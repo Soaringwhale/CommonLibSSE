@@ -1,10 +1,10 @@
 #pragma once
 
 #include "RE/H/hkArray.h"
+#include "RE/H/hkQsTransform.h"
 #include "RE/H/hkRefVariant.h"
 #include "RE/H/hkReferencedObject.h"
 #include "RE/H/hkStringPtr.h"
-#include "RE/H/hkQsTransform.h"
 #include "RE/H/hkaSkeleton.h"
 #include "RE/H/hkbCharacterSetup.h"
 

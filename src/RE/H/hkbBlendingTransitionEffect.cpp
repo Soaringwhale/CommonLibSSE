@@ -139,7 +139,7 @@ namespace RE
 		auto& fromGeneratorInfo = behaviorGraph.getNodeInfoByClone(fromGenerator);
 		return behaviorGraph.adjust_info_usesomeind(fromGeneratorInfo).syncInfo;
 	}
-	
+
 	const hkbGeneratorSyncInfo& hkbBlendingTransitionEffect::getToGeneratorSyncInfo(hkbBehaviorGraph& behaviorGraph)
 	{
 		auto& toGeneratorInfo = behaviorGraph.getNodeInfoByClone(toGenerator);
@@ -171,10 +171,10 @@ namespace RE
 			characterPoseAtBeginningOfTransition.append(poseLocal, bones_count);
 		}
 	}
-	
+
 	void hkbBlendingTransitionEffect::updateSync(const hkbContext& ctx, hkbGenerator* gen)
 	{
-		using func_t = void (hkbBlendingTransitionEffect*, const hkbContext& ctx, hkbGenerator* gen);
+		using func_t = void(hkbBlendingTransitionEffect*, const hkbContext& ctx, hkbGenerator* gen);
 		REL::Relocation<func_t> func{ RELOCATION_ID(59289, 0) };
 		return func(this, ctx, gen);
 	}

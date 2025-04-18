@@ -7,7 +7,7 @@ namespace RE
 		triggerInterval(), initiateInterval(), transition(a_transition), condition(condition), eventId(a_eventId), toStateId(a_toStateId), fromNestedStateId(), toNestedStateId(), priority(), flags()
 	{
 	}
-	
+
 	//hkbStateMachine::~hkbStateMachine()
 	//{
 	//	for (auto& transition : activeTransitions) {
@@ -18,40 +18,40 @@ namespace RE
 	//		state->RemoveReference();
 	//	}
 	//}
-	
+
 	void hkbStateMachine::addState(int32_t stateId, hkbGenerator* generator, char const* stateName)
 	{
 		REL::Relocation<void(hkbStateMachine*, int32_t, hkbGenerator*, char const*)> func(RELOCATION_ID(58706, 0));  // I do not know for AE
 		return func(this, stateId, generator, stateName);
 	}
-	
+
 	int32_t hkbStateMachine::addState(RE::hkbGenerator* generator, const char* stateName)
 	{
 		int32_t stateID = getUnusedStateId();
 		addState(stateID, generator, stateName);
 		return stateID;
 	}
-	
+
 	hkbStateMachine::TransitionInfo* hkbStateMachine::addTransition(int32_t eventId, int32_t fromStateId, int32_t toStateId, hkbTransitionEffect* transition, hkbCondition* condition)
 	{
 		auto& from_state = getStateInfoById(fromStateId);
 		if (!from_state.transitions)
 			from_state.transitions = make_hkref<hkbStateMachine::TransitionInfoArray>();
-	
+
 		return addTransitionInternal(eventId, toStateId, transition, condition, from_state.transitions->transitions);
 	}
-	
+
 	hkbStateMachine::TransitionInfo* hkbStateMachine::addTransitionInternal(int32_t eventId, int32_t toStateId, hkbTransitionEffect* transition, hkbCondition* condition, hkArray<TransitionInfo>& transitions)
 	{
 		transitions.push_back({ eventId, toStateId, transition, condition });
 		return &transitions.back();
 	}
-	
+
 	uint16_t hkbStateMachine::getCurrentStateIndex() const
 	{
 		return currentStateIndexAndEntered >> 1;
 	}
-	
+
 	hkbStateMachine* hkbStateMachine::getNestedStateMachineClone(const hkbBehaviorGraph& behaviorGraph, int32_t stateIndex)
 	{
 		if (auto nodeTemplate = getNestedStateMachineTemplate(behaviorGraph, stateIndex)) {
@@ -60,7 +60,7 @@ namespace RE
 			return nullptr;
 		}
 	}
-	
+
 	hkbBehaviorGraph::StateMachineInfo* hkbStateMachine::getNestedStateMachineInfo(const hkbBehaviorGraph& behaviorGraph, int32_t stateIndex)
 	{
 		if (auto global_transition_data = behaviorGraph.globalTransitionData.get()) {
@@ -74,10 +74,10 @@ namespace RE
 				}
 			}
 		}
-	
+
 		return nullptr;
 	}
-	
+
 	hkbStateMachine* hkbStateMachine::getNestedStateMachineTemplate(const hkbBehaviorGraph& behaviorGraph, int32_t stateIndex)
 	{
 		if (auto info = getNestedStateMachineInfo(behaviorGraph, stateIndex)) {
@@ -86,7 +86,7 @@ namespace RE
 			return nullptr;
 		}
 	}
-	
+
 	int32_t hkbStateMachine::getStateIndex(int32_t stateID) const
 	{
 		if (stateID)
@@ -95,39 +95,39 @@ namespace RE
 			return -1;
 		return 0;
 	}
-	
+
 	hkbStateMachine::StateInfo& hkbStateMachine::getStateInfoById(int32_t stateId)
 	{
 		return *states[getStateIndex(stateId)];
 	}
-	
+
 	const hkbStateMachine::StateInfo& hkbStateMachine::getStateInfoById(int32_t stateId) const
 	{
 		return *states[getStateIndex(stateId)];
 	}
-	
+
 	hkbStateMachine::StateInfo& hkbStateMachine::getStateInfoByIndex(int32_t stateIndex)
 	{
 		return *states[stateIndex];
 	}
-	
+
 	const hkbStateMachine::StateInfo& hkbStateMachine::getStateInfoByIndex(int32_t stateIndex) const
 	{
 		return *states[stateIndex];
 	}
-	
+
 	int32_t hkbStateMachine::getUnusedStateId() const
 	{
 		int32_t i = 0;
 		while (getStateIndex(i) != -1) ++i;
 		return i;
 	}
-	
+
 	hkbStateMachine::StateInfo::StateInfo()
 	{
 		stl::emplace_vtable(this);
 	}
-	
+
 	hkbStateMachine::StateInfo::~StateInfo()
 	{
 		for (auto listener : listeners) {

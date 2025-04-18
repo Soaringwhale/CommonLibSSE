@@ -61,7 +61,7 @@ namespace RE
 		virtual void         GetMemoryStatistics(MemoryStatistics& a_usage) = 0;                                        // 08
 		virtual std::int32_t GetAllocatedSize(const void* a_obj, std::int32_t a_numBytes) = 0;                          // 09
 		virtual void         ResetPeakMemoryStatistics();                                                               // 0A - { return; }
-		
+
 		/// Allocate a buffer which is a multiple of SIZE_ELEM.
 		template <typename TYPE>
 		inline TYPE* _bufAlloc(int32_t& reqNumInOut)

@@ -23,8 +23,8 @@ namespace RE
 		virtual void generate(const hkbContext& a_context, const hkbGeneratorOutput** activeChildrenOutput, hkbGeneratorOutput& output, float timeOffset = 0.0f) const = 0;  // 17
 		virtual bool canRecycleOutput() const { return false; }                                                                                                              // 18
 		virtual void updateSync(const hkbContext& a_context, hkbNodeInfo& info);                                                                                             // 19
-		virtual void setLocalTime([[maybe_unused]] float time) {};                                                                                                           // 1A
-		virtual void startEcho() {};                                                                                                                                         // 1B
+		virtual void setLocalTime([[maybe_unused]] float time){};                                                                                                            // 1A
+		virtual void startEcho(){};                                                                                                                                          // 1B
 
 		HK_HEAP_REDEFINE_NEW();
 	};

@@ -19,7 +19,8 @@ namespace RE
 
 		// override (ActionInput)
 		// 01
-		ActorState*            GetSourceActorState() const override { 
+		ActorState* GetSourceActorState() const override
+		{
 			if (!ref)
 				return nullptr;
 
@@ -29,7 +30,7 @@ namespace RE
 				return nullptr;
 			}
 		}
-		ActionQueue*           GetActionQueue(void) override { return nullptr; }         // 02
+		ActionQueue* GetActionQueue(void) override { return nullptr; }  // 02
 																		// 03
 		BGSAnimationSequencer* GetSourceSequencer() const override
 		{
@@ -38,7 +39,7 @@ namespace RE
 
 		// override (BGSActionData)
 		BGSActionData* CreateCopy() const override { return nullptr; }  // 04
-																   // 05
+																		// 05
 		bool DoIt() override
 		{
 			using func_t = decltype(&TESActionData::DoIt);

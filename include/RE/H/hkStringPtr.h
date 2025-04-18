@@ -42,7 +42,7 @@ namespace RE
 		const char* _data{ nullptr };  // 0
 
 	private:
-		bool should_deallocate() const;
+		bool  should_deallocate() const;
 		char* strDup(const char* a_data);
 		char* strNdup(const char* a_data, size_type len);
 	};

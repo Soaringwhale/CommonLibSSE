@@ -49,7 +49,7 @@ namespace RE
 					_data = strNdup(a_data, len) + 1;
 				}
 			} else {
-				_data = a_data;	
+				_data = a_data;
 			}
 		} else {
 			_data = nullptr;

@@ -1095,6 +1095,7 @@
 #include "RE/H/hkbExpressionData.h"
 #include "RE/H/hkbExpressionDataArray.h"
 #include "RE/H/hkbGenerator.h"
+#include "RE/H/hkbGeneratorOutputUtils.h"
 #include "RE/H/hkbManualSelectorGenerator.h"
 #include "RE/H/hkbModifier.h"
 #include "RE/H/hkbModifierGenerator.h"

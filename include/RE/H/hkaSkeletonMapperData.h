@@ -1,8 +1,8 @@
 #pragma once
 
 #include "RE/H/hkArray.h"
-#include "RE/H/hkRefPtr.h"
 #include "RE/H/hkQsTransform.h"
+#include "RE/H/hkRefPtr.h"
 #include "RE/H/hkaSkeleton.h"
 
 namespace RE
@@ -53,16 +53,16 @@ namespace RE
 		~hkaSkeletonMapperData() = default;
 
 		// members
-		hkRefPtr<hkaSkeleton>  m_skeletonA;                  // 00
-		hkRefPtr<hkaSkeleton>  m_skeletonB;                  // 08
-		hkArray<SimpleMapping> m_simpleMappings;             // 10
-		hkArray<ChainMapping>  m_chainMappings;              // 20
-		hkArray<int16_t>       m_unmappedBones;              // 30
-		hkQsTransform          m_extractedMotionMapping;     // 40
-		bool                   m_keepUnmappedLocal{ true };  // 70
-		char                   pad71[3];                     // 71
-		MappingType            m_mappingType{ MappingType ::HK_RETARGETING_MAPPING};  // 74
-		char                   pad78[8];                     // 78
+		hkRefPtr<hkaSkeleton>  m_skeletonA;                                            // 00
+		hkRefPtr<hkaSkeleton>  m_skeletonB;                                            // 08
+		hkArray<SimpleMapping> m_simpleMappings;                                       // 10
+		hkArray<ChainMapping>  m_chainMappings;                                        // 20
+		hkArray<int16_t>       m_unmappedBones;                                        // 30
+		hkQsTransform          m_extractedMotionMapping;                               // 40
+		bool                   m_keepUnmappedLocal{ true };                            // 70
+		char                   pad71[3];                                               // 71
+		MappingType            m_mappingType{ MappingType ::HK_RETARGETING_MAPPING };  // 74
+		char                   pad78[8];                                               // 78
 	};
 	static_assert(sizeof(hkaSkeletonMapperData) == 0x80);
 	static_assert(alignof(hkaSkeletonMapperData) == 0x10);

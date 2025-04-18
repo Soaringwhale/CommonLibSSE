@@ -24,7 +24,7 @@ namespace RE
 		{
 			return *REL::Relocation<hkClass*>(REL::ID(521060));
 		}
-		
+
 		// members
 		std::uint8_t                     characterControllerSetup[24];  // 10 (hkbCharacterControllerSetup)
 		float                            modelUpMS[4];                  // 28 (hkVector4)

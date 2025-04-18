@@ -88,7 +88,6 @@ namespace RE
 			assert(!shouldDeallocate() || m_elem == nullptr);  // memory not freed
 		}
 
-
 		bool shouldDeallocate() const
 		{
 			return (m_numElems & DONT_DEALLOCATE_FLAG) == 0;
@@ -182,7 +181,7 @@ namespace RE
 		}
 
 		// members
-		Pair* m_elem;		   // 00
+		Pair*     m_elem;      // 00
 		size_type m_numElems;  // 08 - high bits are flags
 		size_type m_hashMod;   // 0C - capacity - 1
 
@@ -214,10 +213,10 @@ namespace RE
 
 			assert(m_numElems < newcap);  // "table size is not big enough"
 
-			bool     _shouldDeallocate = shouldDeallocate();
+			bool      _shouldDeallocate = shouldDeallocate();
 			size_type oldcap = m_hashMod + 1;
-			Pair*    oldelem = m_elem;
-			Pair*    newelem = static_cast<Pair*>(alloc.BlockAlloc(sizeof(Pair) * newcap));
+			Pair*     oldelem = m_elem;
+			Pair*     newelem = static_cast<Pair*>(alloc.BlockAlloc(sizeof(Pair) * newcap));
 
 			assert(newelem != nullptr);
 

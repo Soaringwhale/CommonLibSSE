@@ -89,7 +89,6 @@ namespace RE
 		const hkbNodeInfo& getNodeInfoByTemplate(hkbNode* nodeTemplate) const;
 		hkbNode*           getNodeTemplate(hkbNode* nodeClone) const;
 
-
 		// members
 		stl::enumeration<VariableMode, std::uint8_t> variableMode;                     // 048 - How do deal with variables when the behavior is inactive
 		char                                         pad49[7];                         // 049

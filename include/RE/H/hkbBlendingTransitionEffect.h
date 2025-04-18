@@ -1,7 +1,7 @@
 #pragma once
 
-#include "RE/H/hkbTransitionEffect.h"
 #include "RE/H/hkQsTransform.h"
+#include "RE/H/hkbTransitionEffect.h"
 
 namespace RE
 {

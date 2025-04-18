@@ -275,7 +275,6 @@ namespace RE
 			_capacityAndFlags = kDontDeallocFlag;
 		}
 
-
 		enum : std::uint32_t
 		{
 			kCapacityMask = 0x3FFFFFFF,
