@@ -17,6 +17,7 @@ namespace RE
 	class hkbBehaviorGraph;
 	struct BSAnimationGraphEvent;
 	struct hkbGeneratorOutput;
+	class hkbStateMachine;
 
 	namespace BSResource
 	{
@@ -53,6 +54,15 @@ namespace RE
 			uint32_t unk08;
 			uint32_t unk0C;
 		};
+
+		struct PushediStateInfo
+		{
+			// members
+			hkbStateMachine* sm;      // 00
+			int32_t          iState;  // 08
+			uint32_t         pad0C;   // 0C
+		};
+		static_assert(sizeof(PushediStateInfo) == 0x10);
 
 		~BShkbAnimationGraph() override;  // 00
 
@@ -132,34 +142,32 @@ namespace RE
 		}
 
 		// members
-		hkbCharacter                   characterInstance;            // 0C0
-		BSTArray<BoneNodeEntry>        boneNodes;                    // 160
-		BSTArray<BShkFloatController*> fadeControllers;              // 178
-		BSTArray<void*>                unk190;                       // 190
-		BSTSmallArray<void*>           unk1A8;                       // 1A8
-		BSTSmallArray<std::uint8_t>    unk1C0;                       // 1C0
-		std::uint64_t                  unk1D8;                       // 1D8
-		std::uint64_t                  unk1E0;                       // 1E0
-		float                          interpolationTimeOffsets[2];  // 1E8
-		BSFixedString                  projectName;                  // 1F0
-		BSResource::ID*                unk1F8;                       // 1F8
-		ProjectDBData*                 projectDBData;                // 200 - BShkbHkxDB::ProjectDBData*
-		hkbBehaviorGraph*              behaviorGraph;                // 208
-		Actor*                         holder;                       // 210
-		BSFadeNode*                    rootNode;                     // 218
-		hkbGeneratorOutput*            generatorOutputs[2];          // 220
-		float                          interpolationAmounts[2];      // 230
-		bhkWorld*                      physicsWorld;                 // 238
-		std::uint16_t                  numAnimBones;                 // 240
-		std::uint8_t                   unk242;                       // 242
-		std::uint8_t                   unk243;                       // 243
-		std::uint16_t                  unk244;                       // 244
-		std::uint8_t                   unk246;                       // 246
-		std::uint8_t                   unk247;                       // 247
-		std::uint8_t                   unk248;                       // 248
-		std::uint8_t                   doFootIK;                     // 249
-		std::uint16_t                  unk24A;                       // 24A
-		std::uint32_t                  unk24C;                       // 24C
+		hkbCharacter                                       characterInstance;            // 0C0
+		BSTArray<BoneNodeEntry>                            boneNodes;                    // 160
+		BSTArray<BShkFloatController*>                     fadeControllers;              // 178
+		BSTArray<void*>                                    unk190;                       // 190
+		BSTSmallArray<void*>                               unk1A8;                       // 1A8
+		BSTSmallArray<BSTTuple<int32_t, PushediStateInfo>> iStates;                      // 1C0
+		float                                              interpolationTimeOffsets[2];  // 1E8
+		BSFixedString                                      projectName;                  // 1F0
+		BSResource::ID*                                    unk1F8;                       // 1F8
+		ProjectDBData*                                     projectDBData;                // 200 - BShkbHkxDB::ProjectDBData*
+		hkbBehaviorGraph*                                  behaviorGraph;                // 208
+		TESObjectREFR*                                     holder;                       // 210
+		BSFadeNode*                                        rootNode;                     // 218
+		hkbGeneratorOutput*                                generatorOutputs[2];          // 220
+		float                                              interpolationAmounts[2];      // 230
+		bhkWorld*                                          physicsWorld;                 // 238
+		std::uint16_t                                      numAnimBones;                 // 240
+		std::uint8_t                                       unk242;                       // 242
+		std::uint8_t                                       unk243;                       // 243
+		std::uint16_t                                      unk244;                       // 244
+		std::uint8_t                                       unk246;                       // 246
+		std::uint8_t                                       unk247;                       // 247
+		std::uint8_t                                       unk248;                       // 248
+		std::uint8_t                                       doFootIK;                     // 249
+		std::uint16_t                                      unk24A;                       // 24A
+		std::uint32_t                                      unk24C;                       // 24C
 	};
 	static_assert(sizeof(BShkbAnimationGraph) == 0x250);
 }

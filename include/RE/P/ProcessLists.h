@@ -26,7 +26,7 @@ namespace RE
 		public:
 			inline static constexpr auto RTTI = RTTI_ProcessLists__GetActorsFilter;
 
-			virtual ~GetActorsFilter();  // 00
+			virtual ~GetActorsFilter() = default;  // 00
 
 			// add
 			virtual bool IsValid(Actor* a_actor) = 0;  // 01

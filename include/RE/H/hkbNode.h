@@ -37,12 +37,12 @@ namespace RE
 				childInfos(childInfos) {}
 
 			// members
-			hkArray<hkbNodeChildInfo>& childInfos;  // 00 - An array of child info (must be allocated by the caller)
-			uint8_t                    unk08;       // 08
-			uint8_t                    unk09;       // 09
-			uint8_t                    unk0A;       // 0A
-			uint8_t                    unk0B;       // 0B
-			char                       pad0C[4];    // 0C
+			hkArray<hkbNodeChildInfo>& childInfos;    // 00 - An array of child info (must be allocated by the caller)
+			bool                       ignoreEvents;  // 08
+			bool                       reset;         // 09
+			bool                       syncToParent;  // 0A
+			uint8_t                    unk0B;         // 0B
+			char                       pad0C[4];      // 0C
 		};
 		static_assert(sizeof(ChildrenInfo) == 0x10);
 
@@ -50,7 +50,7 @@ namespace RE
 		enum class GetChildrenFlagBits : int32_t
 		{
 			kActiveOnly = 1 << 0,      // If true, only return the active children (otherwise, all children).
-			kGeneratorsOnly = 1 << 1,  // // If true, only return generators (else also return modifiers).
+			kGeneratorsOnly = 1 << 1,  // If true, only return generators (else also return modifiers).
 			// If true, the behavior graphs pointed to by hkbBehaviorReferenceGenerators
 			// will be ignored (along with all of their descendants).
 			kIgnoreReferencedBehaviour = 1 << 2
@@ -65,36 +65,38 @@ namespace RE
 			kShareable = 3
 		};
 
-		~hkbNode() override;  // 00
+		hkbNode() { stl::emplace_vtable(this); }
+		~hkbNode() override = default;  // 00
 
 		// add
-		virtual void Activate(const hkbContext& a_context);                     // 04 - { return; }
-		virtual void Update(const hkbContext& a_context, float a_timestep);     // 05 - { userData |= 1; }
-		virtual void handleEvent(const hkbContext& ctx, hkbEvent& event);       // 06 - { return; }
-		virtual void Deactivate(const hkbContext& a_context);                   // 07 - { return; }
-		virtual int  getMaxNumChildren(GET_CHILDREN_FLAGS flags);               // 08 - { return 2; }
-		virtual void getChildren(GET_CHILDREN_FLAGS flags, ChildrenInfo& ans);  // 09 - { return; }
-		virtual void isValid(void);                                             // 0A - { return 1; }
-		virtual void precompute(void);                                          // 0B - { return; }
-		virtual void cloneNode(void);                                           // 0C
-		virtual void createInternalState(void);                                 // 0D - { return 0; }
-		virtual void getInternalState(void);                                    // 0E - { return; }
-		virtual void getInternalStateUser(void);                                // 0F - { return; }
-		virtual void setInternalState(void);                                    // 10 - { return; }
-		virtual void setInternalStateUser(void);                                // 11 - { return; }
-		virtual void getActiveEvents(void);                                     // 12 - { return; }
-		virtual void Unk_13(void);                                              // 13 - { return 0; }
-		virtual void getActiveVariablesSpecial(void);                           // 14 - { return; }
-		virtual bool isGenerator() const;                                       // 15 - { return 0; }
-		virtual bool isGraph() const;                                           // 16 - { return 0; }
+		virtual void                Activate([[maybe_unused]] const hkbContext& a_context) {}                                                                                                                       // 04
+		virtual void                Update([[maybe_unused]] const hkbContext& a_context, [[maybe_unused]] float a_timestep) { userData |= 1; }                                                                      // 05
+		virtual void                handleEvent([[maybe_unused]] const hkbContext& ctx, [[maybe_unused]] hkbEvent& event) {}                                                                                        // 06
+		virtual void                Deactivate([[maybe_unused]] const hkbContext& a_context) {}                                                                                                                     // 07
+		virtual int32_t             getMaxNumChildren([[maybe_unused]] GET_CHILDREN_FLAGS flags) { return 2; }                                                                                                      // 08
+		virtual void                getChildren([[maybe_unused]] GET_CHILDREN_FLAGS flags, [[maybe_unused]] ChildrenInfo& ans) {}                                                                                   // 09
+		virtual bool                isValid([[maybe_unused]] hkStringPtr& err) const { return true; }                                                                                                               // 0A
+		virtual void                precompute([[maybe_unused]] const hkbContext& ctx) {}                                                                                                                           // 0B
+		virtual hkbNode*            cloneNode([[maybe_unused]] hkbBehaviorGraph& rootBehavior) const { return nullptr; }                                                                                            // 0C
+		virtual hkReferencedObject* createInternalState() { return nullptr; }                                                                                                                                       // 0D
+		virtual void                getInternalState([[maybe_unused]] hkReferencedObject& internalState) const {}                                                                                                   // 0E
+		virtual void                getInternalStateUser([[maybe_unused]] const hkbBehaviorGraph& rootBehavior, [[maybe_unused]] hkReferencedObject& internalState) const {}                                        // 0F
+		virtual void                setInternalState([[maybe_unused]] const hkReferencedObject& internalState) {}                                                                                                   // 10
+		virtual void                setInternalStateUser([[maybe_unused]] const hkbContext& context, [[maybe_unused]] const hkReferencedObject& internalState, [[maybe_unused]] void* nodeIdToInternalStateMap) {}  // 11
+		virtual void                getActiveEvents([[maybe_unused]] void* activeEvents) const {}                                                                                                                   // 12
+		virtual bool                isTransitionEffect() const { return false; }                                                                                                                                    // 13
+		virtual void                getActiveVariablesSpecial([[maybe_unused]] void* activeVariables) const {}                                                                                                      // 14
+		virtual bool                isGenerator() const { return false; }                                                                                                                                           // 15
+		virtual bool                isGraph() const { return false; }                                                                                                                                               // 16
+
+		HK_HEAP_REDEFINE_NEW();
 
 		// members
-		std::uint64_t userData;    // 30
-		hkStringPtr   name;        // 38
-		std::uint16_t id;          // 40
-		CloneState    cloneState;  // 42
-		std::uint8_t  pad43;       // 43
-		std::uint32_t pad44;       // 44
+		uint64_t    userData{ 0 };                        // 30
+		hkStringPtr name;                                 // 38
+		int16_t     id{ -1 };                             // 40
+		CloneState  cloneState{ CloneState ::kDefault };  // 42
+		char        pad43[5];                             // 43
 	};
 	static_assert(sizeof(hkbNode) == 0x48);
 

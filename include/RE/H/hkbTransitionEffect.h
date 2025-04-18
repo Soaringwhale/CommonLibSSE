@@ -4,9 +4,12 @@
 
 namespace RE
 {
-	class hkbTransitionEffect : public RE::hkbGenerator
+	class hkbTransitionEffect : public hkbGenerator
 	{
 	public:
+		inline static constexpr auto RTTI = RTTI_hkbTransitionEffect;
+		inline static constexpr auto VTABLE = VTABLE_hkbTransitionEffect;
+
 		/// These modes determine the behavior when the to-generator is already active when the transition begins.
 		enum SelfTransitionMode : uint8_t
 		{
@@ -39,12 +42,27 @@ namespace RE
 			EVENT_MODE_IGNORE_TO_GENERATOR,
 		};
 
+		hkbTransitionEffect() { stl::emplace_vtable(this); }
+		~hkbTransitionEffect() override = default;  // 00
+
+		// override (hkbNode)
+		bool isTransitionEffect() const { return true; }  // 13
+
+		// add
+		virtual bool  isDone() = 0;                                 // 1C
+		virtual void  setFromGenerator(hkbGenerator* fromGen) = 0;  // 1D
+		virtual void  setToGenerator(hkbGenerator* toGen) = 0;      // 1E
+		virtual float getFromGeneratorBlendOutTime() = 0;           // 1F
+		virtual float getToGeneratorBlendInTime() = 0;              // 20
+
+		bool      computeSelfTransitionMode(const hkbContext& ctx, hkbGenerator* gen);
+		EventMode getEventMode() const;
+
 		// members
-		RE::stl::enumeration<SelfTransitionMode, uint8_t>
-												 selfTransitionMode;  // 48 - What to do if the to-generator is already active when the transition activates it
-		RE::stl::enumeration<EventMode, uint8_t> eventMode;           // 49 - How to process the events of the from- and to-generators.
-		uint8_t                                  field_4A;            // 4A - defaultEventMode?
-		char                                     pad4B[5];            // 4B
+		SelfTransitionMode selfTransitionMode{ SelfTransitionMode ::SELF_TRANSITION_MODE_CONTINUE_IF_CYCLIC_BLEND_IF_ACYCLIC };  // 48 - What to do if the to-generator is already active when the transition activates it
+		EventMode          eventMode;                                                                                            // 49 - How to process the events of the from- and to-generators.
+		EventMode          defaultEventMode{ EventMode ::EVENT_MODE_IGNORE_FROM_GENERATOR };                                     // 4A - defaultEventMode?
+		char               pad4B[5];                                                                                             // 4B
 	};
 	static_assert(sizeof(hkbTransitionEffect) == 0x50);
 }

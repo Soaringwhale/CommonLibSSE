@@ -30,21 +30,27 @@ namespace RE
 				BINDING_TYPE_CHARACTER_PROPERTY,
 			};
 
+			Binding() = default;
+			Binding(const char* memberPath, int32_t variableIndex, BindingType bindingType, int8_t bitIndex);
+
 			// members
-			hkStringPtr memberPath;             // 00
-			hkClass*    memberClass;            // 08
-			int32_t     offsetInObjectPlusOne;  // 10
-			int32_t     offsetInArrayPlusOne;   // 14
-			int32_t     rootVariableIndex;      // 18
-			int32_t     variableIndex;          // 1C
-			int8_t      bitIndex;               // 20
-			BindingType bindingType;            // 21
-			int8_t      memberType;             // 22
-			int8_t      variableType;           // 23
-			int8_t      flags;                  // 24
-			char        pad25[3];               // 25
+			hkStringPtr memberPath;                                         // 00
+			hkClass*    memberClass{ nullptr };                             // 08
+			int32_t     offsetInObjectPlusOne{ 0 };                         // 10
+			int32_t     offsetInArrayPlusOne{ 0 };                          // 14
+			int32_t     rootVariableIndex{ -1 };                            // 18
+			int32_t     variableIndex{ 0 };                                 // 1C
+			int8_t      bitIndex{ -1 };                                     // 20
+			BindingType bindingType{ BindingType::BINDING_TYPE_VARIABLE };  // 21
+			int8_t      memberType{ 0 };                                    // 22
+			int8_t      variableType{ -1 };                                 // 23
+			int8_t      flags{ 0 };                                         // 24
+			char        pad25[3];                                           // 25
 		};
 		static_assert(sizeof(Binding) == 0x28);
+
+		hkbVariableBindingSet() { stl::emplace_vtable(this); }
+		~hkbVariableBindingSet() override = default;  // 00
 
 		/// Add a binding to the set.
 		///
@@ -53,28 +59,32 @@ namespace RE
 		/// For example, "children:2/blendWeight" would seek an array
 		/// member named "children", access the second member, and then
 		/// look for a member named "blendWeight" in that object.
-		void addBinding(const char* memberPath, int32_t variableIndex, Binding::BindingType bindingType = Binding::BindingType::BINDING_TYPE_VARIABLE, int32_t bitIndex = -1)
-		{
-			REL::Relocation<decltype(&hkbVariableBindingSet::addBinding)> func(RELOCATION_ID(58805, 0));  // I do not know for AE
-			return func(this, memberPath, variableIndex, bindingType, bitIndex);
-		}
+		void addBinding(const char* memberPath, int32_t variableIndex, Binding::BindingType bindingType = Binding::BindingType::BINDING_TYPE_VARIABLE, int8_t bitIndex = -1);
 
-		static hkbVariableBindingSet* Create()
-		{
-			auto ans = hk_malloc<hkbVariableBindingSet>();
-			std::memset(ans, 0, sizeof(hkbVariableBindingSet));
-			stl::emplace_vtable(ans);
-			ans->indexOfBindingToEnable = -1;
-			return ans;
-		}
+		HK_HEAP_REDEFINE_NEW();
+
+		bool has_binding(const char* memberPath, int32_t variableIndex, Binding::BindingType bindingType = Binding::BindingType::BINDING_TYPE_VARIABLE, int8_t bitIndex = -1) const;
 
 		// members
-		hkArray<Binding> bindings;                // 10
-		int32_t          indexOfBindingToEnable;  // 20
-		bool             hasOutputBinding;        // 24
-		char             pad25[3];                // 25
+		hkArray<Binding> bindings;                      // 10
+		int32_t          indexOfBindingToEnable{ -1 };  // 20
+		bool             hasOutputBinding{ false };     // 24
+		char             pad25[3];                      // 25
 	};
 	static_assert(sizeof(hkbVariableBindingSet) == 0x28);
+
+	inline bool operator==(const hkbVariableBindingSet::Binding& lhs, const hkbVariableBindingSet::Binding& rhs);
+
+	class hkbBindable;
+
+	class hkbBindableCollector
+	{
+	public:
+		// Called on each hkbBindable when you pass this collector into hkbBindable::collectBindables().
+		virtual void collectBindable(hkbBindable* bindable) = 0;
+
+		virtual ~hkbBindableCollector() = default;
+	};
 
 	class hkbBindable : public hkReferencedObject
 	{
@@ -82,18 +92,33 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_hkbBindable;
 		inline static constexpr auto VTABLE = VTABLE_hkbBindable;
 
-		~hkbBindable() override;  // 00
+		struct Cache
+		{
+			// members
+			hkbBindable* bindable;                // 00
+			uint32_t     indexOfBindingToEnable;  // 08
+			bool         hasOutputBinding;        // 0C
+			char         pad0D[3];                // 0D
+		};
+		static_assert(sizeof(Cache) == 0x10);
+
+		hkbBindable() { stl::emplace_vtable(this); }
+		~hkbBindable() override = default;  // 00
 
 		// add
-		virtual void collectBindables(hkbBindableCollector& collector);  // 03
+		virtual void collectBindables(hkbBindableCollector& collector) { collector.collectBindable(this); }  // 03
+
+		HK_HEAP_REDEFINE_NEW();
+
+		void add_binding(const char* memberPath, int32_t variableIndex, hkbVariableBindingSet::Binding::BindingType bindingType = hkbVariableBindingSet::Binding::BindingType::BINDING_TYPE_VARIABLE, int8_t bitIndex = -1);
+		void add_binding_nullcheck(const char* memberPath, int32_t variableIndex, hkbVariableBindingSet::Binding::BindingType bindingType = hkbVariableBindingSet::Binding::BindingType::BINDING_TYPE_VARIABLE, int8_t bitIndex = -1);
+		bool has_binding(const char* memberPath, int32_t variableIndex, hkbVariableBindingSet::Binding::BindingType bindingType = hkbVariableBindingSet::Binding::BindingType::BINDING_TYPE_VARIABLE, int8_t bitIndex = -1) const;
 
 		// members
-		hkRefPtr<hkbVariableBindingSet> variableBindingSet;  // 10
-		hkArray<hkRefVariant>           cachedBindables;     // 18
-		bool                            areBindablesCached;  // 28
-		std::uint8_t                    pad29;               // 29
-		std::uint16_t                   pad2A;               // 2A
-		std::uint32_t                   pad2C;               // 2C
+		hkRefPtr<hkbVariableBindingSet> variableBindingSet;           // 10
+		hkArray<Cache>                  cachedBindables;              // 18
+		bool                            areBindablesCached{ false };  // 28
+		char                            pad29[7];                     // 29
 	};
 	static_assert(sizeof(hkbBindable) == 0x30);
 }

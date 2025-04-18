@@ -36,7 +36,7 @@ namespace RE
 	struct AnimationVariableData;
 	struct BSAnimationGraphVariableCache;
 
-	enum class RESET_3D_FLAGS
+	enum class RESET_3D_FLAGS : uint8_t
 	{
 		kNone = 0,
 		kModel = 1 << 0,

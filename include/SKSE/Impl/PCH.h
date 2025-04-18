@@ -714,6 +714,12 @@ namespace REL
 #	define RELOCATION_ID(SE, AE) REL::ID(SE)
 #endif
 
+#ifdef SKYRIM_SUPPORT_AE
+#	define RELOCATION_OFFSET(SE, AE) (AE)
+#else
+#	define RELOCATION_OFFSET(SE, AE) (SE)
+#endif
+
 #include "REL/Relocation.h"
 
 #include "RE/Offsets.h"

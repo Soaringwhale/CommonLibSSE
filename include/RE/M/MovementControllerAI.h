@@ -1,73 +1,23 @@
 #pragma once
 
 #include "RE/B/BSIntrusiveRefCounted.h"
+#include "RE/B/BSTArray.h"
+#include "RE/B/BSTTuple.h"
 #include "RE/I/IMovementControllerRegisterInterface.h"
+#include "RE/M/MovementAgent.h"
+#include "RE/M/MovementArbiter.h"
 
 namespace RE
 {
-	class BSPathingStreamRead;
-	class BSPathingStreamWrite;
-	class IMovementDebugRenderingInterface;
+	class IMovementControllerDataTracker;
 	class IMovementState;
-	struct IPipelineStageInterface;
-	struct MovementUpdateDataSmallDelta;
-	struct MovementUpdateDataLargeDelta;
-
-	class MovementAgent : public BSIntrusiveRefCounted
-	{
-	public:
-		virtual ~MovementAgent();  // 00
-
-		virtual const BSFixedString&              GetAgentType() const;                                           // 01
-		virtual uint8_t                           GetAgentSaveType() const;                                       // 02
-		virtual IPipelineStageInterface*          GetPipelineStageInterface(const BSFixedString&);                // 03
-		virtual void                              RegisterWithController(IMovementControllerRegisterInterface&);  // 04
-		virtual IMovementDebugRenderingInterface* GetDebugRenderingInterface();                                   // 05
-		virtual void                              Activate();                                                     // 06
-		virtual void                              Init(BSPathingStreamRead&);                                     // 07
-		virtual void                              Kill();                                                         // 08
-		virtual void                              Deactivate();                                                   // 09
-		virtual void                              UnregisterWithController();                                     // 0A
-		virtual void                              SaveGame(BSPathingStreamWrite&);                                // 0B
-		virtual void                              LoadGame(BSPathingStreamRead&);                                 // 0C
-		virtual void                              FinishLoadGame();                                               // 0D
-
-		// members
-		IMovementState* movementState;  // 10
-	};
-	static_assert(sizeof(MovementAgent) == 0x18);
-
-	class MovementArbiter : public BSIntrusiveRefCounted
-	{
-	public:
-		virtual ~MovementArbiter();  // 00
-
-		virtual const BSFixedString&              GetPipelineStage() const;                                       // 01
-		virtual const BSFixedString&              GetArbiterType() const;                                         // 02
-		virtual uint8_t                           GetArbiterSaveType() const;                                     // 03
-		virtual void                              RegisterWithController(IMovementControllerRegisterInterface&);  // 04
-		virtual IMovementDebugRenderingInterface* GetDebugRenderingInterface();                                   // 05
-		virtual void                              Activate();                                                     // 06
-		virtual void                              Init(BSPathingStreamRead&);                                     // 07
-		virtual void                              UpdateSmallDelta(MovementUpdateDataSmallDelta&);                // 08
-		virtual void                              UpdateLargeDelta(MovementUpdateDataLargeDelta&);                // 09
-		virtual void                              Kill();                                                         // 0A
-		virtual void                              Deactivate();                                                   // 0B
-		virtual void                              UnregisterWithController();                                     // 0C
-		virtual void                              SaveGame(BSPathingStreamWrite&);                                // 0D
-		virtual void                              LoadGame(BSPathingStreamRead&);                                 // 0E
-		virtual bool                              AddAgent(const BSTSmartPointer<MovementAgent>&);                // 0F
-		virtual bool                              RemoveAgent(const BSTSmartPointer<MovementAgent>&);             // 10
-		virtual void                              RemoveAllAgents();                                              // 11
-
-		// members
-		IMovementState* movementState;  // 10
-	};
-	static_assert(sizeof(MovementArbiter) == 0x18);
+	struct MovementControllerActiveSetDescription;
+	struct MovementHandlerOutputDataLargeDelta;
+	struct MovementHandlerOutputDataSmallDelta;
 
 	class MovementControllerAI :
-		public BSIntrusiveRefCounted,                // 008
-		public IMovementControllerRegisterInterface  // 000
+		public IMovementControllerRegisterInterface,  // 000
+		public BSIntrusiveRefCounted                  // 008
 	{
 		template <typename T>
 		class ActiveSmartPtr
@@ -127,46 +77,29 @@ namespace RE
 		using ActiveAgentSmartPtr = ActiveSmartPtr<MovementAgent>;
 		static_assert(sizeof(ActiveAgentSmartPtr) == 0x8);
 
+		static bool FindAgentByNameFunctor(const MovementAgent* agent, const BSFixedString& type);
+
 		~MovementControllerAI() override;  // 00
 
 		// add
-		virtual void Unk_05(void);  // 05
-		virtual void Unk_06(void);  // 06 - { return; }
-		virtual void Unk_07(void);  // 07
-		virtual void Unk_08(void);  // 08
-		virtual void Unk_09(void);  // 09 - { return 1; }
+		virtual IMovementState* QCurrentState();                                                          // 05
+		virtual void            Init();                                                                   // 06 - { return; }
+		virtual void            UpdateSmallDelta(float delta, MovementHandlerOutputDataSmallDelta& out);  // 07
+		virtual void            UpdateLargeDelta(float delta, MovementHandlerOutputDataLargeDelta& out);  // 08
+		virtual bool            PreUpdateSmallDelta(void);                                                // 09 - { return 1; }
+
+		bool ActivateSet(const MovementControllerActiveSetDescription& set);
+
+		bool GetMovementAgent(const BSFixedString& type, MovementAgentPtr& ans) const;
 
 		// members
-		std::uint32_t                           pad00C;    // 00C
-		BSTSmallArray<ActiveArbiterSmartPtr, 2> arbiters;  // 10
-		BSTSmallArray<ActiveAgentSmartPtr, 1>   agents;    // 30
-		std::uint64_t                           unk048;    // 048
-		std::uint64_t                           unk050;    // 050
-		std::uint64_t                           unk058;    // 058
-		std::uint64_t                           unk060;    // 060
-		std::uint64_t                           unk068;    // 068
-		std::uint64_t                           unk070;    // 070
-		std::uint64_t                           unk078;    // 078
-		std::uint64_t                           unk080;    // 080
-		std::uint64_t                           unk088;    // 088
-		std::uint64_t                           unk090;    // 090
-		std::uint64_t                           unk098;    // 098
-		std::uint64_t                           unk0A0;    // 0A0
-		std::uint64_t                           unk0A8;    // 0A8
-		std::uint64_t                           unk0B0;    // 0B0
-		std::uint64_t                           unk0B8;    // 0B8
-		std::uint64_t                           unk0C0;    // 0C0
-		std::uint64_t                           unk0C8;    // 0C8
-		std::uint64_t                           unk0D0;    // 0D0
-		std::uint64_t                           unk0D8;    // 0D8
-		std::uint64_t                           unk0E0;    // 0E0
-		std::uint64_t                           unk0E8;    // 0E8
-		std::uint64_t                           unk0F0;    // 0F0
-		std::uint64_t                           unk0F8;    // 0F8
-		std::uint64_t                           unk100;    // 100
-		std::uint64_t                           unk108;    // 108
-		std::uint64_t                           unk110;    // 110
-		std::uint64_t                           unk118;    // 118
+		BSTSmallArray<ActiveArbiterSmartPtr, 2>                         arbiters;     // 10
+		BSTSmallArray<ActiveAgentSmartPtr, 1>                           agents;       // 30
+		BSTSmallArray<BSTTuple<BSFixedString, IMovementInterface*>, 11> interfaces;   // 048
+		BSSpinLock                                                      lock;         // 108
+		FormID                                                          formID;       // 110
+		char                                                            pad114[4];    // 114
+		IMovementControllerDataTracker*                                 dataTracker;  // 118
 	};
 	static_assert(sizeof(MovementControllerAI) == 0x120);
 }

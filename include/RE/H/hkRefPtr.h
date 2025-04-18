@@ -2,6 +2,37 @@
 
 namespace RE
 {
+	/// Intermediate value for pointer return values. To avoid a resource leak,
+	/// it needs to have a reference removed when the object is no longer needed.
+	/// Usually this type is used as an intermediate return value for functions and will
+	/// be assigned directly to a hkRefPtr.
+	/// Note that this indicates a newly added reference, not necessarily a new object, i.e.
+	/// the returned object may be shared.
+	template <typename T>
+	class hkRefNew
+	{
+	public:
+		/// Implicit conversion from raw pointer.
+		hkRefNew(T* t) :
+			m_pntr(t) {}
+
+		/// Assume ownership of this reference.
+		/// Assumes responsibility for calling removeReference in the future.
+		T* stealOwnership()
+		{
+			T* t = m_pntr;
+			m_pntr = nullptr;
+			return t;
+		}
+
+	private:
+		hkRefNew();                         ///< Not implemented
+		void operator=(const hkRefNew& b);  ///< Not implemented
+	public:
+		// members
+		T* m_pntr;  // 00
+	};
+
 	template <class T>
 	class hkRefPtr
 	{
@@ -74,6 +105,12 @@ namespace RE
 			a_rhs._ptr = nullptr;
 		}
 
+		/// Steal (don't increment) the reference from 'rp'.
+		//hkRefPtr(hkRefNew<T> rp) :
+		//	_ptr(rp.stealOwnership())
+		//{
+		//}
+
 		inline ~hkRefPtr()
 		{
 			TryDetach();
@@ -132,6 +169,16 @@ namespace RE
 			a_rhs._ptr = nullptr;
 			return *this;
 		}
+
+		/// Assignment operator.
+		/// Steals (does not increment) the reference from 'rp'.
+		/// Decrease the original reference count and set pointer to object from 'rp'.
+		//void operator=(hkRefNew<T> rp)
+		//
+		//{
+		//	_ptr = rp.stealOwnership();
+		//	return *this;
+		//}
 
 		inline void reset()
 		{
@@ -244,4 +291,45 @@ namespace RE
 
 	template <class T>
 	hkRefPtr(T*) -> hkRefPtr<T>;
+
+	/// Scoped pointer to an object. This is a simple container to hold objects that can not exist on the stack.
+	/// The object is allocated using new() and the default constructor, and delete()'ed on the hkScopedPtr going
+	/// out of scope.
+	/// Pointer operators * and -> are overridden to function transparently
+	template <typename T>
+	class hkScopedPtr
+	{
+	public:
+		typedef hkScopedPtr<T> ThisType;
+
+		/// Create a new hkScopedPtr, calling the object's default constructor
+		hkScopedPtr() { m_object = new T; }
+		/// Pass in an already constructed object. The hkScopedPtr now owns this object
+		hkScopedPtr(T* assignIn) { m_object = assignIn; }
+		~hkScopedPtr() { delete m_object; }
+
+		const T* get() const { return m_object; }
+		T*       get() { return m_object; }
+
+		operator T*() { return m_object; }
+		operator const T*() const { return m_object; }
+
+		const T& operator*() const { return *m_object; }
+		T&       operator*() { return *m_object; }
+
+		const T* operator->() const { return m_object; }
+		T*       operator->() { return m_object; }
+
+		// members
+		T* m_object;  // 00
+
+	private:
+		// hkScopedPtr is not copyable or assignable
+		hkScopedPtr(const hkScopedPtr<T>& copyIn) { assert(false); }
+		hkScopedPtr<T>& operator=(const hkScopedPtr<T>& copyIn)
+		{
+			assert(false);
+			return *this;
+		}
+	};
 }

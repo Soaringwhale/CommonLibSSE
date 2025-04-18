@@ -12,6 +12,9 @@ namespace RE
 	class hkbContext
 	{
 	public:
+		/// Get the event queue of the current character.
+		hkbEventQueue* getEventQueue() const;
+
 		// members
 		hkbCharacter*                         character;         // 00
 		hkbBehaviorGraph*                     behavior;          // 08

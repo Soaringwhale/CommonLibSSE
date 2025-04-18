@@ -107,6 +107,7 @@ set(SOURCES
 	include/RE/B/BGSFootstepEvent.h
 	include/RE/B/BGSFootstepManager.h
 	include/RE/B/BGSFootstepSet.h
+	include/RE/B/BGSGamebryoSequenceGenerator.h
 	include/RE/B/BGSGrassManager.h
 	include/RE/B/BGSHazard.h
 	include/RE/B/BGSHeadPart.h
@@ -288,6 +289,7 @@ set(SOURCES
 	include/RE/B/BSMaterialObject.h
 	include/RE/B/BSMemStorage.h
 	include/RE/B/BSModelDB.h
+	include/RE/B/BSModifyOnceModifier.h
 	include/RE/B/BSMouseDevice.h
 	include/RE/B/BSMultiBound.h
 	include/RE/B/BSMultiBoundAABB.h
@@ -302,6 +304,9 @@ set(SOURCES
 	include/RE/B/BSNavmeshInfoMap.h
 	include/RE/B/BSNiAllocator.h
 	include/RE/B/BSNiNode.h
+	include/RE/B/BSOcclusionBox.h
+	include/RE/B/BSOcclusionPlane.h
+	include/RE/B/BSOcclusionShape.h
 	include/RE/B/BSOffsetAnimationGenerator.h
 	include/RE/B/BSOrderedNode.h
 	include/RE/B/BSPCGamepadDeviceDelegate.h
@@ -324,6 +329,7 @@ set(SOURCES
 	include/RE/B/BSPrecomputedNavmeshInfoPathMap.h
 	include/RE/B/BSReloadShaderI.h
 	include/RE/B/BSRenderPass.h
+	include/RE/B/BSResourceAssetLoader.h
 	include/RE/B/BSResourceEntryDB.h
 	include/RE/B/BSResourceNiBinaryStream.h
 	include/RE/B/BSResponse.h
@@ -1020,17 +1026,20 @@ set(SOURCES
 	include/RE/H/hkArray.h
 	include/RE/H/hkBaseObject.h
 	include/RE/H/hkBaseTypes.h
+	include/RE/H/hkClass.h
 	include/RE/H/hkContactPoint.h
 	include/RE/H/hkContainerAllocators.h
 	include/RE/H/hkFinishLoadedObjectFlag.h
 	include/RE/H/hkMap.h
 	include/RE/H/hkMatrix3.h
 	include/RE/H/hkMemoryAllocator.h
+	include/RE/H/hkMemoryRouter.h
 	include/RE/H/hkMoppBvTreeShapeBase.h
 	include/RE/H/hkMotionState.h
 	include/RE/H/hkMultiThreadCheck.h
 	include/RE/H/hkQsTransform.h
 	include/RE/H/hkQuaternion.h
+	include/RE/H/hkQueue.h
 	include/RE/H/hkRefPtr.h
 	include/RE/H/hkRefVariant.h
 	include/RE/H/hkReferencedObject.h
@@ -1049,10 +1058,15 @@ set(SOURCES
 	include/RE/H/hkaAnnotationTrack.h
 	include/RE/H/hkaBone.h
 	include/RE/H/hkaDefaultAnimationControl.h
+	include/RE/H/hkaDefaultAnimationControlMapperData.h
 	include/RE/H/hkaRagdollInstance.h
 	include/RE/H/hkaSkeleton.h
+	include/RE/H/hkaSkeletonMapper.h
+	include/RE/H/hkaSkeletonMapperData.h
+	include/RE/H/hkaSkeletonMapperUtils.h
 	include/RE/H/hkbAnimationBindingSet.h
 	include/RE/H/hkbAssetBundleStringData.h
+	include/RE/H/hkbAssetLoader.h
 	include/RE/H/hkbBehaviorGraph.h
 	include/RE/H/hkbBehaviorGraphData.h
 	include/RE/H/hkbBehaviorGraphStringData.h
@@ -1073,15 +1087,20 @@ set(SOURCES
 	include/RE/H/hkbEvaluateExpressionModifier.h
 	include/RE/H/hkbEvent.h
 	include/RE/H/hkbEventBase.h
+	include/RE/H/hkbEventDrivenModifier.h
 	include/RE/H/hkbEventInfo.h
+	include/RE/H/hkbEventQueue.h
 	include/RE/H/hkbExpressionData.h
 	include/RE/H/hkbExpressionDataArray.h
 	include/RE/H/hkbGenerator.h
+	include/RE/H/hkbGeneratorOutputUtils.h
 	include/RE/H/hkbManualSelectorGenerator.h
 	include/RE/H/hkbModifier.h
 	include/RE/H/hkbModifierGenerator.h
 	include/RE/H/hkbModifierList.h
+	include/RE/H/hkbModifierWrapper.h
 	include/RE/H/hkbNode.h
+	include/RE/H/hkbNodeInfo.h
 	include/RE/H/hkbPoseMatchingGenerator.h
 	include/RE/H/hkbProjectData.h
 	include/RE/H/hkbProjectStringData.h
@@ -1089,8 +1108,10 @@ set(SOURCES
 	include/RE/H/hkbRigidBodySetup.h
 	include/RE/H/hkbShapeSetup.h
 	include/RE/H/hkbStateMachine.h
+	include/RE/H/hkbSymbolIdMap.h
 	include/RE/H/hkbTransitionEffect.h
 	include/RE/H/hkbTwistModifier.h
+	include/RE/H/hkbUtils.h
 	include/RE/H/hkbVariableInfo.h
 	include/RE/H/hkbVariableValueSet.h
 	include/RE/H/hkp3AxisSweep.h
@@ -1346,7 +1367,10 @@ set(SOURCES
 	include/RE/M/MoveToFunctor.h
 	include/RE/M/Movement.h
 	include/RE/M/MovementActorAvoidanceParameters.h
+	include/RE/M/MovementAgent.h
+	include/RE/M/MovementArbiter.h
 	include/RE/M/MovementControllerAI.h
+	include/RE/M/MovementControllerActiveSetDescription.h
 	include/RE/M/MovementControllerNPC.h
 	include/RE/M/MovementHandler.h
 	include/RE/M/MovementParameters.h
@@ -1909,6 +1933,7 @@ set(SOURCES
 	src/RE/B/BSWindModifier.cpp
 	src/RE/B/BSXFlags.cpp
 	src/RE/B/BShkbUtils.cpp
+	src/RE/B/BSiStateTaggingGenerator.cpp
 	src/RE/B/BarterMenu.cpp
 	src/RE/B/BipedAnim.cpp
 	src/RE/B/BookMenu.cpp
@@ -2078,14 +2103,31 @@ set(SOURCES
 	src/RE/H/HUDMeter.cpp
 	src/RE/H/HUDObject.cpp
 	src/RE/H/HeapBlock.cpp
+	src/RE/H/hkArray.cpp
 	src/RE/H/hkBaseTypes.cpp
+	src/RE/H/hkClass.cpp
 	src/RE/H/hkReferencedObject.cpp
+	src/RE/H/hkMemoryRouter.cpp
 	src/RE/H/hkStringPtr.cpp
 	src/RE/H/hkVector4.cpp
+	src/RE/H/hkaSkeletonMapper.cpp
+	src/RE/H/hkaSkeletonMapperData.cpp
+	src/RE/H/hkaSkeletonMapperUtils.cpp
 	src/RE/H/hkbBehaviorGraph.cpp
+	src/RE/H/hkbBindable.cpp
 	src/RE/H/hkbBlendingTransitionEffect.cpp
+	src/RE/H/hkbCharacter.cpp
+	src/RE/H/hkbClipGenerator.cpp
+	src/RE/H/hkbContext.cpp
+	src/RE/H/hkbEventQueue.cpp
+	src/RE/H/hkbGenerator.cpp
+	src/RE/H/hkbGeneratorOutputUtils.cpp
+	src/RE/H/hkbModifierGenerator.cpp
+	src/RE/H/hkbNode.cpp
 	src/RE/H/hkbStateMachine.cpp
+	src/RE/H/hkbSymbolIdMap.cpp
 	src/RE/H/hkbTransitionEffect.cpp
+	src/RE/H/hkbUtils.cpp
 	src/RE/H/hkpBroadPhase.cpp
 	src/RE/H/hkpCdBody.cpp
 	src/RE/H/hkpCharacterProxyListener.cpp
@@ -2136,6 +2178,7 @@ set(SOURCES
 	src/RE/M/MenuCursor.cpp
 	src/RE/M/MenuEventHandler.cpp
 	src/RE/M/Misc.cpp
+	src/RE/M/MovementControllerAI.cpp
 	src/RE/N/NativeFunctionBase.cpp
 	src/RE/N/NextChildSelector.cpp
 	src/RE/N/NiAVObject.cpp

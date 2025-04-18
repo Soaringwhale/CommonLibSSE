@@ -134,32 +134,29 @@ namespace RE
 		struct FaceData
 		{
 		public:
-			struct Morphs
+			enum class Morphs : uint32_t
 			{
-				enum
-				{
-					kNose_LongShort = 0,
-					kNose_UpDown = 1,
-					kJaw_UpDown = 2,
-					kJaw_NarrowWide = 3,
-					kJaw_ForwardBack = 4,
-					kCheeks_UpDown = 5,
-					kCheeks_ForwardBack = 6,
-					kEyes_UpDown = 7,
-					kEyes_InOut = 8,
-					kBrows_UpDown = 9,
-					kBrows_InOut = 10,
-					kBrows_ForwardBack = 11,
-					kLips_UpDown = 12,
-					kLips_InOut = 13,
-					kChin_NarrowWide = 14,
-					kChin_UpDown = 15,
-					kChin_UnderbiteOverbite = 16,
-					kEyes_ForwardBack = 17,
-					kUnk = 18,
+				kNose_LongShort = 0,
+				kNose_UpDown = 1,
+				kJaw_UpDown = 2,
+				kJaw_NarrowWide = 3,
+				kJaw_ForwardBack = 4,
+				kCheeks_UpDown = 5,
+				kCheeks_ForwardBack = 6,
+				kEyes_UpDown = 7,
+				kEyes_InOut = 8,
+				kBrows_UpDown = 9,
+				kBrows_InOut = 10,
+				kBrows_ForwardBack = 11,
+				kLips_UpDown = 12,
+				kLips_InOut = 13,
+				kChin_NarrowWide = 14,
+				kChin_UpDown = 15,
+				kChin_UnderbiteOverbite = 16,
+				kEyes_ForwardBack = 17,
+				kUnk = 18,
 
-					kTotal = 19
-				};
+				kTotal = 19
 			};
 
 			struct Parts
@@ -182,8 +179,8 @@ namespace RE
 			};
 
 			// members
-			float        morphs[Morphs::kTotal];  // 00 - NAM9
-			std::int32_t parts[Parts::kTotal];    // 4C - NAMA
+			float        morphs[static_cast<uint32_t>(Morphs::kTotal)];  // 00 - NAM9
+			std::int32_t parts[static_cast<uint32_t>(Parts::kTotal)];    // 4C - NAMA
 		};
 		static_assert(sizeof(FaceData) == 0x5C);
 
@@ -192,15 +189,16 @@ namespace RE
 		public:
 			[[nodiscard]] float GetInterpolationValue() const;
 
+			TES_HEAP_REDEFINE_NEW();
+
 			// members
 			Color         tintColor;           // 00 - TINC
 			std::uint16_t tintIndex;           // 04 - TINI
 			std::uint16_t preset;              // 06 - TIAS
-			std::uint16_t interpolationValue;  // 08 - TINV - CK value * 100 as an int
-			std::uint16_t pad0A;               // 0A
-			std::uint32_t pad0C;               // 0C
+			std::uint8_t  interpolationValue;  // 08 - TINV - CK value * 100 as an int
+			char          pad0A[3];            // 0A
 		};
-		static_assert(sizeof(Layer) == 0x10);
+		static_assert(sizeof(Layer) == 0xC);
 
 		~TESNPC() override;  // 00
 
@@ -259,7 +257,7 @@ namespace RE
 		bool                         SetDefaultOutfit(BGSOutfit* a_outfit);
 		void                         SetFaceTexture(BGSTextureSet* a_textureSet);
 		void                         SetHairColor(BGSColorForm* a_hairColor);
-		void                         SetSkinFromTint(NiColorA* a_result, TintMask* a_tintMask, bool a_fromTint);
+		void                         SetSkinFromTint(NiColor& a_result, TintMask* a_tintMask, bool a_fromTint);
 		bool                         SetSleepOutfit(BGSOutfit* a_outfit);
 		void                         UpdateNeck(BSFaceGenNiNode* a_faceNode);
 

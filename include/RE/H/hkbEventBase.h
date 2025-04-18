@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RE/H/hkRefPtr.h"
+#include "RE/H/hkReferencedObject.h"
 
 namespace RE
 {
@@ -22,9 +23,9 @@ namespace RE
 		};
 
 		// members
-		int32_t                   id;       // 00
-		std::uint32_t             pad04;    // 04
-		hkRefPtr<hkbEventPayload> payload;  // 08
+		int32_t          id{ kNull };  // 00
+		uint32_t         pad04;        // 04
+		hkbEventPayload* payload;      // 08
 	};
 	static_assert(sizeof(hkbEventBase) == 0x10);
 }

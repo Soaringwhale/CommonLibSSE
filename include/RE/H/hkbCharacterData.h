@@ -20,6 +20,11 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_hkbCharacterData;
 		inline static constexpr auto VTABLE = VTABLE_hkbCharacterData;
 
+		static const hkClass& staticClass()
+		{
+			return *REL::Relocation<hkClass*>(REL::ID(521060));
+		}
+		
 		// members
 		std::uint8_t                     characterControllerSetup[24];  // 10 (hkbCharacterControllerSetup)
 		float                            modelUpMS[4];                  // 28 (hkVector4)

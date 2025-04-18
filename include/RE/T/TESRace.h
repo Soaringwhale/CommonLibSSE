@@ -193,7 +193,7 @@ namespace RE
 
 		struct FaceRelatedData
 		{
-			enum
+			enum Variant : uint32_t
 			{
 				kNose = 0,
 				kBrows,
@@ -224,7 +224,7 @@ namespace RE
 				struct TintLayer
 				{
 				public:
-					enum class SkinTone
+					enum class SkinTone : uint8_t
 					{
 						kNone = 0,
 						kLipColor = 1,
@@ -244,12 +244,12 @@ namespace RE
 					};
 
 					// members
-					std::uint16_t                            index;          // 00 - TINI
-					stl::enumeration<SkinTone, std::uint8_t> skinTone;       // 02 - TINP
-					std::uint8_t                             pad03;          // 03
-					std::uint32_t                            pad04;          // 04
-					TESTexture                               file;           // 08 - TINT
-					BGSColorForm*                            presetDefault;  // 18 - TIND
+					std::uint16_t index;          // 00 - TINI
+					SkinTone      skinTone;       // 02 - TINP
+					std::uint8_t  pad03;          // 03
+					std::uint32_t pad04;          // 04
+					TESTexture    file;           // 08 - TINT
+					BGSColorForm* presetDefault;  // 18 - TIND
 				};
 				static_assert(sizeof(TintLayer) == 0x20);
 

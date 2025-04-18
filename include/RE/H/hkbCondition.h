@@ -25,6 +25,13 @@ namespace RE
 	class hkbExpressionCondition : public hkbCondition
 	{
 	public:
+		void compile(const hkbContext& ctx)
+		{
+			using func_t = decltype(&hkbExpressionCondition::compile);
+			REL::Relocation<func_t> func{ RELOCATION_ID(58846, 0) };
+			return func(this, ctx);
+		}
+
 		// members
 		hkStringPtr               expression;             // 10
 		hkbCompiledExpressionSet* compiledExpressionSet;  // 18

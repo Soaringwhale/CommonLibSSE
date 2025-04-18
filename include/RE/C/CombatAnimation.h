@@ -14,7 +14,10 @@ namespace RE
 	class CombatAnimation : public TESActionData
 	{
 	public:
-		enum class ANIM : uint32_t
+		inline static constexpr auto RTTI = RTTI_TESActionData;
+		inline static constexpr auto VTABLE = VTABLE_TESActionData;
+
+		enum ANIM : uint32_t
 		{
 			kActionRightAttack,
 			kActionRightRelease,
@@ -52,9 +55,15 @@ namespace RE
 		bool  LoadClipData();
 
 		// members
-		BSScrapArray<AnimationSystemUtils::UtilsClipData> data;
-		LoadedStatus                                      status;
-		uint32_t                                          pad84;
+		BSScrapArray<AnimationSystemUtils::UtilsClipData> data;                            // 60
+		LoadedStatus                                      status{ LoadedStatus ::kNone };  // 80
+		uint32_t                                          pad84;                           // 84
+
+	private:
+		static const DEFAULT_OBJECT* QCombatAnimationActionArray()
+		{
+			return &*REL::Relocation<DEFAULT_OBJECT*>(RELOCATION_ID(509673, 0).address());  // doi ae
+		}
 	};
 	static_assert(sizeof(CombatAnimation) == 0x88);
 }

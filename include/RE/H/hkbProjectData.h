@@ -3,6 +3,7 @@
 #include "RE/H/hkRefPtr.h"
 #include "RE/H/hkReferencedObject.h"
 #include "RE/H/hkVector4.h"
+#include "RE/H/hkbTransitionEffect.h"
 
 namespace RE
 {
@@ -14,10 +15,15 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_hkbProjectData;
 		inline static constexpr auto VTABLE = VTABLE_hkbProjectData;
 
+		static const hkClass& staticClass()
+		{
+			return *REL::Relocation<hkClass*>(REL::ID(521732));
+		}
+
 		// members
 		hkVector4                      worldUpWS;         // 10
 		hkRefPtr<hkbProjectStringData> stringData;        // 20
-		std::uint8_t                   defaultEventNode;  // 28 (hkEnum<hkbTransitionEffect::EventMode, hkInt8>)
+		hkbTransitionEffect::EventMode defaultEventMode;  // 28
 	};
 	static_assert(sizeof(hkbProjectData) == 0x30);
 }

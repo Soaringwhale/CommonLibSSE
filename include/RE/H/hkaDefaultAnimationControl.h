@@ -35,6 +35,8 @@ namespace RE
 		std::int32_t        GetNumTransformTrackToBoneIndices() const override;                                                                                                                                                  // 0A
 		const std::int16_t* GetTransformTrackToBoneIndices() const override;                                                                                                                                                     // 0B
 
+		HK_HEAP_REDEFINE_NEW();
+
 		// members
 		float                                       masterWeight;              // 58
 		float                                       playbackSpeed;             // 5C

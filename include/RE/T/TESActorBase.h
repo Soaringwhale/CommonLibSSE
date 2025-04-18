@@ -45,7 +45,7 @@ namespace RE
 
 		// override (ActorValueOwner)
 		float              GetActorValue(ActorValue a_akValue) override;                                                      // 01
-		float              GetPermanentActorValue(ActorValue a_akValue) override;                                             // 02
+		float              GetActorValueMax(ActorValue a_akValue) override;                                                   // 02
 		float              GetBaseActorValue(ActorValue a_akValue) override;                                                  // 03
 		void               SetBaseActorValue(ActorValue a_akValue, float a_value) override;                                   // 04
 		void               ModActorValue(ActorValue a_akValue, float a_value) override;                                       // 05

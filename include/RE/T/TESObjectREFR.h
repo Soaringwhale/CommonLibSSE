@@ -360,6 +360,7 @@ namespace RE
 		static TESObjectREFR*           FindReferenceFor3D(NiAVObject* a_object3D);
 
 		bool                                    ActivateRef(TESObjectREFR* a_activator, std::uint8_t a_arg2, TESBoundObject* a_object, std::int32_t a_count, bool a_defaultProcessingOnly);
+		void                                    AddItem(TESBoundObject* item, ExtraDataList* extralist = nullptr, int32_t count = 1, TESObjectREFR* fromRef = nullptr);
 		ModelReferenceEffect*                   ApplyArtObject(BGSArtObject* a_artObject, float a_duration = -1.0f, TESObjectREFR* a_facingRef = nullptr, bool a_faceTarget = false, bool a_attachToCamera = false, NiAVObject* a_attachNode = nullptr, bool a_interfaceEffect = false);
 		ShaderReferenceEffect*                  ApplyEffectShader(TESEffectShader* a_effectShader, float a_duration = -1.0f, TESObjectREFR* a_facingRef = nullptr, bool a_faceTarget = false, bool a_attachToCamera = false, NiAVObject* a_attachNode = nullptr, bool a_interfaceEffect = false);
 		bool                                    CanBeMoved();
@@ -471,7 +472,6 @@ namespace RE
 		bool             preDestroyed;  // 93
 		std::uint32_t    pad94;         // 94
 
-	private:
 		InventoryChanges* ForceInitInventoryChanges();
 		InventoryChanges* MakeInventoryChanges();
 		void              MoveTo_Impl(const ObjectRefHandle& a_targetHandle, TESObjectCELL* a_targetCell, TESWorldSpace* a_selfWorldSpace, const NiPoint3& a_position, const NiPoint3& a_rotation);

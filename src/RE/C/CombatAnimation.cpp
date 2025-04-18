@@ -3,28 +3,22 @@
 namespace RE
 {
 	CombatAnimation::CombatAnimation(Actor* actor, ANIM anim) :
-		TESActionData(NoCallCtor())
+		TESActionData(ACTIONPRIORITY::Priority_2, actor)
 	{
-		using func_t = CombatAnimation*(CombatAnimation*, Actor*, ANIM);
-		REL::Relocation<func_t> func{ RELOCATION_ID(43235, 0) };  // I do not know for AE
-		func(this, actor, anim);
+		auto ind = QCombatAnimationActionArray()[anim];
+		action = BGSDefaultObjectManager::GetSingleton()->GetObject<RE::BGSAction>(ind);
 	}
 
 	CombatAnimation::CombatAnimation(Actor* actor, TESObjectREFR* target, ANIM anim) :
-		TESActionData(NoCallCtor())
+		TESActionData(ACTIONPRIORITY::Priority_2, actor, nullptr, target)
 	{
-		using func_t = CombatAnimation*(CombatAnimation*, Actor*, TESObjectREFR*, ANIM);
-		REL::Relocation<func_t> func{ RELOCATION_ID(43236, 0) };  // I do not know for AE
-		func(this, actor, target, anim);
+		auto ind = QCombatAnimationActionArray()[anim];
+		action = BGSDefaultObjectManager::GetSingleton()->GetObject<RE::BGSAction>(ind);
 	}
 
 	CombatAnimation::CombatAnimation(Actor* actor, BGSAction* action) :
-		TESActionData(NoCallCtor())
-	{
-		using func_t = CombatAnimation*(CombatAnimation*, Actor * actor, BGSAction*);
-		REL::Relocation<func_t> func{ RELOCATION_ID(43237, 0) };  // I do not know for AE
-		func(this, actor, action);
-	}
+		TESActionData(ACTIONPRIORITY::Priority_2, actor, action)
+	{}
 
 	bool CombatAnimation::Execute(Actor* actor, ANIM anim)
 	{

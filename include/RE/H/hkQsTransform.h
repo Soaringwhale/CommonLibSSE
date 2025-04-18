@@ -8,6 +8,9 @@ namespace RE
 	class hkQsTransform
 	{
 	public:
+		hkQsTransform() = default;
+		hkQsTransform(const hkQsTransform&) = default;
+
 		// members
 		hkVector4    translation;  // 00
 		hkQuaternion rotation;     // 10

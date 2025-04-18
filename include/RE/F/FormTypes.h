@@ -135,7 +135,7 @@ namespace RE
 	class BGSReverbParameters;
 	class BGSLensFlare;
 
-	enum class FormType
+	enum class FormType : uint8_t
 	{
 		None = 0,                    //	00 NONE TESForm
 		PluginInfo,                  //	01 TES4

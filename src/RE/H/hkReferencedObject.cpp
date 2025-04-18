@@ -2,20 +2,11 @@
 
 namespace RE
 {
-	hkReferencedObject::hkReferencedObject() :
-		memSizeAndFlags(0),
-		referenceCount(1),
-		pad0C(0)
-	{}
-
-	const hkClass* hkReferencedObject::GetClassType() const
+	void hkReferencedObject::CalcContentStatistics(hkStatisticsCollector* a_collector, const hkClass* a_class) const
 	{
-		return nullptr;
-	}
-
-	void hkReferencedObject::CalcContentStatistics(hkStatisticsCollector*, const hkClass*) const
-	{
-		return;
+		using func_t = decltype(&hkReferencedObject::CalcContentStatistics);
+		REL::Relocation<func_t> func{ RELOCATION_ID(56617, 0) };
+		return func(this, a_collector, a_class);
 	}
 
 	void hkReferencedObject::AddReference() const
@@ -28,11 +19,6 @@ namespace RE
 	std::int32_t hkReferencedObject::GetAllocatedSize() const
 	{
 		return memSizeAndFlags & kMemSize;
-	}
-
-	std::int32_t hkReferencedObject::GetReferenceCount() const
-	{
-		return referenceCount;
 	}
 
 	void hkReferencedObject::RemoveReference() const

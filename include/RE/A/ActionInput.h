@@ -1,14 +1,14 @@
 #pragma once
 
-#include "RE/A/ActorState.h"
-#include "RE/B/BGSAction.h"
-#include "RE/B/BGSAnimationSequencer.h"
 #include "RE/N/NiSmartPointer.h"
 #include "RE/T/TESObjectREFR.h"
 
 namespace RE
 {
 	class ActionQueue;
+	class ActorState;
+	class BGSAction;
+	class BGSAnimationSequencer;
 
 	class ActionInput
 	{
@@ -16,31 +16,41 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_ActionInput;
 		inline static constexpr auto VTABLE = VTABLE_ActionInput;
 
-		ActionInput(uint32_t a_flags, TESObjectREFR* a_source, BGSAction* a_action, TESObjectREFR* a_target)
+		enum class Priority : uint32_t
 		{
-			using func_t = ActionInput*(ActionInput*, uint32_t, TESObjectREFR*, BGSAction*, TESObjectREFR*);
-			REL::Relocation<func_t> func{ RELOCATION_ID(14814, 0) };  // I do not know for AE
-			func(this, a_flags, a_source, a_action, a_target);
-		}
+			Priority_0,
+			Priority_1,
+			Priority_2,
+		};
 
-		virtual ~ActionInput() {}  // 00
+		ActionInput(Priority a_priority = Priority::Priority_0, TESObjectREFR* a_ref = nullptr, BGSAction* a_action = nullptr, TESObjectREFR* a_targetRef = nullptr) :
+			ref(a_ref), targetRef(a_targetRef), action(a_action), priority(a_priority) { stl::emplace_vtable(this); }
+		ActionInput(const ActionInput& other) = delete;
+
+		virtual ~ActionInput() = default;  // 00
 
 		// add
 		virtual ActorState*            GetSourceActorState() const { return nullptr; }  // 01
-		virtual ActionQueue*           GetActionQueue() { return 0; }                   // 02
+		virtual ActionQueue*           GetActionQueue() { return nullptr; }             // 02
 		virtual BGSAnimationSequencer* GetSourceSequencer() const { return nullptr; }   // 03
 
+		TES_HEAP_REDEFINE_NEW();
+
 		// members
-		NiPointer<TESObjectREFR> source;  // 08
-		NiPointer<TESObjectREFR> target;  // 10
-		BGSAction*               action;  // 18
-		uint32_t                 unk20;   // 20
+		TESObjectREFRPtr ref{};                             // 08
+		TESObjectREFRPtr targetRef{};                       // 10
+		BGSAction*       action{ nullptr };                 // 18
+		Priority         priority{ Priority::Priority_0 };  // 20
 
 	protected:
-		struct NoCallCtor
-		{};
-
-		ActionInput(NoCallCtor) {}
+		void CopyTo(ActionInput& dst) const
+		{
+			dst.ref = ref;
+			dst.targetRef = targetRef;
+			dst.action = action;
+			dst.priority = priority;
+		}
 	};
 	static_assert(sizeof(ActionInput) == 0x28);
+	using ACTIONPRIORITY = ActionInput::Priority;
 }

@@ -2,7 +2,7 @@
 
 namespace RE
 {
-	enum class FormType;
+	enum class FormType : uint8_t;
 
 	struct FORM_ENUM_STRING
 	{
@@ -15,6 +15,7 @@ namespace RE
 
 		// members
 		FormType      formType;    // 00
+		char          pad01[7];    // 01
 		const char*   formString;  // 08
 		std::uint32_t formCode;    // 10
 	};

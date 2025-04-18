@@ -1,12 +1,39 @@
 #pragma once
 
 #include "RE/H/hkbTransitionEffect.h"
+#include "RE/H/hkQsTransform.h"
 
 namespace RE
 {
+	class hkbGeneratorSyncInfo;
+
+	class hkbBlendingTransitionEffectInternalState : public hkReferencedObject
+	{
+	public:
+		hkbBlendingTransitionEffectInternalState() { stl::emplace_vtable(this); }
+		~hkbBlendingTransitionEffectInternalState() = default;
+
+		// members
+		hkArray<hkQsTransform> characterPoseAtBeginningOfTransition;  // 10
+		float                  timeRemaining;                         // 20
+		float                  timeInTransition;                      // 24
+		bool                   applySelfTransition;                   // 28
+		bool                   initializeCharacterPose;               // 29
+		char                   pad2A[6];
+	};
+	static_assert(sizeof(hkbBlendingTransitionEffectInternalState));
+
 	class hkbBlendingTransitionEffect : public hkbTransitionEffect
 	{
 	public:
+		inline static constexpr auto RTTI = RTTI_hkbBlendingTransitionEffect;
+		inline static constexpr auto VTABLE = VTABLE_hkbBlendingTransitionEffect;
+
+		static const hkClass& staticClass()
+		{
+			return *REL::Relocation<hkClass*>(REL::ID(521850));
+		}
+
 		/// Flags to indicate specialized behavior.
 		enum class FlagBits : uint16_t
 		{
@@ -42,26 +69,65 @@ namespace RE
 			END_MODE_CAP_DURATION_AT_END_OF_FROM_GENERATOR = 2,
 		};
 
-		static hkbBlendingTransitionEffect* Create(float duration, Flags flags = FlagBits::FLAG_NONE, EndMode endMode = EndMode::END_MODE_NONE);
+		hkbBlendingTransitionEffect() { stl::emplace_vtable(this); }
+		hkbBlendingTransitionEffect(float a_duration, Flags flags = FlagBits::FLAG_NONE, EndMode endMode = EndMode::END_MODE_NONE);
+		~hkbBlendingTransitionEffect() = default;
+
+		// override (hkReferencedObject)
+		const hkClass* GetClassType() const override { return &staticClass(); }  // 01
+
+		// override (hkbNode)
+		void                Activate(const hkbContext& a_context) override;                                                                               // 04
+		void                Update(const hkbContext& a_context, float a_timestep) override;                                                               // 05
+		void                Deactivate(const hkbContext& a_context) override;                                                                             // 07
+		void                getChildren(GET_CHILDREN_FLAGS flags, ChildrenInfo& ans) override;                                                            // 09
+		hkbNode*            cloneNode([[maybe_unused]] hkbBehaviorGraph& rootBehavior) const override { return new hkbBlendingTransitionEffect(*this); }  // 0C
+		hkReferencedObject* createInternalState() override { return new hkbBlendingTransitionEffectInternalState(); }                                     // 0D
+		void                getInternalState(hkReferencedObject& internalState) const override;                                                           // 0E
+		void                setInternalState(const hkReferencedObject& internalState) override;                                                           // 10
+
+		// override (hkbGenerator)
+		void generate(const hkbContext& a_context, const hkbGeneratorOutput** activeChildrenOutput, hkbGeneratorOutput& output, float timeOffset = 0.0f) const override;  // 17
+		bool canRecycleOutput() const override { return fromGenerator == toGenerator; }                                                                                   // 18
+		void updateSync(const hkbContext& a_context, hkbNodeInfo& info) override;                                                                                         // 19
+
+		// override (hkbTransitionEffect)
+		bool  isDone() override;                                                             // 1C
+		void  setFromGenerator(hkbGenerator* fromGen) override { fromGenerator = fromGen; }  // 1D
+		void  setToGenerator(hkbGenerator* toGen) override { toGenerator = toGen; }          // 1E
+		float getFromGeneratorBlendOutTime() override { return duration; }                   // 1F
+		float getToGeneratorBlendInTime() override { return duration; }                      // 20
+
+		// add
+		virtual bool                        isSyncable(hkbBehaviorGraph& behaviorGraph);                                      // 21
+		virtual bool                        hasToGeneratorBeenActivatedInThisFrame() const { return timeInTransition == 0; }  // 22
+		virtual bool                        useFromGeneratorToSyncOnly() const { return false; };                             // 23
+		virtual const hkbGeneratorSyncInfo& getFromGeneratorSyncInfo(hkbBehaviorGraph& behaviorGraph);                        // 24
+		virtual float                       getTransitionDuration() const { return duration; }                                // 25
+		virtual bool                        isFirstFrame() const { return hasToGeneratorBeenActivatedInThisFrame(); }         // 26
+
+		const hkbGeneratorSyncInfo& getToGeneratorSyncInfo(hkbBehaviorGraph& behaviorGraph);
+		void                        update(const hkbContext& ctx, float dtime, hkbGenerator* generator);
+		void                        updateSync(const hkbContext& ctx, hkbGenerator* gen);
 
 		// members
-		float duration;  // 50
-		uint32_t
-				 toGeneratorStartTimeFraction;  // 54 - The start time of the to-generator when the transition begins, expressed as a fraction of its duration.
-		Flags    flags;                         // 58 - Flags to indicate specialized behavior.
-		EndMode  endMode;                       // 5A - The treatment of the end of the from-generator.
-		uint8_t  field_5B;                      // 5B
-		uint32_t field_5C;                      // 5C
-		uint64_t field_60;                      // 60
-		uint64_t field_68;                      // 68
-		uint64_t field_70;                      // 70
-		uint64_t field_78;                      // 78
-		uint64_t field_80;                      // 80
-		uint16_t field_88;                      // 88
-		char     field_8A[6];                   // 8A
+		float                  duration{ 0.0f };                      // 50
+		float                  toGeneratorStartTimeFraction{ 0.0f };  // 54 - The start time of the to-generator when the transition begins, expressed as a fraction of its duration.
+		Flags                  flags{};                               // 58 - Flags to indicate specialized behavior.
+		EndMode                endMode{ EndMode ::END_MODE_NONE };    // 5A - The treatment of the end of the from-generator.
+		uint8_t                blendCurve{ 0 };                       // 5B
+		char                   pad5C[4];                              // 5C
+		hkbGenerator*          fromGenerator{ nullptr };              // 60
+		hkbGenerator*          toGenerator{ nullptr };                // 68
+		hkArray<hkQsTransform> characterPoseAtBeginningOfTransition;  // 70
+		float                  timeRemaining{ 0.0f };                 // 80
+		float                  timeInTransition{ 0.0f };              // 84
+		bool                   applySelfTransition{ false };          // 88
+		bool                   initializeCharacterPose{ false };      // 89
+		char                   field_8A[6];                           // 8A
 
-	private:
-		static hkbBlendingTransitionEffect* ctor(hkbBlendingTransitionEffect* _this, float duration, Flags flags, EndMode endMode);
+	protected:
+		hkbBlendingTransitionEffect(const hkbBlendingTransitionEffect& other);
 	};
 	static_assert(sizeof(hkbBlendingTransitionEffect) == 0x90);
 }

@@ -21,8 +21,8 @@ namespace RE
 		struct FilesInfo
 		{
 			// members
-			BSTSmallArray<uint32_t>           crcs;  // 00 -- directory crc
-			BSTSmallArray<BSTArray<uint32_t>> dirs;  // 18 -- file crc
+			BSTSmallArray<uint32_t>           dirs;   // 00 -- directory crc
+			BSTSmallArray<BSTArray<uint32_t>> files;  // 18 -- file crc
 		};
 
 		// members
@@ -43,7 +43,7 @@ namespace RE
 
 		// members
 		uint64_t                                               field0;  // 00
-		BSTHashMap<BSFixedString, BSTArray<AnimationSetData>*> map;     // 08
+		BSTHashMap<BSFixedString, BSTArray<AnimationSetData>*> map;     // 08 - key = project (e.g. DefaultMale or Spriggan)
 	};
 	static_assert(sizeof(AnimationSetDataSingleton) == 0x38);
 }

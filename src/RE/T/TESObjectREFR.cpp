@@ -56,6 +56,13 @@ namespace RE
 		return func(this, a_activator, a_arg2, a_object, a_count, a_defaultProcessingOnly);
 	}
 
+	void TESObjectREFR::AddItem(TESBoundObject* item, ExtraDataList* extralist, int32_t count, TESObjectREFR* fromRef)
+	{
+		if (HasContainer()) {
+			GetInventoryChanges()->AddItem(item, extralist, count, fromRef);
+		}
+	}
+
 	ModelReferenceEffect* TESObjectREFR::ApplyArtObject(BGSArtObject* a_artObject, float a_duration, TESObjectREFR* a_facingRef, bool a_faceTarget, bool a_attachToCamera, NiAVObject* a_attachNode, bool a_interfaceEffect)
 	{
 		using func_t = decltype(&TESObjectREFR::ApplyArtObject);

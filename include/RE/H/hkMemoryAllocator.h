@@ -1,7 +1,6 @@
 #pragma once
 
 #include "RE/H/hkBaseTypes.h"
-#include "RE/H/hkContainerAllocators.h"
 
 namespace RE
 {
@@ -62,6 +61,17 @@ namespace RE
 		virtual void         GetMemoryStatistics(MemoryStatistics& a_usage) = 0;                                        // 08
 		virtual std::int32_t GetAllocatedSize(const void* a_obj, std::int32_t a_numBytes) = 0;                          // 09
 		virtual void         ResetPeakMemoryStatistics();                                                               // 0A - { return; }
+		
+		/// Allocate a buffer which is a multiple of SIZE_ELEM.
+		template <typename TYPE>
+		inline TYPE* _bufAlloc(int32_t& reqNumInOut)
+		{
+			int32_t SIZE_ELEM = sizeof(TYPE);
+			int32_t n = reqNumInOut * SIZE_ELEM;
+			void*   p = BufAlloc(n);
+			reqNumInOut = n / SIZE_ELEM;
+			return static_cast<TYPE*>(p);
+		}
 	};
 	static_assert(sizeof(hkMemoryAllocator) == 0x8);
 }

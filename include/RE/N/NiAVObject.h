@@ -46,6 +46,8 @@ namespace RE
 	};
 	static_assert(sizeof(PerformOpFunc) == 0x8);
 
+	NiSmartPointer(NiAVObject);
+
 	class NiAVObject : public NiObjectNET
 	{
 	public:

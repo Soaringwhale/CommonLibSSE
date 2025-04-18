@@ -196,7 +196,7 @@ namespace RE
 			kGettingOnOffMount = 1 << 3,
 			kInRandomScene = 1 << 4,
 			kNoBleedoutRecovery = 1 << 5,
-			kInBleedoutAnimation = 1 << 6,
+			kInBleedoutAnimation = 1 << 6,  // should run bleedout action
 			kCanDoFavor = 1 << 7,
 			kShouldAnimGraphUpdate = 1 << 8,
 			kCanSpeakToEssentialDown = 1 << 9,
@@ -477,7 +477,7 @@ namespace RE
 		virtual void                    UpdateActor3DPosition();                                                                                                                                                         // 11F
 		virtual void                    PrecacheData();                                                                                                                                                                  // 120
 		virtual void                    WornArmorChanged(void);                                                                                                                                                          // 121
-		virtual void                    ProcessTracking(float a_delta, NiAVObject* a_obj3D);                                                                                                                             // 122
+		virtual void                    ProcessTracking(float a_delta);                                                                                                                                                  // 122
 		virtual void                    Unk_123(void);                                                                                                                                                                   // 123
 		virtual void                    CreateActorMover();                                                                                                                                                              // 124
 		virtual void                    DestroyActorMover();                                                                                                                                                             // 125

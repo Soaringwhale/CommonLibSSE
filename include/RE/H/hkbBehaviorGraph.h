@@ -11,35 +11,7 @@ namespace RE
 	class hkbStateMachine;
 	class hkbVariableValueSet;
 
-	/// Information about a node in a behavior graph.
-	struct hkbNodeInfo
-	{
-		void*    unk00;         //00
-		int64_t  unk08;         //08
-		int64_t  unk10;         //10
-		void*    unk18;         //18
-		char     unk20[48];     //20
-		hkbNode* nodeTemplate;  //50
-		hkbNode* nodeClone;     //58
-		hkbNode* behavior;      //60
-		int64_t  unk68;         //68
-		int64_t  unk70;         //70
-		int64_t  unk78;         //78
-		int64_t  unk80;         //80
-		bool     unk88;         //88
-	};
-	static_assert(sizeof(hkbNodeInfo) == 0x90);
-
 	using NodeList = hkArray<hkbNodeInfo>;
-
-	class hkbSymbolIdMap : public RE::hkReferencedObject
-	{
-	public:
-		// members
-		hkArray<uint32_t> array;  // 10
-		hkMap64           map;    // 20
-	};
-	static_assert(sizeof(hkbSymbolIdMap) == 0x30);
 
 	class hkbBehaviorGraph : public hkbGenerator
 	{
@@ -64,27 +36,24 @@ namespace RE
 		struct StateMachineInfo
 		{
 			// members
-			hkbStateMachine*  stateMachineTemplate;          // 00 - A pointer to a node which is a state machine.
-			uint64_t          field08;                       // 08
-			uint64_t          field10;                       // 10
-			hkMap64*          eventToGlobalTransitionMap;    // 18 - A map from events to global transition. The index of the transition in hkbStateMachine::m_wildcardTransitions is stored.
-			hkArray<int32_t>* childStateMachineInfoIndices;  // 20 - The child state machine info indices
-			uint32_t          field28;                       // 28
-			uint32_t          field2C;                       // 2C
+			hkbStateMachine*                stateMachineTemplate;          // 00 - A pointer to a node which is a state machine.
+			uint64_t                        field08;                       // 08
+			uint64_t                        field10;                       // 10
+			hkPointerMap<int32_t, int16_t>* eventToGlobalTransitionMap;    // 18 - A map from events to global transition. The index of the transition in hkbStateMachine::m_wildcardTransitions is stored.
+			hkArray<int32_t>*               childStateMachineInfoIndices;  // 20 - The child state machine info indices
+			uint32_t                        field28;                       // 28
+			uint32_t                        field2C;                       // 2C
 		};
 		static_assert(sizeof(StateMachineInfo) == 0x30);
 
 		struct GlobalTransitionData : public hkReferencedObject
 		{
 			// members
-			StateMachineInfo* stateMachineInfos;               // 10 - All the state machines in the entire behavior graph.
-			uint64_t          field18;                         // 18
-			uint64_t          field20;                         // 20
-			uint64_t          field28;                         // 28
-			hkMap64           stateMachineTemplateToIndexMap;  // 30 - A map from state machines to indices in the m_stateMachineInfos
-			hkMap64           eventToStateMachineInfoIndices;  // 40 - A map from event IDs to arrays of indices into the m_stateMachineInfos. This map tells us which state machines have global wildcard transitions defined for each event ID.
-			uint64_t          field50;                         // 50
-			uint64_t          field58;                         // 58
+			hkArray<StateMachineInfo>                stateMachineInfos;                             // 10 - All the state machines in the entire behavior graph.
+			hkArray<int32_t>                         eventlessGlobalTransitionStateMachineIndices;  // 20 - Indices (into the m_stateMachineInfos) of the state machine infos that have global wildcard transitions with only conditions.
+			hkPointerMap<hkbStateMachine*, int32_t>  stateMachineTemplateToIndexMap;                // 30 - A map from state machines to indices in the m_stateMachineInfos
+			hkPointerMap<int32_t, hkArray<int32_t>*> eventToStateMachineInfoIndices;                // 40 - A map from event IDs to arrays of indices into the m_stateMachineInfos. This map tells us which state machines have global wildcard transitions defined for each event ID.
+			hkPointerMap<uint16_t, hkbStateMachine*> idToStateMachineTemplateMap;                   // 50 - A map from ids to state machine templates. This is used for looking up global transitions.
 		};
 		static_assert(sizeof(GlobalTransitionData) == 0x60);
 
@@ -92,7 +61,7 @@ namespace RE
 		{
 			return *REL::Relocation<hkClass*>(REL::ID(521003));
 		}
-		
+
 		~hkbBehaviorGraph() override;  // 00
 
 		// override (hkbNode)
@@ -103,40 +72,45 @@ namespace RE
 		void     handleEvent(const hkbContext& ctx, hkbEvent& event) override;                                      // 06
 		void     Deactivate(const hkbContext& a_context) override;                                                  // 07
 		void     getChildren(GET_CHILDREN_FLAGS flags, ChildrenInfo& ans) override;                                 // 09
-		void     cloneNode() override;                                                                              // 0C
+		hkbNode* cloneNode(hkbBehaviorGraph& rootBehavior) const override;                                          // 0C
 		bool     isGraph() const override;                                                                          // 16 - { return 1; }
 
 		// override (hkbGenerator)
-		void generate(const hkbContext& a_context) const override;              // 17
-		bool canRecycleOutput() const override;                                 // 18 - { return 1; }
-		void updateSync(const hkbContext& a_context, void* nodeInfo) override;  // 19
+		void generate(const hkbContext& a_context, const hkbGeneratorOutput** activeChildrenOutput, hkbGeneratorOutput& output, float timeOffset = 0.0f) const override;  // 17
+		bool canRecycleOutput() const override;                                                                                                                           // 18
+		void updateSync(const hkbContext& a_context, hkbNodeInfo& info) override;                                                                                         // 19
 
-		hkbNode* getNodeClone(hkbNode* nodeTemplate) const;
-		hkbNode* getNodeTemplate(hkbNode* nodeClone) const;
+		hkbNodeInfo&       accessNodeInfoByClone(hkbNode* nodeClone);
+		hkbNodeInfo&       accessNodeInfoByTemplate(hkbNode* nodeTemplate);
+		hkbNodeInfo&       adjust_info_usesomeind(hkbNodeInfo& info) const;
+		const hkbNodeInfo& adjust_info_usesomeind(const hkbNodeInfo& info) const;
+		hkbNode*           getNodeClone(hkbNode* nodeTemplate) const;
+		const hkbNodeInfo& getNodeInfoByClone(hkbNode* nodeClone) const;
+		const hkbNodeInfo& getNodeInfoByTemplate(hkbNode* nodeTemplate) const;
+		hkbNode*           getNodeTemplate(hkbNode* nodeClone) const;
+
 
 		// members
 		stl::enumeration<VariableMode, std::uint8_t> variableMode;                     // 048 - How do deal with variables when the behavior is inactive
-		std::uint8_t                                 pad49;                            // 049
-		std::uint16_t                                pad4A;                            // 04A
-		std::uint32_t                                pad4C;                            // 04C
+		char                                         pad49[7];                         // 049
 		hkArray<hkRefVariant>                        uniqueIDPool;                     // 050 - A pool of unique IDs to be used for hkbTransitionEffects (all other nodes have static unique IDs).
-		hkRefVariant                                 idToStateMachineTemplateMap;      // 060 - A map from ids to state machine templates. This is used for looking up global transitions.
+		void*                                        idToStateMachineTemplateMap;      // 060 - A map from ids to state machine templates. This is used for looking up global transitions.
 		hkArray<hkRefVariant>                        mirroredExternalIDMap;            // 068 - The mapper between external Id's and mirrored external Id's
 		hkRefVariant                                 pseudoRandomGenerator;            // 078
 		hkRefPtr<hkbGenerator>                       rootGenerator;                    // 080
 		hkRefPtr<hkbBehaviorGraphData>               data;                             // 088 - The constant data associated with the behavior
 		hkRefVariant                                 rootGeneratorClone;               // 090 - If this is a clone, this pointer points to the original root of the cloned behavior graph.
 		NodeList*                                    activeNodes;                      // 098 - The current active nodes in the behavior.
-		hkRefVariant                                 activeNodeTemplateToIndexMap;     // 0A0
-		hkRefVariant                                 activeNodesChildrenIndices;       // 0A8
+		hkPointerMap<hkbNode*, int32_t>*             activeNodeTemplateToIndexMap;     // 0A0
+		hkArray<int32_t>*                            activeNodesChildrenIndices;       // 0A8
 		hkRefPtr<GlobalTransitionData>               globalTransitionData;             // 0B0 - A member for storing all the information required for doing global transitions.
 		hkRefPtr<hkbSymbolIdMap>                     eventIDMap;                       // 0B8 - A mapper between internal event IDs and external event IDs
 		hkRefPtr<hkbSymbolIdMap>                     attributeIDMap;                   // 0C0 - A mapper between internal attribute IDs and external attribute IDs.
 		hkRefPtr<hkbSymbolIdMap>                     variableIDMap;                    // 0C8 - A mapper between internal variable IDs and external variable IDs.
 		hkRefPtr<hkbSymbolIdMap>                     characterPropertyIDMap;           // 0D0 - A mapper between internal character property IDs and those in the character (external).
 		hkbVariableValueSet*                         variableValueSet;                 // 0D8 - The current value of the behavior variables.
-		hkMap64*                                     nodeTemplateToCloneMap;           // 0E0 - A map from template nodes to cloned nodes.
-		hkMap64*                                     nodeCloneToTemplateMap;           // 0E8
+		hkPointerMap<hkbNode*, hkbNode*>*            nodeTemplateToCloneMap;           // 0E0 - A map from template nodes to cloned nodes.
+		hkPointerMap<hkbNode*, hkbNode*>*            nodeCloneToTemplateMap;           // 0E8
 		hkRefVariant                                 stateListenerTemplateToCloneMap;  // 0F0 - A map from template state listeners to clones.
 		hkRefVariant                                 nodePartitionInfo;                // 0F8
 		std::int32_t                                 numIntermediateOutputs;           // 100 - The number of intermediate outputs needed to process the partitioned graph.

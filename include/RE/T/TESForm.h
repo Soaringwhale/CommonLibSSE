@@ -285,7 +285,7 @@ namespace RE
 
 		[[nodiscard]] std::uint32_t GetFormFlags() const noexcept { return formFlags; }
 		[[nodiscard]] FormID        GetFormID() const noexcept { return formID; }
-		[[nodiscard]] FormType      GetFormType() const noexcept { return *formType; }
+		[[nodiscard]] FormType      GetFormType() const noexcept { return formType; }
 		[[nodiscard]] std::int32_t  GetGoldValue() const;
 
 		[[nodiscard]] FormID GetLocalFormID()
@@ -358,7 +358,7 @@ namespace RE
 		std::uint32_t                                   formFlags;        // 10
 		FormID                                          formID;           // 14
 		stl::enumeration<InGameFormFlag, std::uint16_t> inGameFormFlags;  // 18
-		stl::enumeration<FormType, std::uint8_t>        formType;         // 1A
+		FormType                                        formType;         // 1A
 		std::uint8_t                                    pad1B;            // 1B
 		std::uint32_t                                   pad1C;            // 1C
 	};

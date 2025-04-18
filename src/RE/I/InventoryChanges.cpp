@@ -27,6 +27,13 @@ namespace RE
 		changed = true;
 	}
 
+	void InventoryChanges::AddItem(TESBoundObject* item, ExtraDataList* extraList, int32_t count, TESObjectREFR* fromRefr)
+	{
+		using func_t = decltype(&InventoryChanges::AddItem);
+		REL::Relocation<func_t> func{ RELOCATION_ID(15815, 16053) };
+		return func(this, item, extraList, count, fromRefr);
+	}
+
 	TESObjectARMO* InventoryChanges::GetArmorInSlot(std::int32_t a_slot)
 	{
 		using func_t = decltype(&InventoryChanges::GetArmorInSlot);

@@ -255,7 +255,7 @@ namespace RE
 		}
 	}
 
-	void TESNPC::SetSkinFromTint(NiColorA* a_result, TintMask* a_tintMask, bool a_fromTint)
+	void TESNPC::SetSkinFromTint(NiColor& a_result, TintMask* a_tintMask, bool a_fromTint)
 	{
 		using func_t = decltype(&TESNPC::SetSkinFromTint);
 		REL::Relocation<func_t> func{ Offset::TESNPC::SetSkinFromTint };

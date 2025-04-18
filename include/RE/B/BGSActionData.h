@@ -13,26 +13,43 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_BGSActionData;
 		inline static constexpr auto VTABLE = VTABLE_BGSActionData;
 
-		BGSActionData() :
-			ActionInput(NoCallCtor())
+		enum class Flag : uint32_t
 		{
-			using func_t = BGSActionData*(BGSActionData*);
-			REL::Relocation<func_t> func{ RELOCATION_ID(15916, 41558) };
-			func(this);
+			Flag1 = 1 << 0,
+			Flag2 = 1 << 1,
+		};
+		using Flags = stl::enumeration<Flag, uint32_t>;
+
+		BGSActionData(ACTIONPRIORITY a_priority = ACTIONPRIORITY::Priority_0, TESObjectREFR* a_ref = nullptr, BGSAction* a_action = nullptr, TESObjectREFR* a_targetRef = nullptr) :
+			ActionInput(a_priority, a_ref, a_action, a_targetRef)
+		{
+			stl::emplace_vtable(this);
 		}
 
-		virtual ~BGSActionData() override {}  // 00
+		virtual ~BGSActionData() override = default;  // 00
 
 		// add
-		virtual BGSActionData* Clone() const { return nullptr; }  // 04
-		virtual bool           Process() { return false; };       // 05
+		// 04
+		virtual BGSActionData* CreateCopy() const
+		{
+			auto ans = new BGSActionData();
+
+			BGSActionData::CopyTo(*ans);
+
+			return ans;
+		}
+		virtual bool DoIt() { return false; };  // 05
+
+		void CopyTo(class BGSActionData& dst) const
+		{
+			ActionInput::CopyTo(dst);
+			ActionOutput::CopyTo(dst);
+
+			dst.flags = flags;
+		}
 
 		// members
-		uint32_t flags;  // 58
-
-	protected:
-		BGSActionData(NoCallCtor a) :
-			ActionInput(a) {}
+		Flags flags{};  // 58
 	};
 	static_assert(sizeof(BGSActionData) == 0x60);
 }

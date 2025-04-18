@@ -38,6 +38,7 @@ namespace RE
 		~InventoryChanges();
 
 		void           AddEntryData(InventoryEntryData* a_entry);
+		void           AddItem(TESBoundObject* item, ExtraDataList* extraList = nullptr, int32_t count = 1, TESObjectREFR* fromRefr = nullptr);
 		TESObjectARMO* GetArmorInSlot(std::int32_t a_slot);
 		float          GetInventoryWeight();
 		std::uint16_t  GetNextUniqueID();

@@ -8,7 +8,7 @@
 
 namespace RE
 {
-	enum class RESET_3D_FLAGS;
+	enum class RESET_3D_FLAGS : uint8_t;
 	class Actor;
 	class bhkCharacterController;
 	class BipedAnim;
