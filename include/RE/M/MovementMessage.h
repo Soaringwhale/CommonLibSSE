@@ -19,7 +19,7 @@ namespace RE
 		virtual uint32_t             GetType() const = 0;                                 // 01
 		virtual void                 Write(BSPathingStreamWrite& stream) const = 0;       // 02
 		virtual void                 Read(BSPathingStreamRead& stream) = 0;               // 03
-		virtual void                 FixupNumericID(void*) {};                            // 04
+		virtual void                 FixupNumericID(void*){};                             // 04
 		virtual IPathFollowerAction* GetPathFollowerActionInterface(void) { return 0; };  // 05
 	};
 	static_assert(sizeof(MovementMessage) == 0x10);
