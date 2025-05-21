@@ -1,7 +1,7 @@
 #pragma once
 
-#include "RE/I/IMovementState.h"
 #include "RE/B/BSTSingleton.h"
+#include "RE/I/IMovementState.h"
 
 namespace RE
 {
@@ -14,7 +14,7 @@ namespace RE
 		// override (IMovementState)
 		uint32_t             DoGetNumericID() const override { return 0; }                                              // 01
 		void                 DoGetPathingLocation(BSPathingLocation&) const override {}                                 // 02
-		void                 DoGetLocation(NiPoint3& pos) const override ;                      // 03
+		void                 DoGetLocation(NiPoint3& pos) const override;                                               // 03
 		void                 DoGetEulerAngles(NiPoint3& angles) const override;                                         // 04
 		float                DoGetMovementSpeed() const override { return 0; }                                          // 05
 		float                DoGetRotationSpeed() const override { return 0; }                                          // 06

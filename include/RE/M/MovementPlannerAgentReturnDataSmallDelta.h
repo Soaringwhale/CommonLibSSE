@@ -1,8 +1,8 @@
 #pragma once
 
 #include "RE/B/BSTArray.h"
-#include "RE/N/NiPoint3.h"
 #include "RE/M/MovementVector.h"
+#include "RE/N/NiPoint3.h"
 #include "RE/W/WeightedModifier.h"
 
 namespace RE

@@ -12,7 +12,7 @@ namespace RE
 	{
 	public:
 		NiPoint3 GetTargetDirection() const;
-		float GetTargetSpeed() const;
+		float    GetTargetSpeed() const;
 		NiPoint3 GetTargetAngle() const;
 
 		// members
