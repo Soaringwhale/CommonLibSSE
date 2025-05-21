@@ -38,15 +38,22 @@ namespace RE
 		};
 		static_assert(sizeof(MaxSpeeds) == 0x2C);
 
+		struct mb_CurrentSpeeds
+		{
+			// members
+			float directional{ FLT_MAX };    // 00
+			float movementSpeed{ FLT_MAX };  // 04
+			float rotationSpeed{ FLT_MAX };  // 08
+		};
+		static_assert(sizeof(mb_CurrentSpeeds) == 0x0C);
+
 		struct TypeData
 		{
 		public:
 			// members
-			BSFixedString typeName;       // 00 - MNAM
-			MaxSpeeds     defaultData;    // 08 - SPED
-			float         directional;    // 34 - INAM~
-			float         movementSpeed;  // 38
-			float         rotationSpeed;  // 3C - ~INAM
+			BSFixedString    typeName;       // 00 - MNAM
+			MaxSpeeds        defaultData;    // 08 - SPED
+			mb_CurrentSpeeds mb_cur_speeds;  // 34 - INAM
 		};
 		static_assert(sizeof(TypeData) == 0x40);
 	}

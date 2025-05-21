@@ -7,12 +7,19 @@ namespace RE
 	public:
 		struct Description
 		{
+			Description() = default;
+
+			template <size_t N>
+			Description(BSFixedString t, BSFixedString i, char const (&data)[N]) :
+				type(std::move(t)), interface_name(std::move(i)), ptr(data), size(N)
+			{}
+
 			// members
 			BSFixedString type;            // 00
 			BSFixedString interface_name;  // 08
-			const char*   description;     // 10
-			uint32_t      size;            // 18
-			uint32_t      pad1C;           // 1C
+			const char*   ptr{};           // 10
+			uint32_t      size{ 0 };       // 18
+			uint8_t       pad1C[4];        // 1C
 		};
 		static_assert(sizeof(Description) == 0x20);
 

@@ -4,23 +4,25 @@
 
 namespace RE
 {
-	// 08
 	template <class Derived, class Parent>
 	struct BSTDerivedCreator : public IBSTCreator<Parent>
 	{
 	public:
-		virtual ~BSTDerivedCreator();  // 00
+		BSTDerivedCreator() = default;
 
-	protected:
+		virtual ~BSTDerivedCreator() = default;  // 00
+
 		// override (IBSTCreator<Parent>)
-		Parent* CreateImpl() const override;  // 01
-
-	public:
-		void Destroy(const Parent* a_val) const override;  // 02
-
-		Derived* Create() const
+		// 01
+		Parent* Create() const override
 		{
-			return static_cast<Derived*>(CreateImpl());
+			return new Derived();
+		}
+
+		// 02
+		void Destroy(const Parent* a_val) const override
+		{
+			delete a_val;
 		}
 	};
 }

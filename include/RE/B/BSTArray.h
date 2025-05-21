@@ -17,9 +17,9 @@ namespace RE
 			inline static constexpr auto RTTI = RTTI_BSTArrayBase__IAllocatorFunctor;
 
 			// add
-			virtual bool Allocate(std::uint32_t a_num, std::uint32_t a_elemSize) = 0;                                                                                                             // 00
-			virtual bool Reallocate(std::uint32_t a_minNewSizeInItems, std::uint32_t a_frontCopyCount, std::uint32_t a_shiftCount, std::uint32_t a_backCopyCount, std::uint32_t a_elemSize) = 0;  // 01
-			virtual void Deallocate() = 0;                                                                                                                                                        // 02
+			virtual bool Allocate(std::uint32_t a_num, std::uint32_t a_elemSize) const = 0;                                                                                                             // 00
+			virtual bool Reallocate(std::uint32_t a_minNewSizeInItems, std::uint32_t a_frontCopyCount, std::uint32_t a_shiftCount, std::uint32_t a_backCopyCount, std::uint32_t a_elemSize) const = 0;  // 01
+			virtual void Deallocate() const = 0;                                                                                                                                                        // 02
 
 			virtual ~IAllocatorFunctor() = default;  // 03
 
@@ -38,7 +38,25 @@ namespace RE
 
 		[[nodiscard]] constexpr bool      empty() const noexcept { return _size == 0; }
 		[[nodiscard]] constexpr size_type size() const noexcept { return _size; }
+		
+		size_type AddUninitialized(const IAllocatorFunctor& allocator, size_type capacity, size_type elemSize)
+		{
+			auto cur_size = size();
+			if (cur_size < capacity) {
+				return _size++;
+			}
 
+			if (!capacity) {
+				[[maybe_unused]] bool ok = allocator.Allocate(1, elemSize);
+				assert(ok && "allocation failed");
+				set_size(1);
+				return 0;
+			}
+
+			[[maybe_unused]] bool ok = allocator.Reallocate(cur_size + 1, cur_size, 0, 0, elemSize);
+			assert(ok && "reallocation failed");
+			return _size++;
+		}
 	protected:
 		constexpr void set_size(size_type a_size) noexcept { _size = a_size; }
 
@@ -54,66 +72,50 @@ namespace RE
 		using size_type = std::uint32_t;
 
 		constexpr BSTArrayHeapAllocator() noexcept = default;
-
-		inline BSTArrayHeapAllocator(const BSTArrayHeapAllocator& a_rhs)
-		{
-			if (a_rhs.data()) {
-				_capacity = a_rhs.capacity();
-				_data = allocate(capacity());
-				std::memcpy(data(), a_rhs.data(), capacity());
-			}
-		}
-
-		constexpr BSTArrayHeapAllocator(BSTArrayHeapAllocator&& a_rhs) noexcept :
-			_data(a_rhs.data()),
-			_capacity(a_rhs.capacity())
-		{
-			a_rhs._data = nullptr;
-			a_rhs._capacity = 0;
-		}
-
-		inline ~BSTArrayHeapAllocator()
-		{
-			deallocate(data());
-			_data = nullptr;
-			_capacity = 0;
-		}
-
-		inline BSTArrayHeapAllocator& operator=(const BSTArrayHeapAllocator& a_rhs)
-		{
-			if (this != std::addressof(a_rhs)) {
-				deallocate(data());
-				_data = nullptr;
-				_capacity = 0;
-
-				if (a_rhs.data()) {
-					_capacity = a_rhs.capacity();
-					_data = allocate(capacity());
-					std::memcpy(data(), a_rhs.data(), capacity());
-				}
-			}
-			return *this;
-		}
-
-		inline BSTArrayHeapAllocator& operator=(BSTArrayHeapAllocator&& a_rhs)
-		{
-			if (this != std::addressof(a_rhs)) {
-				deallocate(data());
-				_data = a_rhs.data();
-				_capacity = a_rhs.capacity();
-
-				a_rhs._data = nullptr;
-				a_rhs._capacity = 0;
-			}
-			return *this;
-		}
+		BSTArrayHeapAllocator(const BSTArrayHeapAllocator& a_rhs) = delete;
+		BSTArrayHeapAllocator(BSTArrayHeapAllocator&& a_rhs) = delete;
+		~BSTArrayHeapAllocator() = default;
+		BSTArrayHeapAllocator& operator=(const BSTArrayHeapAllocator& a_rhs) = delete;
+		BSTArrayHeapAllocator& operator=(BSTArrayHeapAllocator&& a_rhs) = delete;
 
 		TES_HEAP_REDEFINE_NEW();
 
 		[[nodiscard]] constexpr void*       data() noexcept { return _data; }
 		[[nodiscard]] constexpr const void* data() const noexcept { return _data; }
-
 		[[nodiscard]] constexpr size_type capacity() const noexcept { return _capacity; }
+
+		bool Allocate(size_type num, size_type elemSize)
+		{
+			size_type cap = std::max(num, 4u);
+			set_data_and_capacity(allocate_and_check(elemSize * cap), cap);
+			return _data != nullptr;
+		}
+
+		void Deallocate()
+		{
+			free(_data);
+			set_data_and_capacity(nullptr, 0);
+		}
+
+		bool Reallocate(size_type minNewSizeInItems, size_type frontCopyCount, size_type shiftCount, size_type backCopyCount, uint32_t elemSize)
+		{
+			size_type new_cap = std::max(minNewSizeInItems, 2 * _capacity);
+
+			if (!_data) {
+				return Allocate(new_cap, elemSize);
+			} else {
+				// looks fine for all types I found, _data is deallocated without dtors
+				auto new_data = (char*)allocate_and_check(elemSize * new_cap);
+				if (frontCopyCount)
+					std::memmove(new_data, _data, elemSize * frontCopyCount);
+				if (backCopyCount)
+					std::memmove(&new_data[elemSize * (frontCopyCount + shiftCount)], (char*)_data + elemSize * frontCopyCount, elemSize * backCopyCount);
+
+				deallocate(_data);
+				set_data_and_capacity(new_data, new_cap);
+				return true;
+			}
+		}
 
 	protected:
 		inline void* allocate(std::size_t a_size)
@@ -136,11 +138,131 @@ namespace RE
 		}
 
 	private:
+		void* allocate_and_check(size_t size)
+		{
+			auto mem = malloc(size);
+			if (!mem) {
+				stl::report_and_fail("out of memory"sv);
+			}
+			return mem;
+		}
+
+		constexpr void set_data_and_capacity(void* data, uint32_t capacity) noexcept
+		{
+			_data = data;
+			_capacity = capacity;
+		}
+
 		// members
 		void*         _data{ nullptr };  // 00
 		std::uint32_t _capacity{ 0 };    // 08
 	};
 	static_assert(sizeof(BSTArrayHeapAllocator) == 0x10);
+
+	struct BSTSmallArrayHeapAllocatorCore
+	{
+		using size_type = std::uint32_t;
+
+		void Initialize()
+		{
+			_capacity = 0;
+			_local = 1;
+		}
+
+		[[nodiscard]] constexpr bool is_local() const noexcept { return _local != 0; }
+
+		[[nodiscard]] constexpr void*       data() noexcept { return is_local() ? &_storage : _storage; }
+		[[nodiscard]] constexpr const void* data() const noexcept { return is_local() ? &_storage : _storage; }
+
+		bool fits_in_static(size_type num, size_type elemSize, size_type static_size)
+		{
+			return num * elemSize <= static_size;
+		}
+
+		size_type get_new_cap(size_type num, size_type elemSize)
+		{
+			return std::max(num, (elemSize + 15) / elemSize);  // idk what is it, looks like always fits
+		}
+
+		bool Allocate(size_type num, size_type elemSize, size_type static_size)
+		{
+			assert(is_local() && "wrong invariant in BSTSmallArrayHeapAllocatorCore: !islocal on Allocate");
+			if (!fits_in_static(num, elemSize, static_size)) {
+				auto new_cap = get_new_cap(num, elemSize);
+				set_data_and_capacity(allocate_and_check(new_cap * elemSize), new_cap, false);
+			} else {
+				_capacity = static_size / elemSize;
+			}
+			return true;
+		}
+
+		void Deallocate()
+		{
+			if (!is_local())
+				free(_storage);
+
+			_capacity = 0;
+		}
+
+		bool Reallocate(size_type minNewSizeInItems, size_type frontCopyCount, size_type shiftCount, size_type backCopyCount, uint32_t elemSize, size_type static_size)
+		{
+			if (!is_local()) {
+				return Allocate(minNewSizeInItems, elemSize, static_size);
+			} else {
+				char* cur_data = reinterpret_cast<char*>(data());
+				char* p_data = reinterpret_cast<char*>(&_storage);
+				char* new_data;
+
+				if (fits_in_static(minNewSizeInItems, elemSize, static_size)) {
+					new_data = reinterpret_cast<char*>(&_storage);
+					_local = 1;
+					_capacity = static_size / elemSize;
+				} else {
+					auto new_cap = get_new_cap(minNewSizeInItems, elemSize);
+					new_data = reinterpret_cast<char*>(allocate_and_check(elemSize * new_cap));
+					_local = 0;
+					_capacity = new_cap;
+				}
+
+				if (frontCopyCount)
+					std::memmove(new_data, cur_data, elemSize * frontCopyCount);
+				if (backCopyCount)
+					std::memmove(&new_data[elemSize * (frontCopyCount + shiftCount)], cur_data + elemSize * frontCopyCount, elemSize * backCopyCount);
+
+				if (cur_data != p_data) {
+					free(cur_data);
+				}
+
+				if (new_data != p_data) {
+					_storage = new_data;
+				}
+
+				return 1;
+			}
+		}
+
+		void* allocate_and_check(size_t size)
+		{
+			auto mem = malloc(size);
+			if (!mem) {
+				stl::report_and_fail("out of memory"sv);
+			}
+			return mem;
+		}
+
+		constexpr void set_data_and_capacity(void* data, size_type capacity, bool local) noexcept
+		{
+			_storage = data;
+			_capacity = capacity;
+			_local = local;
+		}
+
+		// members
+		uint32_t _capacity: 31;  // 00
+		uint32_t _local: 1;      // 00
+		uint8_t  pad04[4];       // 04
+		void*    _storage;       // 08
+	};
 
 	template <std::uint32_t N>
 	class BSTSmallArrayHeapAllocator
@@ -192,6 +314,24 @@ namespace RE
 
 		[[nodiscard]] constexpr size_type capacity() const noexcept { return _capacity; }
 
+		bool Allocate(size_type num, size_type elemSize)
+		{
+			// TODO: how to fix that
+			return reinterpret_cast<BSTSmallArrayHeapAllocatorCore*>(this)->Allocate(num, elemSize, N);
+		}
+
+		void Deallocate()
+		{
+			// TODO: how to fix that
+			return reinterpret_cast<BSTSmallArrayHeapAllocatorCore*>(this)->Deallocate();
+		}
+
+		bool Reallocate(size_type minNewSizeInItems, size_type frontCopyCount, size_type shiftCount, size_type backCopyCount, uint32_t elemSize)
+		{
+			// TODO: how to fix that
+			return reinterpret_cast<BSTSmallArrayHeapAllocatorCore*>(this)->Reallocate(minNewSizeInItems, frontCopyCount, shiftCount, backCopyCount, elemSize, N);
+		}
+		
 	protected:
 		void* allocate(std::size_t a_size)
 		{
@@ -352,6 +492,43 @@ namespace RE
 
 		[[nodiscard]] constexpr size_type capacity() const noexcept { return _capacity; }
 
+		bool Allocate(size_type num, size_type elemSize)
+		{
+			auto mem = allocate_and_check(num * elemSize);
+			set_data_and_capacity(mem, num);
+			return mem != nullptr;
+		}
+
+		void Deallocate()
+		{
+			if (auto mem = data()) {
+				assert(_allocator && "no allocator");
+				_allocator->Deallocate(mem);
+			}
+			set_data_and_capacity(nullptr, 0);
+			_allocator = nullptr;
+		}
+
+		bool Reallocate(size_type minNewSizeInItems, size_type frontCopyCount, size_type shiftCount, size_type backCopyCount, uint32_t elemSize)
+		{
+			size_type new_cap = std::max(minNewSizeInItems, 2 * _capacity);
+
+			if (!_data) {
+				return Allocate(new_cap, elemSize);
+			} else {
+				// looks fine for all types I found, _data is deallocated without dtors
+				auto new_data = (char*)allocate_and_check(elemSize * new_cap);
+				if (frontCopyCount)
+					std::memmove(new_data, _data, elemSize * frontCopyCount);
+				if (backCopyCount)
+					std::memmove(&new_data[elemSize * (frontCopyCount + shiftCount)], (char*)_data + elemSize * frontCopyCount, elemSize * backCopyCount);
+
+				_allocator->Deallocate(_data);
+				set_data_and_capacity(new_data, new_cap);
+				return true;
+			}
+		}
+
 	protected:
 		void* allocate(std::size_t a_size);
 		void  deallocate(void* a_ptr);
@@ -363,12 +540,61 @@ namespace RE
 		}
 
 	private:
+		void* allocate_and_check(size_type size)
+		{
+			if (!_allocator) {
+				auto heap = MemoryManager::GetSingleton();
+				_allocator = heap ? heap->GetThreadScrapHeap() : nullptr;
+				assert(_allocator);
+			}
+
+			auto mem = _allocator->Allocate(size, alignof(void*));
+			if (!mem) {
+				stl::report_and_fail("out of memory"sv);
+			}
+			return mem;
+		}
+
+		constexpr void set_data_and_capacity(void* data, uint32_t capacity) noexcept
+		{
+			_data = data;
+			_capacity = capacity;
+		}
+
 		// members
 		ScrapHeap* _allocator{ nullptr };  // 00
 		void*      _data{ nullptr };       // 08
 		size_type  _capacity{ 0 };         // 10
+		uint8_t    pad14[4];               // 14
 	};
 	static_assert(sizeof(BSScrapArrayAllocator) == 0x18);
+
+	template <typename Allocator>
+	struct BSTArrayAllocatorFunctor : BSTArrayBase::IAllocatorFunctor
+	{
+		BSTArrayAllocatorFunctor(Allocator* alloc) :
+			allocator(alloc)
+		{}
+
+		// override (BSTArrayBase::IAllocatorFunctor)
+		bool Allocate(uint32_t num, uint32_t elemSize) const override  // 00
+		{
+			return allocator->Allocate(num, elemSize);
+		}
+		bool Reallocate(uint32_t minNewSizeInItems, uint32_t frontCopyCount, uint32_t shiftCount, uint32_t backCopyCount, uint32_t elemSize) const override  // 01
+		{
+			return allocator->Reallocate(minNewSizeInItems, frontCopyCount, shiftCount, backCopyCount, elemSize);
+		}
+		void Deallocate() const override  // 02
+		{
+			return allocator->Deallocate();
+		}
+
+		~BSTArrayAllocatorFunctor() override = default;  // 03
+
+		// members
+		Allocator* allocator;  // 08
+	};
 
 	template <class T, class Allocator = BSTArrayHeapAllocator>
 	class BSTArray :
@@ -424,7 +650,7 @@ namespace RE
 			set_size(newSize);
 		}
 
-		inline ~BSTArray() { release(); }
+		inline ~BSTArray() { clear(true); }
 
 		inline BSTArray& operator=(const BSTArray& a_rhs)
 		{
@@ -515,10 +741,13 @@ namespace RE
 			}
 		}
 
-		inline void clear()
+		void clear(bool deallocate = false)
 		{
-			if (!empty()) {
-				change_size(0);
+			if (data()) {
+				DestructItems(0, size());
+				if (deallocate)
+					allocator_type::Deallocate();
+				set_size(0);
 			}
 		}
 
@@ -538,20 +767,16 @@ namespace RE
 			return result ? *result + 1 : begin();
 		}
 
-		inline void push_back(const value_type& a_value) { emplace_back(a_value); }
-		inline void push_back(value_type&& a_value) { emplace_back(std::move(a_value)); }
+		void push_back(const value_type& a_value) { emplace_back(a_value); }
+		void push_back(value_type&& a_value) { emplace_back(std::move(a_value)); }
 
 		template <class... Args>
-		inline reference emplace_back(Args&&... a_args)
+		reference emplace_back(Args&&... a_args)
 		{
-			if (size() == capacity()) {
-				grow_capacity();
-			}
-
-			set_size(size() + 1);
-			auto& elem = back();
-			std::construct_at(std::addressof(elem), std::forward<Args>(a_args)...);
-			return elem;
+			auto ind = AddUninitialized();
+			auto elem = data() + ind;
+			std::construct_at(elem, std::forward<Args>(a_args)...);
+			return *elem;
 		}
 
 		inline void pop_back()
@@ -642,6 +867,19 @@ namespace RE
 		{
 			clear();
 			change_capacity(0);
+		}
+
+		size_type AddUninitialized()
+		{
+			BSTArrayAllocatorFunctor<allocator_type> functor(this);
+			return BSTArrayBase::AddUninitialized(functor, capacity(), sizeof(T));
+		}
+
+		void DestructItems(size_type from_ind, size_type count)
+		{
+			for (size_type i = 0; i < count; i++) {
+				std::destroy_at(data() + from_ind + i);
+			}
 		}
 	};
 

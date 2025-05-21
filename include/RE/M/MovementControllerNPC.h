@@ -36,7 +36,7 @@ namespace RE
 			AnimationDrivenAllowControlsRotation = 0x5,
 			NodeFollowing = 0x6,
 			MOVEMENT_TYPE_7 = 0x7,
-			MOVEMENT_TYPE_8 = 0x8,
+			PlannerDirectControl = 0x8,
 			MOVEMENT_TYPE_9 = 0x9,
 			MotionDrivenLandLow = 0xA,
 			MotionDrivenFlightLow = 0xB,
@@ -77,7 +77,7 @@ namespace RE
 		uint8_t                    field_1C8;             // 1C8
 		uint8_t                    field_1C9;             // 1C9
 		uint8_t                    StaticPathingState;    // 1CA
-		uint8_t                    field_1CB;             // 1CB
+		bool                       keepOffset;            // 1CB
 		std::uint32_t              unk1CC;                // 1CC
 	};
 	static_assert(sizeof(MovementControllerNPC) == 0x1D0);

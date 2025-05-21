@@ -113,7 +113,7 @@ namespace RE
 		hkpSurfaceInfo                                   surfaceInfo;                // 1A0
 		hkpCharacterContext                              context;                    // 1E0
 		stl::enumeration<CHARACTER_FLAGS, std::uint32_t> flags;                      // 218
-		hkpCharacterStateType                            wantState;                  // 218
+		hkpCharacterStateType                            wantState;                  // 21C
 		float                                            velocityTime;               // 220
 		float                                            rotMod;                     // 224
 		float                                            rotModTime;                 // 228

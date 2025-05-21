@@ -159,17 +159,14 @@ namespace RE
 				kTotal = 19
 			};
 
-			struct Parts
+			enum class Parts : uint32_t
 			{
-				enum
-				{
-					kNose = 0,
-					kUnknown = 1,
-					kEyes = 2,
-					kMouth = 3,
+				kNose = 0,
+				kUnknown = 1,
+				kEyes = 2,
+				kMouth = 3,
 
-					kTotal = 4
-				};
+				kTotal = 4
 			};
 
 			enum

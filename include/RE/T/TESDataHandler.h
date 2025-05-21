@@ -65,7 +65,7 @@ namespace RE
 		template <class T>
 		BSTArray<T*>& GetFormArray();
 
-		ObjectRefHandle CreateReferenceAtLocation(TESBoundObject* a_base, const NiPoint3& a_location, const NiPoint3& a_rotation, TESObjectCELL* a_targetCell, TESWorldSpace* a_selfWorldSpace, TESObjectREFR* a_alreadyCreatedRef, BGSPrimitive* a_primitive, const ObjectRefHandle& a_linkedRoomRefHandle, bool a_forcePersist, bool a_arg11);
+		ObjectRefHandle CreateReferenceAtLocation(TESBoundObject* a_base, const NiPoint3& a_location, const NiPoint3& a_rotation, TESObjectCELL* a_targetCell, TESWorldSpace* a_selfWorldSpace, TESObjectREFR* a_alreadyCreatedRef = nullptr, BGSPrimitive* a_primitive = nullptr, ObjectRefHandle* a_linkedRoomRefHandle = nullptr, bool a_forcePersist = false, bool a_arg11 = true);
 
 		// members
 		std::uint8_t                      pad001;                                         // 001

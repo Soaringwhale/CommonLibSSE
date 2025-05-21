@@ -322,6 +322,11 @@ set(SOURCES
 	include/RE/B/BSPathingLocation.h
 	include/RE/B/BSPathingRequest.h
 	include/RE/B/BSPathingSearchParameters.h
+	include/RE/B/BSPathingStream.h
+	include/RE/B/BSPathingStreamRead.h
+	include/RE/B/BSPathingStreamSimpleBufferRead.h
+	include/RE/B/BSPathingStreamSimpleBufferWrite.h
+	include/RE/B/BSPathingStreamWrite.h
 	include/RE/B/BSPointerHandle.h
 	include/RE/B/BSPointerHandleManager.h
 	include/RE/B/BSPointerHandleSmartPointer.h
@@ -1236,6 +1241,7 @@ set(SOURCES
 	include/RE/I/IMovementInterface.h
 	include/RE/I/IMovementMessageInterface.h
 	include/RE/I/IMovementMotionDrivenControl.h
+	include/RE/I/IMovementParameters.h
 	include/RE/I/IMovementPlannerDirectControl.h
 	include/RE/I/IMovementSelectIdle.h
 	include/RE/I/IMovementState.h
@@ -1245,6 +1251,7 @@ set(SOURCES
 	include/RE/I/IObjectProcessor.h
 	include/RE/I/IPackageData.h
 	include/RE/I/IPackageDataAIWorldLocationHandle.h
+	include/RE/I/IPipelineStageInterface.h
 	include/RE/I/IPostAnimationChannelUpdateFunctor.h
 	include/RE/I/IProcedureTreeItem.h
 	include/RE/I/IProfilePolicy.h
@@ -1372,8 +1379,22 @@ set(SOURCES
 	include/RE/M/MovementControllerAI.h
 	include/RE/M/MovementControllerActiveSetDescription.h
 	include/RE/M/MovementControllerNPC.h
+	include/RE/M/MovementControllerSetDescriptions.h
 	include/RE/M/MovementHandler.h
+	include/RE/M/MovementHandlerAgent.h
+	include/RE/M/MovementHandlerAgentPlayerControls.h
+	include/RE/M/MovementHandlerAgentUpdateDataSmallDelta.h
+	include/RE/M/MovementHandlerOutputDataSmallDelta.h
+	include/RE/M/MovementHandlerUpdateDataSmallDelta.h
 	include/RE/M/MovementParameters.h
+	include/RE/M/MovementPlannerAgent.h
+	include/RE/M/MovementPlannerAgentDirectControl.h
+	include/RE/M/MovementPlannerAgentReturnDataSmallDelta.h
+	include/RE/M/MovementPlannerUpdateDataSmallDelta.h
+	include/RE/M/MovementTweenerAgent.h
+	include/RE/M/MovementTweenerAgentNodeFollower.h
+	include/RE/M/MovementTweenerAgentOutputData.h
+	include/RE/M/MovementVector.h
 	include/RE/M/MoviePlayer.h
 	include/RE/M/MultiBoundMarkerData.h
 	include/RE/N/NativeFunction.h
@@ -1506,6 +1527,7 @@ set(SOURCES
 	include/RE/N/NightEyeEffect.h
 	include/RE/N/NonActorMagicCaster.h
 	include/RE/N/NonActorMagicTarget.h
+	include/RE/N/NullMovementState.h
 	include/RE/O/Object.h
 	include/RE/O/ObjectTypeInfo.h
 	include/RE/O/ObjectiveState.h
@@ -1822,6 +1844,7 @@ set(SOURCES
 	include/RE/V/VoiceSpellFireHandler.h
 	include/RE/W/WeaponAnimationGraphManagerHolder.h
 	include/RE/W/WeatherType.h
+	include/RE/W/WeightedModifier.h
 	include/RE/W/WeightedRandomChildSelector.h
 	include/RE/W/WerewolfEffect.h
 	include/RE/W/WerewolfFeedEffect.h
@@ -1909,6 +1932,9 @@ set(SOURCES
 	src/RE/B/BSPCOrbisGamepadDevice.cpp
 	src/RE/B/BSPathingLocation.cpp
 	src/RE/B/BSPathingRequest.cpp
+	src/RE/B/BSPathingStream.cpp
+	src/RE/B/BSPathingStreamSimpleBufferRead.cpp
+	src/RE/B/BSPathingStreamSimpleBufferWrite.cpp
 	src/RE/B/BSPointerHandle.cpp
 	src/RE/B/BSResourceNiBinaryStream.cpp
 	src/RE/B/BSResponse.cpp
@@ -2143,6 +2169,7 @@ set(SOURCES
 	src/RE/I/INIPrefSettingCollection.cpp
 	src/RE/I/INISettingCollection.cpp
 	src/RE/I/IObjectHandlePolicy.cpp
+	src/RE/I/IPipelineStageInterface.cpp
 	src/RE/I/IStackCallbackFunctor.cpp
 	src/RE/I/IVirtualMachine.cpp
 	src/RE/I/IngredientItem.cpp
@@ -2178,7 +2205,13 @@ set(SOURCES
 	src/RE/M/MenuCursor.cpp
 	src/RE/M/MenuEventHandler.cpp
 	src/RE/M/Misc.cpp
+	src/RE/M/MovementAgent.cpp
 	src/RE/M/MovementControllerAI.cpp
+	src/RE/M/MovementHandlerAgent.cpp
+	src/RE/M/MovementHandlerAgentPlayerControls.cpp
+	src/RE/M/MovementPlannerAgent.cpp
+	src/RE/M/MovementPlannerAgentDirectControl.cpp
+	src/RE/M/MovementTweenerAgent.cpp
 	src/RE/N/NativeFunctionBase.cpp
 	src/RE/N/NextChildSelector.cpp
 	src/RE/N/NiAVObject.cpp
@@ -2228,6 +2261,7 @@ set(SOURCES
 	src/RE/N/NiTransformController.cpp
 	src/RE/N/NiTransformData.cpp
 	src/RE/N/NiTransformInterpolator.cpp
+	src/RE/N/NullMovementState.cpp
 	src/RE/O/Object.cpp
 	src/RE/O/ObjectTypeInfo.cpp
 	src/RE/O/ObjectiveState.cpp

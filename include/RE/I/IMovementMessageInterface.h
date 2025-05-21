@@ -13,8 +13,8 @@ namespace RE
 
 		// add
 		virtual void PostWarpToMessage(void) = 0;  // 01
-		virtual void PostMessageA(void) = 0;       // 02
-		virtual void SendMessageA(void) = 0;       // 03
+		virtual void PostMessageA(void*) = 0;      // 02
+		virtual void SendMessageA(void* msg) = 0;  // 03
 	};
 	static_assert(sizeof(IMovementMessageInterface) == 0x8);
 }

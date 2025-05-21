@@ -13,6 +13,11 @@ namespace RE
 	class BSTFactoryManager : public Singleton<BSTFactoryManager<Key, T, SIZE, Singleton>>
 	{
 	public:
+		bool RegisterFactory(const Key& key, const T* val)
+		{
+			factories.insert({ key, val });
+		}
+
 		// members
 		BSTStaticHashMap<Key, const T*, SIZE> factories;  // 00
 	};

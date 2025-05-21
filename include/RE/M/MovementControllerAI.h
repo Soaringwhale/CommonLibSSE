@@ -10,7 +10,7 @@
 namespace RE
 {
 	class IMovementControllerDataTracker;
-	class IMovementState;
+	struct IMovementState;
 	struct MovementControllerActiveSetDescription;
 	struct MovementHandlerOutputDataLargeDelta;
 	struct MovementHandlerOutputDataSmallDelta;
