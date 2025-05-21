@@ -99,6 +99,13 @@ namespace RE
 		return DoTrap2(a_trap, a_target);
 	}
 
+	void TESObjectREFR::Enable(bool a_resetInventory)
+	{
+		using func_t = decltype(&TESObjectREFR::Enable);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(19373, 19800) };
+		return func(this, a_resetInventory);
+	}
+
 	NiAVObject* TESObjectREFR::Get3D() const
 	{
 		return Get3D2();
@@ -830,6 +837,13 @@ namespace RE
 	void TESObjectREFR::SetActivationBlocked(bool a_blocked)
 	{
 		extraList.SetExtraFlags(ExtraFlags::Flag::kBlockActivate, a_blocked);
+	}
+
+	void TESObjectREFR::SetAngle(const NiPoint3& a_angle)
+	{
+		using func_t = decltype(&TESObjectREFR::SetAngle);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(19359, 19786) };
+		return func(this, a_angle);
 	}
 
 	void TESObjectREFR::SetCollision(bool a_enable)

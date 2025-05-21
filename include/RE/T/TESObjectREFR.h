@@ -367,6 +367,7 @@ namespace RE
 		ObjectRefHandle                         CreateRefHandle();
 		void                                    DoTrap(TrapData& a_data);
 		void                                    DoTrap(TrapEntry* a_trap, TargetEntry* a_target);
+		void                                    Enable(bool a_resetInventory);
 		NiAVObject*                             Get3D() const;
 		NiAVObject*                             Get3D(bool a_firstPerson) const;
 		TESNPC*                                 GetActorOwner();
@@ -454,6 +455,7 @@ namespace RE
 		void                                    PlayAnimation(stl::zstring a_from, stl::zstring a_to);
 		void                                    PlayAnimation(NiControllerManager* a_manager, NiControllerSequence* a_toSeq, NiControllerSequence* a_fromSeq);
 		void                                    SetActivationBlocked(bool a_blocked);
+		void                                    SetAngle(const NiPoint3& a_angle);
 		void                                    SetCollision(bool a_enable);
 		bool                                    SetDisplayName(const BSFixedString& a_name, bool a_force);
 		void                                    SetEncounterZone(BGSEncounterZone* a_zone);

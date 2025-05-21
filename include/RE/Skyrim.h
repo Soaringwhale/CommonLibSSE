@@ -1388,6 +1388,8 @@
 #include "RE/M/MovementHandlerAgentUpdateDataSmallDelta.h"
 #include "RE/M/MovementHandlerOutputDataSmallDelta.h"
 #include "RE/M/MovementHandlerUpdateDataSmallDelta.h"
+#include "RE/M/MovementMessage.h"
+#include "RE/M/MovementMessageFreezeDirection.h"
 #include "RE/M/MovementParameters.h"
 #include "RE/M/MovementPlannerAgent.h"
 #include "RE/M/MovementPlannerAgentDirectControl.h"
