@@ -78,13 +78,13 @@ namespace RE
 
 		// members
 		IMovementControllerRegisterInterface* register_interface;                    // 28
-		uint64_t                                  lock;                                  // 30
-		uint32_t                                  mb_input_type;                         // 38
-		uint8_t                                   pad3C[4];                              // 3C
-		Data40*                                   data40;                                // 40
-		float                                     dampenAccelerationMultiplier;          // 48
-		bool                                      bFreezeDirectionOnLargeDeltaControls;  // 4C
-		uint8_t                                   pad4D[3];                              // 4D
+		uint64_t                              lock;                                  // 30
+		uint32_t                              mb_input_type;                         // 38
+		uint8_t                               pad3C[4];                              // 3C
+		Data40*                               data40;                                // 40
+		float                                 dampenAccelerationMultiplier;          // 48
+		bool                                  bFreezeDirectionOnLargeDeltaControls;  // 4C
+		uint8_t                               pad4D[3];                              // 4D
 	};
 	static_assert(sizeof(MovementHandlerAgentPlayerControls) == 0x50);
 }

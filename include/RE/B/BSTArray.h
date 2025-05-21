@@ -38,7 +38,7 @@ namespace RE
 
 		[[nodiscard]] constexpr bool      empty() const noexcept { return _size == 0; }
 		[[nodiscard]] constexpr size_type size() const noexcept { return _size; }
-		
+
 		size_type AddUninitialized(const IAllocatorFunctor& allocator, size_type capacity, size_type elemSize)
 		{
 			auto cur_size = size();
@@ -57,6 +57,7 @@ namespace RE
 			assert(ok && "reallocation failed");
 			return _size++;
 		}
+
 	protected:
 		constexpr void set_size(size_type a_size) noexcept { _size = a_size; }
 
@@ -82,7 +83,7 @@ namespace RE
 
 		[[nodiscard]] constexpr void*       data() noexcept { return _data; }
 		[[nodiscard]] constexpr const void* data() const noexcept { return _data; }
-		[[nodiscard]] constexpr size_type capacity() const noexcept { return _capacity; }
+		[[nodiscard]] constexpr size_type   capacity() const noexcept { return _capacity; }
 
 		bool Allocate(size_type num, size_type elemSize)
 		{
@@ -331,7 +332,7 @@ namespace RE
 			// TODO: how to fix that
 			return reinterpret_cast<BSTSmallArrayHeapAllocatorCore*>(this)->Reallocate(minNewSizeInItems, frontCopyCount, shiftCount, backCopyCount, elemSize, N);
 		}
-		
+
 	protected:
 		void* allocate(std::size_t a_size)
 		{
