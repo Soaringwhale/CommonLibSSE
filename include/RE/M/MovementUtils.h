@@ -27,8 +27,8 @@ namespace RE
 		float ComputeRotationFromDelta(float cur_angle, float target_angle, float dtime);
 		void  ComputeRotationFromEulerAngles(float Z, float X, float Y, NiMatrix3& ans);
 		float ComputePitchOffsetBetweenVectors(const NiPoint3& from, const NiPoint3& to);
-		bool  ComputeSpeedForDistanceAndTargetSpeed(float acc, float decel, float speedNorm, float a4, float a5, float& a6, float& a7);                                                                            // 89341
-		bool  ComputeSpeedForSlowDownDistance(float a1, float a2, float a3, float& a4, float& a5);                                                                                                                 // 89340
+		bool  ComputeSpeedForDistanceAndTargetSpeed(float acc, float decel, float speedNorm, float a4, float a5, float& a6, float& a7);  // 89341
+		bool  ComputeSpeedForSlowDownDistance(float a1, float a2, float a3, float& a4, float& a5);                                       // 89340
 		void  ComputeTimeAndDistanceToStop(float speed, float accel, float& time, float& distance);
 		void  DampenMovementVector(const MovementVector& MV_cur, const MovementVector& MV_target, float acc_denorm, float decel_denorm, float dtime, MovementVector& ans);                                         // 89353
 		void  DampenMovementVector(const MovementVector& rcx0, const MovementVector& rdx0, float acc_denorm, float decel_denorm, float max_rot_speed_denorm, float dtime, MovementVector& ans_MovementDirection);  // 89354
