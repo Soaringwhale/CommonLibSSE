@@ -18,7 +18,7 @@ namespace RE
 		void                 DoGetEulerAngles(NiPoint3& angles) const override;                                         // 04
 		float                DoGetMovementSpeed() const override { return 0; }                                          // 05
 		float                DoGetRotationSpeed() const override { return 0; }                                          // 06
-		void                 DoGetMovementRotation(NiPoint3&) override {}                                               // 07
+		void                 DoGetMovementRotation(NiPoint3&) const override {}                                         // 07
 		bool                 DoGetCurrentMaxSpeeds(Movement::MaxSpeeds&) const override { return false; }               // 08
 		float                DoGetMovementRadius() const override { return 0; }                                         // 09
 		float                DoGetMovementWidth() const override { return 0; }                                          // 0A

@@ -6,7 +6,9 @@
 namespace RE
 {
 	class BSPathingLocation;
+	class NiMatrix3;
 	class NiPoint3;
+	class NiTransform;
 
 	namespace Movement
 	{
@@ -37,9 +39,7 @@ namespace RE
 			MAX_STATE_ID = 11,
 		};
 
-		bool CanStrafe() const;
-
-		~IMovementState() override;  // 00
+		~IMovementState() override = default;  // 00
 
 		// add
 		virtual uint32_t             DoGetNumericID() const = 0;                                                 // 01
@@ -48,7 +48,7 @@ namespace RE
 		virtual void                 DoGetEulerAngles(NiPoint3& angles) const = 0;                               // 04
 		virtual float                DoGetMovementSpeed() const = 0;                                             // 05
 		virtual float                DoGetRotationSpeed() const = 0;                                             // 06
-		virtual void                 DoGetMovementRotation(NiPoint3& rotation) = 0;                              // 07
+		virtual void                 DoGetMovementRotation(NiPoint3& rotation) const = 0;                        // 07
 		virtual bool                 DoGetCurrentMaxSpeeds(Movement::MaxSpeeds& max_speeds) const = 0;           // 08
 		virtual float                DoGetMovementRadius() const = 0;                                            // 09
 		virtual float                DoGetMovementWidth() const = 0;                                             // 0A
@@ -61,6 +61,26 @@ namespace RE
 		virtual CHARACTER_STATE      DoGetCharacterState() const = 0;                                            // 11
 		virtual bool                 IsRiddenByPlayer() const = 0;                                               // 12
 		virtual bool                 DoGetUseVelocityObstacles() const = 0;                                      // 13
+
+		bool  CanStrafe() const;
+		void  GetCCRotation(NiMatrix3& ans) const;
+		void  GetCCTransform(NiTransform& ans) const;
+		bool  GetCurrentWalkRunPercent(float& ans_walk, float& ans_run) const;  // 88497
+		void  GetDirectionAngles(NiPoint3& ans) const;
+		void  GetDirectionVector(NiPoint3& ans, bool anglesHeadingOnly = false) const;
+		float GetMaxSpeed() const;
+		float GetMinSpeed() const;
+		float GetMovementHeading() const;
+		float DenormalizeAcceleration(float acc_norm) const;
+		float DenormalizeAngleAcceleration(float angle_accel_norm) const;
+		float DenormalizeRotateWhileMoving(float speed_norm) const;
+		float DenormalizeRotationSpeed(float rotspeed_norm) const;
+		float DenormalizeSpeed(float speed_norm) const;
+		float NormalizeAcceleration(float acc_denorm) const;
+		float NormalizeAngleAcceleration(float angle_accel_denorm) const;
+		float NormalizeRotateWhileMoving(float speed_denorm) const;
+		float NormalizeRotationSpeed(float rotspeed_denorm) const;
+		float NormalizeSpeed(float speed_denorm) const;
 	};
 	static_assert(sizeof(IMovementState) == 0x8);
 }

@@ -209,7 +209,6 @@ namespace RE
 		[[nodiscard]] static TESForm* LookupByID(FormID a_formID)
 		{
 			const auto& [map, lock] = GetAllForms();
-			const BSReadWriteLock l{ lock };
 			if (map) {
 				const auto it = map->find(a_formID);
 				return it != map->end() ? it->second : nullptr;

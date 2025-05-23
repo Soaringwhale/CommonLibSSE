@@ -1398,6 +1398,7 @@
 #include "RE/M/MovementTweenerAgent.h"
 #include "RE/M/MovementTweenerAgentNodeFollower.h"
 #include "RE/M/MovementTweenerAgentOutputData.h"
+#include "RE/M/MovementUtils.h"
 #include "RE/M/MovementVector.h"
 #include "RE/M/MoviePlayer.h"
 #include "RE/M/MultiBoundMarkerData.h"

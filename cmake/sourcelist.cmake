@@ -1396,6 +1396,7 @@ set(SOURCES
 	include/RE/M/MovementTweenerAgent.h
 	include/RE/M/MovementTweenerAgentNodeFollower.h
 	include/RE/M/MovementTweenerAgentOutputData.h
+	include/RE/M/MovementUtils.h
 	include/RE/M/MovementVector.h
 	include/RE/M/MoviePlayer.h
 	include/RE/M/MultiBoundMarkerData.h
@@ -2214,6 +2215,7 @@ set(SOURCES
 	src/RE/M/MovementPlannerAgent.cpp
 	src/RE/M/MovementPlannerAgentDirectControl.cpp
 	src/RE/M/MovementTweenerAgent.cpp
+	src/RE/M/MovementUtils.cpp
 	src/RE/N/NativeFunctionBase.cpp
 	src/RE/N/NextChildSelector.cpp
 	src/RE/N/NiAVObject.cpp

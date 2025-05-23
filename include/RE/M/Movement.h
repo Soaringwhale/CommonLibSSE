@@ -33,8 +33,8 @@ namespace RE
 			};
 
 			// members
-			float speeds[SPEED_DIRECTIONS::kTotal][kTotal];  // 00
-			float rotateWhileMovingRun;                      // 28
+			float speeds[SPEED_DIRECTIONS::kTotal][kTotal]{};  // 00
+			float rotateWhileMovingRun{ 0 };                   // 28
 		};
 		static_assert(sizeof(MaxSpeeds) == 0x2C);
 
