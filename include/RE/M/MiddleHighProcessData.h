@@ -66,7 +66,7 @@ namespace RE
 		ExtraDataList*      extraDataList;    // 00
 		std::int32_t        count;            // 08
 		std::uint32_t       pad0C;            // 0C
-		const BGSEquipSlot* equipSlot;        // 10
+		BGSEquipSlot* equipSlot;        // 10
 		void*               unk18;            // 18
 		bool                playEquipSounds;  // 20
 		bool                forceEquip;       // 21
