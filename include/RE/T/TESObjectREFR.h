@@ -371,7 +371,7 @@ namespace RE
 		NiAVObject*                             Get3D() const;
 		NiAVObject*                             Get3D(bool a_firstPerson) const;
 		TESNPC*                                 GetActorOwner();
-		NiPoint3                                GetAngle() const;
+		const NiPoint3&                         GetAngle() const;
 		float                                   GetAngleX() const;
 		float                                   GetAngleY() const;
 		float                                   GetAngleZ() const;
@@ -407,7 +407,7 @@ namespace RE
 		[[nodiscard]] constexpr TESBoundObject* GetObjectReference() const noexcept { return data.objectReference; }
 		TESForm*                                GetOwner() const;
 		[[nodiscard]] constexpr TESObjectCELL*  GetParentCell() const noexcept { return parentCell; }
-		[[nodiscard]] constexpr NiPoint3        GetPosition() const noexcept { return data.location; }
+		[[nodiscard]] constexpr const NiPoint3& GetPosition() const noexcept { return data.location; }
 		[[nodiscard]] constexpr float           GetPositionX() const noexcept { return data.location.x; }
 		[[nodiscard]] constexpr float           GetPositionY() const noexcept { return data.location.y; }
 		[[nodiscard]] constexpr float           GetPositionZ() const noexcept { return data.location.z; }

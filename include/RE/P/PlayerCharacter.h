@@ -332,6 +332,15 @@ namespace RE
 		};
 		static_assert(sizeof(PlayerSkills) == 0x8);
 
+		struct BowArrayItem
+		{
+			// members
+			float    heldDownSecs;  // 00
+			uint8_t  pad[4];        // 04
+			uint64_t time;          // 08
+		};
+		static_assert(sizeof(BowArrayItem) == 0x10);
+
 		~PlayerCharacter() override;  // 000
 
 		// override
@@ -543,7 +552,7 @@ namespace RE
 		std::uint32_t                                           padB8C;                                       // B8C
 		std::uint64_t                                           unkB90;                                       // B90
 		TESBoundObject*                                         unkB98;                                       // B98 - Set/Cleared in SmithingMenuEntry, may be used to test for enchantment?
-		BSTSmallArray<void*, 4>                                 unkBA0;                                       // BA0
+		BSTSmallArray<BowArrayItem, 2>                          unkBA0;                                       // BA0
 		PreTransformationData*                                  preTransformationData;                        // BD0 - Stores equipped data when transforming to vampire/werewolf, cleared when transforming back to human
 		PlayerFlags                                             playerFlags;                                  // BD8
 

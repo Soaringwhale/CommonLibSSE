@@ -13,6 +13,7 @@ namespace RE
 	class bhkCharacterController;
 	class BipedAnim;
 	class HighProcess;
+	class InventoryEntryData;
 	class NiAVObject;
 	class NiPoint3;
 	class TESForm;
@@ -156,6 +157,7 @@ namespace RE
 		bhkCharacterController* GetCharController();
 		ActorHandle             GetCommandingActor() const;
 		TESShout*               GetCurrentShout();
+		InventoryEntryData*     GetCurrentWeapon(bool left) const;
 		TESForm*                GetEquippedLeftHand();
 		TESForm*                GetEquippedRightHand();
 		ObjectRefHandle         GetHeadtrackTarget() const;

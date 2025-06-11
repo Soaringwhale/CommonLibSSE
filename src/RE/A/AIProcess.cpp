@@ -44,6 +44,19 @@ namespace RE
 		return high ? high->currentShout : nullptr;
 	}
 
+	InventoryEntryData* AIProcess::GetCurrentWeapon(bool left) const
+	{
+		if (!middleHigh)
+			return nullptr;
+
+		auto ans = left ? middleHigh->leftHand : middleHigh->rightHand;
+		if (ans) {
+			if (!ans->object || ans->object->formType != RE::FormType::Weapon)
+				ans = nullptr;
+		}
+		return ans;
+	}
+
 	TESForm* AIProcess::GetEquippedLeftHand()
 	{
 		return equippedObjects[Hands::kLeft];

@@ -37,12 +37,12 @@ namespace RE
 		{
 			// members
 			hkbStateMachine*                stateMachineTemplate;          // 00 - A pointer to a node which is a state machine.
-			uint64_t                        field08;                       // 08
-			uint64_t                        field10;                       // 10
+			hkbBehaviorGraph*               behaviorTemplate;              // 08 - The behavior graph to which the state machine belongs. For the state machines in root behavior graph this would be set to null.
+			hkArray<int16_t>*               eventlessGlobalTransitions;    // 10 - All the global wildcard transitions for a state machine with only conditions. If they have different priorities than the one with higher priority comes first. The index of the transition in hkbStateMachine::m_wildcardTransitions is stored.
 			hkPointerMap<int32_t, int16_t>* eventToGlobalTransitionMap;    // 18 - A map from events to global transition. The index of the transition in hkbStateMachine::m_wildcardTransitions is stored.
 			hkArray<int32_t>*               childStateMachineInfoIndices;  // 20 - The child state machine info indices
-			uint32_t                        field28;                       // 28
-			uint32_t                        field2C;                       // 2C
+			uint32_t                        parentStateMachineInfoIndex;   // 28 - The state machine info index which contains the parent state machine of this state machine.
+			uint32_t                        stateIndexInParent;            // 2C - The index of the state in the parent state machine that contains this state machine.
 		};
 		static_assert(sizeof(StateMachineInfo) == 0x30);
 

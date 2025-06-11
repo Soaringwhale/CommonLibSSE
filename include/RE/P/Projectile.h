@@ -230,11 +230,11 @@ namespace RE
 		float          GetSpeed() const;
 		void           Kill();
 
-		static ProjectileHandle* Launch(ProjectileHandle* a_result, LaunchData& a_data) noexcept;
-		static ProjectileHandle* LaunchSpell(ProjectileHandle* a_result, TESObjectREFR* a_shooter, SpellItem* a_spell, const NiPoint3& a_origin, const ProjectileRot& a_angles) noexcept;
-		static ProjectileHandle* LaunchSpell(ProjectileHandle* a_result, TESObjectREFR* a_shooter, SpellItem* a_spell, MagicSystem::CastingSource a_source) noexcept;
-		static ProjectileHandle* LaunchArrow(ProjectileHandle* a_result, TESObjectREFR* a_shooter, TESAmmo* a_ammo, TESObjectWEAP* a_weap, const NiPoint3& a_origin, const ProjectileRot& a_angles) noexcept;
-		static ProjectileHandle* LaunchArrow(ProjectileHandle* a_result, TESObjectREFR* a_shooter, TESAmmo* a_ammo, TESObjectWEAP* a_weap) noexcept;
+		static ProjectileHandle Launch(LaunchData& a_data) noexcept;
+		static ProjectileHandle LaunchSpell(TESObjectREFR* a_shooter, SpellItem* a_spell, const NiPoint3& a_origin, const ProjectileRot& a_angles) noexcept;
+		static ProjectileHandle LaunchSpell(TESObjectREFR* a_shooter, SpellItem* a_spell, MagicSystem::CastingSource a_source) noexcept;
+		static ProjectileHandle LaunchArrow(TESObjectREFR* a_shooter, TESAmmo* a_ammo, TESObjectWEAP* a_weap, const NiPoint3& a_origin, const ProjectileRot& a_angles) noexcept;
+		static ProjectileHandle LaunchArrow(TESObjectREFR* a_shooter, TESAmmo* a_ammo, TESObjectWEAP* a_weap) noexcept;
 
 		// members
 		BSSimpleList<ImpactData*>              impacts;            // 098

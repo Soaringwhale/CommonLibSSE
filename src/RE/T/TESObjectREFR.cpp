@@ -126,7 +126,7 @@ namespace RE
 		}
 	}
 
-	NiPoint3 TESObjectREFR::GetAngle() const
+	const NiPoint3& TESObjectREFR::GetAngle() const
 	{
 		return data.angle;
 	}

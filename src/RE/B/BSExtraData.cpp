@@ -4,10 +4,6 @@
 
 namespace RE
 {
-	BSExtraData::BSExtraData() :
-		next(nullptr)
-	{}
-
 	bool BSExtraData::IsNotEqual(const BSExtraData*) const
 	{
 		return false;

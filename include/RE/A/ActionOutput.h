@@ -15,6 +15,22 @@ namespace RE
 		~ActionOutput() = default;
 		ActionOutput(const ActionOutput& other) = delete;
 
+		void ClearAnimEvent()
+		{
+			animEvent = "";
+			targetAnimEvent = "";
+		}
+
+		bool IsSequence() const
+		{
+			return sequence && result >= 0;
+		}
+
+		uint32_t NextSequenceIndex()
+		{
+			++sequenceIndex;
+		}
+
 		// members
 		BSFixedString animEvent{};             // 00
 		BSFixedString targetAnimEvent{};       // 08
@@ -32,6 +48,12 @@ namespace RE
 			dst.result = result;
 			dst.sequence = sequence;
 			dst.sequenceIndex = sequenceIndex;
+		}
+
+		void SetSequence(TESIdleForm* new_sequence, uint32_t new_sequenceIndex)
+		{
+			sequence = new_sequence;
+			sequenceIndex = new_sequenceIndex;
 		}
 	};
 	static_assert(sizeof(ActionOutput) == 0x30);
