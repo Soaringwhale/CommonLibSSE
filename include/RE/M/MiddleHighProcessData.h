@@ -63,18 +63,18 @@ namespace RE
 	{
 	public:
 		// members
-		ExtraDataList*      extraDataList;    // 00
-		std::int32_t        count;            // 08
-		std::uint32_t       pad0C;            // 0C
-		BGSEquipSlot* equipSlot;        // 10
-		void*               unk18;            // 18
-		bool                playEquipSounds;  // 20
-		bool                forceEquip;       // 21
-		bool                showMessage;      // 22
-		bool                unk23;            // 23
-		bool                unk24;            // 24
-		std::uint8_t        pad25;            // 25
-		std::uint16_t       pad26;            // 26
+		ExtraDataList* extraDataList;    // 00
+		std::int32_t   count;            // 08
+		std::uint32_t  pad0C;            // 0C
+		BGSEquipSlot*  equipSlot;        // 10
+		void*          unk18;            // 18
+		bool           playEquipSounds;  // 20
+		bool           forceEquip;       // 21
+		bool           showMessage;      // 22
+		bool           unk23;            // 23
+		bool           unk24;            // 24
+		std::uint8_t   pad25;            // 25
+		std::uint16_t  pad26;            // 26
 	};
 	static_assert(sizeof(ObjectEquipParams) == 0x28);
 
