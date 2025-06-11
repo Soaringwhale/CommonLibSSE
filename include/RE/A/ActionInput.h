@@ -37,9 +37,9 @@ namespace RE
 		TES_HEAP_REDEFINE_NEW();
 
 		// members
-		TESObjectREFRPtr ref{};                             // 08
-		TESObjectREFRPtr targetRef{};                       // 10
-		BGSAction*       action{ nullptr };                 // 18
+		TESObjectREFRPtr ref{};                                   // 08
+		TESObjectREFRPtr targetRef{};                             // 10
+		BGSAction*       action{ nullptr };                       // 18
 		ACTIONPRIORITY   priority{ ACTIONPRIORITY::Priority_0 };  // 20
 
 	protected:
