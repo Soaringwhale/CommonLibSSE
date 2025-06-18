@@ -136,7 +136,7 @@ namespace RE
 
 	bool AIProcess::InHighProcess() const
 	{
-		switch (*processLevel) {
+		switch (processLevel) {
 		case PROCESS_TYPE::kHigh:
 			return true;
 		default:
@@ -146,7 +146,7 @@ namespace RE
 
 	bool AIProcess::InMiddleHighProcess() const
 	{
-		switch (*processLevel) {
+		switch (processLevel) {
 		case PROCESS_TYPE::kHigh:
 		case PROCESS_TYPE::kMiddleHigh:
 			return true;
@@ -157,7 +157,7 @@ namespace RE
 
 	bool AIProcess::InMiddleLowProcess() const
 	{
-		switch (*processLevel) {
+		switch (processLevel) {
 		case PROCESS_TYPE::kHigh:
 		case PROCESS_TYPE::kMiddleHigh:
 		case PROCESS_TYPE::kMiddleLow:
@@ -169,7 +169,7 @@ namespace RE
 
 	bool AIProcess::InLowProcess() const
 	{
-		switch (*processLevel) {
+		switch (processLevel) {
 		case PROCESS_TYPE::kHigh:
 		case PROCESS_TYPE::kMiddleHigh:
 		case PROCESS_TYPE::kMiddleLow:

@@ -21,7 +21,7 @@ namespace RE
 	struct HighProcessData;
 	struct MiddleHighProcessData;
 
-	enum class PROCESS_TYPE
+	enum class PROCESS_TYPE : uint8_t
 	{
 		kNone = static_cast<std::underlying_type_t<PROCESS_TYPE>>(-1),
 		kHigh = 0,
@@ -216,7 +216,7 @@ namespace RE
 		std::uint32_t                                   unk130;                         // 130
 		std::uint16_t                                   unk134;                         // 134
 		stl::enumeration<LowProcessFlags, std::uint8_t> lowProcessFlags;                // 136
-		stl::enumeration<PROCESS_TYPE, std::uint8_t>    processLevel;                   // 137
+		PROCESS_TYPE                                    processLevel;                   // 137
 		bool                                            skippedTimeStampForPathing;     // 138
 		bool                                            ignoringCombat;                 // 139
 		bool                                            endAlarmOnActor;                // 13A
