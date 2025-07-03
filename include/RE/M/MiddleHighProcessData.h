@@ -189,7 +189,7 @@ namespace RE
 		TESIdleForm*                                   lastIdlePlayed;              // 280
 		AIPerkData*                                    perkData;                    // 288
 		std::uint32_t                                  unk290;                      // 290
-		std::uint32_t                                  currentFurnitureSubgraphID;  // 294
+		float                                          furnitureEntryAngle;         // 294
 		float                                          unk298;                      // 298
 		float                                          unk29C;                      // 29C
 		float                                          unk2A0;                      // 2A0
