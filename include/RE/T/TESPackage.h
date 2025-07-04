@@ -31,7 +31,7 @@ namespace RE
 		kFOOD = 15
 	};
 
-	enum class PACKAGE_PROCEDURE_TYPE
+	enum class PACKAGE_PROCEDURE_TYPE : uint32_t
 	{
 		kNone = static_cast<std::underlying_type_t<PACKAGE_PROCEDURE_TYPE>>(-1),
 		kFind = 0,
@@ -106,6 +106,7 @@ namespace RE
 		{
 			kNone = 0,
 			kOffersServices = 1 << 0,
+			kUnk1 = 1 << 1,
 			kMustComplete = 1 << 2,
 			kMaintainSpeedAtGoal = 1 << 3,
 			kUnlocksDoorsAtPackageStart = 1 << 6,
@@ -297,22 +298,22 @@ namespace RE
 		virtual bool IsPackageOwner(Actor* a_actor);                                                                 // 3F - { return true; }
 
 		// members
-		PACKAGE_DATA                                            packData;        // 20 - PKDT
-		std::uint32_t                                           pad2C;           // 2C
-		TESPackageData*                                         data;            // 30
-		PackageLocation*                                        packLoc;         // 38
-		PackageTarget*                                          packTarg;        // 40
-		BGSIdleCollection*                                      idleCollection;  // 48
-		PackageSchedule                                         packSched;       // 50 - PSDT
-		std::uint32_t                                           pad5C;           // 5C
-		TESCondition                                            packConditions;  // 60
-		TESCombatStyle*                                         combatStyle;     // 68 - CNAM
-		TESQuest*                                               ownerQuest;      // 70 - QNAM
-		PackageEventAction                                      onBegin;         // 78
-		PackageEventAction                                      onEnd;           // 98
-		PackageEventAction                                      onChange;        // B8
-		stl::enumeration<PACKAGE_PROCEDURE_TYPE, std::uint32_t> procedureType;   // D8
-		volatile std::uint32_t                                  refCount;        // DC
+		PACKAGE_DATA           packData;        // 20 - PKDT
+		std::uint32_t          pad2C;           // 2C
+		TESPackageData*        data;            // 30
+		PackageLocation*       packLoc;         // 38
+		PackageTarget*         packTarg;        // 40
+		BGSIdleCollection*     idleCollection;  // 48
+		PackageSchedule        packSched;       // 50 - PSDT
+		std::uint32_t          pad5C;           // 5C
+		TESCondition           packConditions;  // 60
+		TESCombatStyle*        combatStyle;     // 68 - CNAM
+		TESQuest*              ownerQuest;      // 70 - QNAM
+		PackageEventAction     onBegin;         // 78
+		PackageEventAction     onEnd;           // 98
+		PackageEventAction     onChange;        // B8
+		PACKAGE_PROCEDURE_TYPE procedureType;   // D8
+		volatile std::uint32_t refCount;        // DC
 	};
 	static_assert(sizeof(TESPackage) == 0xE0);
 }

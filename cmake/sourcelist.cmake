@@ -2269,6 +2269,7 @@ set(SOURCES
 	src/RE/O/Object.cpp
 	src/RE/O/ObjectTypeInfo.cpp
 	src/RE/O/ObjectiveState.cpp
+	src/RE/P/PackageLocation.cpp
 	src/RE/P/PackUnpack.cpp
 	src/RE/P/PackedInstructionStream.cpp
 	src/RE/P/PlayerCamera.cpp
