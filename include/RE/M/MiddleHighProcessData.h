@@ -239,7 +239,7 @@ namespace RE
 		bool                                           alwaysHit;                 // 323
 		bool                                           doNoDamage;                // 324
 		bool                                           soulTrapped;               // 325
-		bool                                           unk326;                    // 326
+		bool                                           lookAt;                    // 326
 		bool                                           unk327;                    // 327
 		bool                                           unk328;                    // 328
 		bool                                           preventCombat;             // 329
