@@ -114,6 +114,7 @@ namespace RE
 			kContinueIfPCNear = 1 << 9,
 			kOncePerDay = 1 << 10,
 			kPreferredSpeed = 1 << 13,
+			kScriptPackage = 1 << 14,
 			kAlwaysSneak = 1 << 17,
 			kAllowSwimming = 1 << 18,
 			kIgnoreCombat = 1 << 20,
