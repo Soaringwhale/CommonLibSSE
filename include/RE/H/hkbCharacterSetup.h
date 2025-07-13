@@ -25,12 +25,10 @@ namespace RE
 		hkRefPtr<const hkaSkeleton>                animationSkeleton;                 // 20 - The animation skeleton. For the scaled character the reference pose inside this skeleton is scaled.
 		hkRefPtr<const hkaSkeletonMapper>          ragdollToAnimationSkeletonMapper;  // 28 - A mapper from the ragdoll skeleton to the animation skeleton.
 		hkRefPtr<const hkaSkeletonMapper>          animationToRagdollSkeletonMapper;  // 30 - A mapper from the animation skeleton to the ragdoll skeleton.
-		hkRefPtr<hkbAnimationBindingSet>           animationBindingSet;               // 38
-		hkRefPtr<hkbCharacterData>                 data;                              // 40
-		hkRefPtr<const hkaSkeleton>                unscaledAnimationSkeleton;         // 48
-		mutable hkRefPtr<hkaMirroredSkeleton>      mirroredSkeleton;                  // 50
-		hkRefPtr<hkbSymbolIdMap>                   characterPropertyIdMap;            // 58
-		mutable hkCriticalSection*                 criticalSection;                   // 60
+		hkRefPtr<hkbAnimationBindingSet>           animationBindingSet;               // 38 - The animation bindings used for this character.  These get hooked up based on the data in hkbCharacterStringData::m_animationBundleNameData and hkbCharacterStringData::m_animationBundleFilenameData.
+		hkRefPtr<hkbCharacterData>                 data;                              // 40 - Serialized data for the character.
+		hkRefPtr<const hkaSkeleton>                unscaledAnimationSkeleton;         // 48 - The animation skeleton. If the character is scaled then this points to the unscaled version of the skeleton. If character is not scaled then this is null.
+		hkRefPtr<hkbSymbolIdMap>                   characterPropertyIdMap;            // 50 - An ID mapper from internal character property IDs to external IDs.
 	};
-	static_assert(sizeof(hkbCharacterSetup) == 0x68);
+	static_assert(sizeof(hkbCharacterSetup) == 0x58);
 }

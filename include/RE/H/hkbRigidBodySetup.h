@@ -6,18 +6,9 @@ namespace RE
 {
 	struct hkbRigidBodySetup
 	{
-		enum class Type
-		{
-			kInvalid = -1,
-			kKeyframed,
-			kDynamic,
-			kFixed,
-		};
-
 		// members
-		std::uint32_t                       collisionFilterInfo;  // 00
-		stl::enumeration<Type, std::int8_t> type;                 // 04
-		hkbShapeSetup                       shapeSetup;           // 05
+		hkbShapeSetup shapeSetup;           // 00
+		uint32_t      collisionFilterInfo;  // 08
 	};
-	static_assert(sizeof(hkbRigidBodySetup) == 0x20);
+	static_assert(sizeof(hkbRigidBodySetup) == 0xC);
 }

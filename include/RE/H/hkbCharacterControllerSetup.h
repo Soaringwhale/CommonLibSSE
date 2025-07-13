@@ -10,7 +10,8 @@ namespace RE
 	{
 		// members
 		hkbRigidBodySetup   rigidBodySetup;   // 00
-		hkReferencedObject* controllerCInfo;  // 20
+		uint8_t             pad[4];           // 0C
+		hkReferencedObject* controllerCInfo;  // 10
 	};
-	static_assert(sizeof(hkbCharacterControllerSetup) == 0x28);
+	static_assert(sizeof(hkbCharacterControllerSetup) == 0x18);
 }
