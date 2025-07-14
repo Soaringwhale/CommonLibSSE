@@ -26,7 +26,7 @@ namespace RE
 
 	float AIProcess::GetCachedHeight() const
 	{
-		return high ? high->cachedActorHeight : static_cast<float>(-1.0);
+		return high ? high->actorHeight : static_cast<float>(-1.0);
 	}
 
 	bhkCharacterController* AIProcess::GetCharController()
@@ -93,7 +93,7 @@ namespace RE
 			if (a_biped) {
 				return a_biped->root->GetObjectByName(FixedStrings::GetSingleton()->weapon);
 			} else {
-				return middleHigh->unk148;
+				return middleHigh->weaponBone1;
 			}
 		} else {
 			return nullptr;
@@ -219,7 +219,7 @@ namespace RE
 	void AIProcess::SetCachedHeight(float a_height)
 	{
 		if (high) {
-			high->cachedActorHeight = a_height;
+			high->actorHeight = a_height;
 		}
 	}
 
@@ -233,7 +233,7 @@ namespace RE
 	void AIProcess::Set3DUpdateFlag(RESET_3D_FLAGS a_flags)
 	{
 		if (middleHigh) {
-			middleHigh->update3DModel.set(a_flags);
+			middleHigh->reset3dFlags.set(a_flags);
 		}
 	}
 

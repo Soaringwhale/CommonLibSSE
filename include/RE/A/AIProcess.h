@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RE/A/ActorPackage.h"
+#include "RE/A/AITimer.h"
 #include "RE/B/BGSDefaultObjectManager.h"
 #include "RE/B/BSTArray.h"
 #include "RE/B/BSTList.h"
@@ -110,6 +111,14 @@ namespace RE
 	};
 	static_assert(sizeof(ObjectstoAcquire) == 0x28);
 
+	struct EquippedItem
+	{
+		// members
+		TESBoundObject* object;  // 00
+		BGSEquipSlot*   slot;    // 08
+	};
+	static_assert(sizeof(EquippedItem) == 0x10);
+
 	class AIProcess
 	{
 	public:
@@ -190,8 +199,8 @@ namespace RE
 		MiddleHighProcessData*                          middleHigh;                     // 008
 		HighProcessData*                                high;                           // 010
 		ActorPackage                                    currentPackage;                 // 018
-		float                                           unk048;                         // 048
-		std::uint32_t                                   unk04C;                         // 04C
+		float                                           hourLastProcessed;              // 048
+		std::uint32_t                                   dateLastProcessed;              // 04C
 		CachedValues*                                   cachedValues;                   // 050
 		std::int32_t                                    numberItemsActivate;            // 058
 		std::uint32_t                                   pad05C;                         // 05C
@@ -203,16 +212,17 @@ namespace RE
 		float                                           deathTime;                      // 094
 		float                                           trackedDamage;                  // 098
 		std::uint32_t                                   pad09C;                         // 09C
-		BSTArray<TESForm*>                              forms;                          // 0A0
-		Data0B8                                         unk0B8;                         // 0B8
+		BSTArray<EquippedItem>                          equippedForms;                  // 0A0
+		Data0B8                                         dataB8;                         // 0B8
 		TESForm*                                        equippedObjects[Hand::kTotal];  // 0F0
-		std::uint64_t                                   unk100;                         // 100
-		std::uint64_t                                   unk108;                         // 108
+		TESBoundObject*                                 itemBeingUsed;                  // 100
+		AITimer                                         combatDelayTimer;               // 108
 		RefHandle                                       followTarget;                   // 110
 		RefHandle                                       target;                         // 114
-		std::uint64_t                                   unk118;                         // 118
+		RefHandle                                       genericLocation;                // 118
+		RefHandle                                       secondGenericLocation;          // 11C
 		std::uint64_t                                   unk120;                         // 120
-		std::uint64_t                                   unk128;                         // 128
+		TESTopic*                                       speakingTopic;                  // 128
 		std::uint32_t                                   unk130;                         // 130
 		std::uint16_t                                   unk134;                         // 134
 		stl::enumeration<LowProcessFlags, std::uint8_t> lowProcessFlags;                // 136
@@ -223,7 +233,7 @@ namespace RE
 		bool                                            escortingPlayer;                // 13B
 		std::uint32_t                                   pad13C;                         // 13C
 
-	protected:
+	private:
 		void Update3DModel_Impl(Actor* a_actor);
 	};
 	static_assert(sizeof(AIProcess) == 0x140);
