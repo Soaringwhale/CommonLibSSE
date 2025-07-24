@@ -212,7 +212,7 @@ namespace RE
 				struct TintLayer
 				{
 				public:
-					enum class SkinTone : uint8_t
+					enum SkinTone : uint8_t
 					{
 						kNone = 0,
 						kLipColor = 1,
@@ -229,6 +229,8 @@ namespace RE
 						kNeck = 12,
 						kForehead = 13,
 						kDirt = 14,
+
+						Total
 					};
 
 					// members

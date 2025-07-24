@@ -240,6 +240,7 @@
 #include "RE/B/BSFaceGenManager.h"
 #include "RE/B/BSFaceGenModel.h"
 #include "RE/B/BSFaceGenNiNode.h"
+#include "RE/B/BSFaceGenUtils.h"
 #include "RE/B/BSFadeNode.h"
 #include "RE/B/BSFastNavmeshEdgeHandle.h"
 #include "RE/B/BSFile.h"

@@ -189,7 +189,7 @@ namespace RE
 		void                    SetArrested(bool a_arrested);
 		void                    SetCachedHeight(float a_height);
 		void                    SetHeadtrackTarget(Actor* a_owner, NiPoint3& a_targetPosition);
-		void                    Set3DUpdateFlag(RESET_3D_FLAGS a_flags);
+		void                    Set3DUpdateFlag(stl::enumeration<RESET_3D_FLAGS, uint8_t> a_flags);
 		bool                    SetupSpecialIdle(Actor* a_actor, DEFAULT_OBJECT a_action, TESIdleForm* a_idle, bool a_arg5, bool a_arg6, TESObjectREFR* a_target);
 		void                    StopCurrentIdle(Actor* a_actor, bool a_forceIdleStop);
 		void                    Update3DModel(Actor* a_actor);

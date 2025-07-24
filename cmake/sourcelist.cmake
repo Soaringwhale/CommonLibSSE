@@ -238,6 +238,7 @@ set(SOURCES
 	include/RE/B/BSFaceGenManager.h
 	include/RE/B/BSFaceGenModel.h
 	include/RE/B/BSFaceGenNiNode.h
+	include/RE/B/BSFaceGenUtils.h
 	include/RE/B/BSFadeNode.h
 	include/RE/B/BSFastNavmeshEdgeHandle.h
 	include/RE/B/BSFile.h
@@ -1918,6 +1919,7 @@ set(SOURCES
 	src/RE/B/BSDirectInputManager.cpp
 	src/RE/B/BSEffectShaderData.cpp
 	src/RE/B/BSExtraData.cpp
+	src/RE/B/BSFaceGenUtils.cpp
 	src/RE/B/BSFixedString.cpp
 	src/RE/B/BSGamepadDevice.cpp
 	src/RE/B/BSHandleRefObject.cpp

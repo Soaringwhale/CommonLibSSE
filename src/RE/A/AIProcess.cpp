@@ -230,10 +230,10 @@ namespace RE
 		return func(this, a_owner, a_targetPosition);
 	}
 
-	void AIProcess::Set3DUpdateFlag(RESET_3D_FLAGS a_flags)
+	void AIProcess::Set3DUpdateFlag(stl::enumeration<RESET_3D_FLAGS, uint8_t> a_flags)
 	{
 		if (middleHigh) {
-			middleHigh->reset3dFlags.set(a_flags);
+			middleHigh->reset3dFlags |= a_flags;
 		}
 	}
 

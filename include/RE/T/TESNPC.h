@@ -134,7 +134,7 @@ namespace RE
 		struct FaceData
 		{
 		public:
-			enum class Morphs : uint32_t
+			enum Morphs : uint32_t
 			{
 				kNose_LongShort = 0,
 				kNose_UpDown = 1,
