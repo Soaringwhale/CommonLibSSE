@@ -1,7 +1,7 @@
 #pragma once
 
-#include "RE/A/ActorPackage.h"
 #include "RE/A/AITimer.h"
+#include "RE/A/ActorPackage.h"
 #include "RE/B/BGSDefaultObjectManager.h"
 #include "RE/B/BSTArray.h"
 #include "RE/B/BSTList.h"
