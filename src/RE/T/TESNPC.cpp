@@ -56,6 +56,15 @@ namespace RE
 		return func(this, a_target);
 	}
 
+	void TESNPC::ClearHeadParts()
+	{
+		if (headParts) {
+			free(headParts);
+			headParts = nullptr;
+			numHeadParts = 0;
+		}
+	}
+
 	bool TESNPC::ContainsKeyword(std::string_view a_editorID)
 	{
 		if (ContainsKeywordString(a_editorID)) {
@@ -65,6 +74,20 @@ namespace RE
 			return true;
 		}
 		return false;
+	}
+
+	void TESNPC::CopyHeadPartsFrom(BSScrapArray<BGSHeadPart*>& array)
+	{
+		using func_t = decltype(&TESNPC::CopyHeadPartsFrom);
+		REL::Relocation<func_t> func{ RELOCATION_ID(24245, 24749) };
+		return func(this, array);
+	}
+
+	void TESNPC::GenerateFlattenedHeadPartArray(BSScrapArray<BGSHeadPart*>& ans) const
+	{
+		using func_t = decltype(&TESNPC::GenerateFlattenedHeadPartArray);
+		REL::Relocation<func_t> func{ RELOCATION_ID(24226, 24730) };
+		return func(this, ans);
 	}
 
 	BGSHeadPart** TESNPC::GetBaseOverlays() const
@@ -204,6 +227,13 @@ namespace RE
 		return std::ranges::any_of(factions, [&](const auto& faction) {
 			return faction.faction == a_faction && faction.rank > -1;
 		});
+	}
+
+	bool TESNPC::QUsingAlternateHeadPartList() const
+	{
+		using func_t = decltype(&TESNPC::QUsingAlternateHeadPartList);
+		REL::Relocation<func_t> func{ RELOCATION_ID(24274, 0) };
+		return func(this);
 	}
 
 	bool TESNPC::RemovePerk(BGSPerk* a_perk)

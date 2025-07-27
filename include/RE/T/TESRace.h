@@ -306,6 +306,8 @@ namespace RE
 
 		[[nodiscard]] bool AllowsPCDialogue() const;
 		[[nodiscard]] bool AllowsPickpocket() const;
+		FaceRelatedData::TintAsset* getTintAsset(SEX sex, FaceRelatedData::TintAsset::TintLayer::SkinTone tone,
+			int32_t ind = 0) const;
 		[[nodiscard]] bool IsChildRace() const;
 
 		// members
