@@ -304,11 +304,11 @@ namespace RE
 		const char* GetFormEditorID() const override;             // 32 - { return formEditorID.c_str(); }
 		bool        SetFormEditorID(const char* a_str) override;  // 33 - { formEditorID = a_str; }
 
-		[[nodiscard]] bool AllowsPCDialogue() const;
-		[[nodiscard]] bool AllowsPickpocket() const;
+		[[nodiscard]] bool          AllowsPCDialogue() const;
+		[[nodiscard]] bool          AllowsPickpocket() const;
 		FaceRelatedData::TintAsset* getTintAsset(SEX sex, FaceRelatedData::TintAsset::TintLayer::SkinTone tone,
 			int32_t ind = 0) const;
-		[[nodiscard]] bool IsChildRace() const;
+		[[nodiscard]] bool          IsChildRace() const;
 
 		// members
 		TESModel                                       skeletonModels[SEXES::kTotal];                                               // 098 - ANAM
