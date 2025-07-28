@@ -14,7 +14,8 @@ namespace RE
 		kRecycle = 5,
 		kRestrained = 6,
 		kEssentialDown = 7,
-		kBleedout = 8
+		kBleedout = 8,
+		kDontMove = 9,
 	};
 
 	enum class ATTACK_STATE_ENUM : std::uint32_t

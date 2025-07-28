@@ -147,7 +147,7 @@ namespace RE
 		BSTArray<CommandedActorData>                   commandedActors;             // 100
 		NiNode*                                        damageRootNode[6];           // 118
 		NiAVObject*                                    weaponBone1;                 // 148
-		NiNode*                                        weaponBone2;                 // 150
+		NiAVObject*                                    weaponBone2;                 // 150
 		NiAVObject*                                    headNode;                    // 158
 		NiAVObject*                                    torsoNode;                   // 160
 		NiAVObject*                                    faceTargetSourceNode;        // 168
