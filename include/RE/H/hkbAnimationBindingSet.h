@@ -9,7 +9,6 @@ namespace RE
 	class hkRefPtr;
 
 	class hkaAnimationBinding;
-	class hkbAssetBundle;
 
 	class hkbAnimationBindingWithTriggers : public RE::hkReferencedObject
 	{
@@ -38,9 +37,18 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_hkbAnimationBindingSet;
 		inline static constexpr auto VTABLE = VTABLE_hkbAnimationBindingSet;
 
+		hkbAnimationBindingSet()
+		{
+			stl::emplace_vtable(this);
+		}
+
+		~hkbAnimationBindingSet() override = default;
+
 		// members
-		hkArray<hkbAnimationBindingWithTriggers*> bindings;      // 10 - An array of bindings (a map from integers to bindings).
-		hkArray<hkRefPtr<hkbAssetBundle>>         assetBundles;  // 20 - An array of bundles from which the bindings were loaded from.
+
+		/// An array of bindings (a map from integers to bindings).  A reference will be removed from each
+		/// element on destruction, so you are responsible for adding referenced when populating this array.
+		hkArray<hkbAnimationBindingWithTriggers*> bindings;
 	};
-	static_assert(sizeof(hkbAnimationBindingSet) == 0x30);
+	static_assert(sizeof(hkbAnimationBindingSet) == 0x20);
 }

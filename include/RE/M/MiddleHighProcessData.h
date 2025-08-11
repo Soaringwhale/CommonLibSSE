@@ -145,7 +145,7 @@ namespace RE
 		std::uint32_t                                  pad0F4;                      // 0F4
 		BSTSmartPointer<AnimResponse>                  animResponse;                // 0F8
 		BSTArray<CommandedActorData>                   commandedActors;             // 100
-		NiNode*                                        damageRootNode[6];           // 118
+		NiNode*                                        damageRootNode[6];           // 118 - BGSBodyPartDefs::LIMB_ENUM
 		NiAVObject*                                    weaponBone1;                 // 148
 		NiAVObject*                                    weaponBone2;                 // 150
 		NiAVObject*                                    headNode;                    // 158

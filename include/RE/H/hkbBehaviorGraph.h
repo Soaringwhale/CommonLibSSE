@@ -4,6 +4,7 @@
 #include "RE/H/hkMap.h"
 #include "RE/H/hkRefVariant.h"
 #include "RE/H/hkbGenerator.h"
+#include "RE/H/hkbSymbolIdMap.h"
 
 namespace RE
 {
@@ -84,6 +85,7 @@ namespace RE
 		hkbNodeInfo&       accessNodeInfoByTemplate(hkbNode* nodeTemplate);
 		hkbNodeInfo&       adjust_info_usesomeind(hkbNodeInfo& info) const;
 		const hkbNodeInfo& adjust_info_usesomeind(const hkbNodeInfo& info) const;
+		hkbBehaviorGraph*  cloneDeep(bool copyAnimationBindings = true, bool copyIdMappers = true, bool copyReferencedBehaviors = true, void* vtableClassRegistry = nullptr, void* finishLoadedObjectRegistry = nullptr, hkbGenerator* replacementRootGenerator = nullptr, void* behaviorToCloneMap = nullptr);
 		hkbNode*           getNodeClone(hkbNode* nodeTemplate) const;
 		const hkbNodeInfo& getNodeInfoByClone(hkbNode* nodeClone) const;
 		const hkbNodeInfo& getNodeInfoByTemplate(hkbNode* nodeTemplate) const;

@@ -33,10 +33,7 @@ namespace RE
 		kBowReleasing = 11,
 		kBowReleased = 12,
 		kBowNextAttack = 13,
-		kBowFollowThrough = 14,
-		kFire = 15,
-		kFiring = 16,
-		kFired = 17
+		kBowFollowThrough = 14
 	};
 
 	enum class FLY_STATE : std::uint32_t

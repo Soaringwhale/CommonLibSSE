@@ -336,7 +336,11 @@ set(SOURCES
 	include/RE/B/BSReloadShaderI.h
 	include/RE/B/BSRenderPass.h
 	include/RE/B/BSResourceAssetLoader.h
+	include/RE/B/BSResourceEntry.h
+	include/RE/B/BSResourceEntryCache.h
 	include/RE/B/BSResourceEntryDB.h
+	include/RE/B/BSResourceEntryQueue.h
+	include/RE/B/BSResourceHandle.h
 	include/RE/B/BSResourceNiBinaryStream.h
 	include/RE/B/BSResponse.h
 	include/RE/B/BSRotAccumTransfInterpolator.h
@@ -414,6 +418,7 @@ set(SOURCES
 	include/RE/B/BSXAudio2GameSound.h
 	include/RE/B/BSXFlags.h
 	include/RE/B/BShkbAnimationGraph.h
+	include/RE/B/BShkbHkxDB.h
 	include/RE/B/BShkbUtils.h
 	include/RE/B/BSiStateTaggingGenerator.h
 	include/RE/B/BanishEffect.h
@@ -1036,6 +1041,7 @@ set(SOURCES
 	include/RE/H/hkContactPoint.h
 	include/RE/H/hkContainerAllocators.h
 	include/RE/H/hkFinishLoadedObjectFlag.h
+	include/RE/H/hkLoader.h
 	include/RE/H/hkMap.h
 	include/RE/H/hkMatrix3.h
 	include/RE/H/hkMemoryAllocator.h
@@ -1043,6 +1049,7 @@ set(SOURCES
 	include/RE/H/hkMoppBvTreeShapeBase.h
 	include/RE/H/hkMotionState.h
 	include/RE/H/hkMultiThreadCheck.h
+	include/RE/H/hkRootLevelContainer.h
 	include/RE/H/hkQsTransform.h
 	include/RE/H/hkQuaternion.h
 	include/RE/H/hkQueue.h
@@ -1060,6 +1067,7 @@ set(SOURCES
 	include/RE/H/hkaAnimatedReferenceFrame.h
 	include/RE/H/hkaAnimation.h
 	include/RE/H/hkaAnimationBinding.h
+	include/RE/H/hkaAnimationContainer.h
 	include/RE/H/hkaAnimationControl.h
 	include/RE/H/hkaAnnotationTrack.h
 	include/RE/H/hkaBone.h
@@ -1095,6 +1103,7 @@ set(SOURCES
 	include/RE/H/hkbEventBase.h
 	include/RE/H/hkbEventDrivenModifier.h
 	include/RE/H/hkbEventInfo.h
+	include/RE/H/hkbEventPayload.h
 	include/RE/H/hkbEventQueue.h
 	include/RE/H/hkbExpressionData.h
 	include/RE/H/hkbExpressionDataArray.h
@@ -1115,6 +1124,7 @@ set(SOURCES
 	include/RE/H/hkbShapeSetup.h
 	include/RE/H/hkbStateMachine.h
 	include/RE/H/hkbSymbolIdMap.h
+	include/RE/H/hkbSymbolLinker.h
 	include/RE/H/hkbTransitionEffect.h
 	include/RE/H/hkbTwistModifier.h
 	include/RE/H/hkbUtils.h
@@ -1941,6 +1951,7 @@ set(SOURCES
 	src/RE/B/BSPathingStreamSimpleBufferRead.cpp
 	src/RE/B/BSPathingStreamSimpleBufferWrite.cpp
 	src/RE/B/BSPointerHandle.cpp
+	src/RE/B/BSResourceAssetLoader.cpp
 	src/RE/B/BSResourceNiBinaryStream.cpp
 	src/RE/B/BSResponse.cpp
 	src/RE/B/BSScaleformManager.cpp
