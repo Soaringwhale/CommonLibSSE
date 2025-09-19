@@ -134,27 +134,27 @@ namespace RE
 
 	class PlayerCharacter :
 		public Character,                            // 000
-		public BSTEventSource<BGSActorCellEvent>,    // 2D0
-		public BSTEventSource<BGSActorDeathEvent>,   // 328
-		public BSTEventSource<PositionPlayerEvent>,  // 380
 		public BSTEventSink<MenuOpenCloseEvent>,     // 2B0
 		public BSTEventSink<MenuModeChangeEvent>,    // 2B8
 		public BSTEventSink<UserEventEnabledEvent>,  // 2C0
 		public BSTEventSink<TESTrackedStatsEvent>    // 2C8
+		public BSTEventSource<BGSActorCellEvent>,    // 2D0
+		public BSTEventSource<BGSActorDeathEvent>,   // 328
+		public BSTEventSource<PositionPlayerEvent>,  // 380
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_PlayerCharacter;
 		inline static constexpr auto VTABLE = VTABLE_PlayerCharacter;
 		inline static constexpr auto FORMTYPE = FormType::ActorCharacter;
 
-		enum class EventType
+		enum class EventType : uint32_t
 		{
 			kThief = 3,
 			kContainer = 5,
 			kDeadBody = 6
 		};
 
-		enum class GrabbingType
+		enum class GrabbingType : uint32_t
 		{
 			kNone = 0,
 			kNormal,
@@ -179,38 +179,38 @@ namespace RE
 			bool          hasQueuedEquipAnim: 1;             // 0:5 - Set true in `OnItemEquipped` if a_playAnim && isPaused, false once out of menu
 			bool          escaping: 1;                       // 0:6 - Is Escaping from jail
 			bool          forceQuestTargetRepath: 1;         // 0:7 - Updates quest target in compass
-			bool          unk1_0: 1;                         // 1:0
-			bool          unk1_1: 1;                         // 1:1
+			bool          unk1_0: 1;                         // 1:0 - 14069F57B
+			bool          unk1_1: 1;                         // 1:1 - 1406B08B0
 			bool          sleeping: 1;                       // 1:2
 			bool          unk1_3: 1;                         // 1:3
-			bool          unk1_4: 1;                         // 1:4
-			bool          unk1_5: 1;                         // 1:5
+			bool          unk1_4: 1;                         // 1:4 - 14069D838
+			bool          unk1_5: 1;                         // 1:5 - 1406B7A77 1406B81E8
 			bool          greetingPlayer: 1;                 // 1:6 - NPC greeting player
-			bool          unk1_7: 1;                         // 1:7
+			bool          beenAttacked: 1;                   // 1:7
 			bool          unk2_0: 1;                         // 2:0
 			bool          aiControlledToPos: 1;              // 2:1 - Guess from FO4, confirmed aiControlled related
 			bool          aiControlledFromPos: 1;            // 2:2 - Guess from FO4, confirmed aiControlled related
 			bool          aiControlledPackage: 1;            // 2:3 - Guess from FO4, confirmed aiControlled related
 			bool          returnToLastKnownGoodPosition: 1;  // 2:4 - return to lastKnownGoodPosition on next Update
 			bool          isBeingChased: 1;                  // 2:5 - unused along with chaseTimer
-			bool          unk2_6: 1;                         // 2:6
-			bool          unk2_7: 1;                         // 2:7
+			bool          young: 1;                          // 2:6
+			bool          toddler: 1;                        // 2:7
 			bool          isInThirdPersonMode: 1;            // 3:0
 			bool          unk3_1: 1;                         // 3:1
-			bool          unk3_2: 1;                         // 3:2
-			bool          unk3_3: 1;                         // 3:3
+			bool          tutorialWeaponChargeLeft: 1;       // 3:2
+			bool          tutorialWeaponChargeRight: 1;      // 3:3
 			bool          target3DDistant: 1;                // 3:4 - Distance from object in crosshair > 1000
 			bool          isInCombat: 1;                     // 3:5
 			bool          attemptedYieldInCurrentCombat: 1;  // 3:6 - Set when yielding to guard for arrest dialogue, prevents multiple arrest dialogues
 			bool          unk3_7: 1;                         // 3:7
 			bool          isLoading: 1;                      // 4:0 - Is player loading a new area
 			bool          shouldUpdateCrosshair: 1;          // 4:1 - If forced off without letting Skyrim update this, crosshair UI won't update,
-			bool          unk4_2: 1;                         // 4:2
+			bool          reportCrime: 1;                    // 4:2
 			bool          healthTutorialShown: 1;            // 4:3
 			bool          magickaTutorialShown: 1;           // 4:4
 			bool          staminaTutorialShown: 1;           // 4:5
 			bool          goToJailQueued: 1;                 // 4:6 - Briefly set
-			bool          unk4_7: 1;                         // 4:7
+			bool          doorAutosave: 1;                   // 4:7
 			bool          isSprinting: 1;                    // 5:0
 			bool          isSungazing: 1;                    // 5:1 - Is staring at the sun
 			bool          dragonRideTargetLocked: 1;         // 5:2
@@ -526,8 +526,8 @@ namespace RE
 		TESImageSpaceModifier*                                  sunGazeImageSpaceModifier;                    // AE0
 		ActorValue                                              advanceSkill;                                 // AE8 - advance values set, then cleared in PlayerSkills::ModSkillPoints surronding ApplyPerkEntry
 		std::uint32_t                                           advanceAction;                                // AEC - Part of AE8 and 9F0
-		stl::enumeration<DEFAULT_OBJECT, std::int32_t>          animationObjectAction;                        // AF0
-		stl::enumeration<GrabbingType, std::uint32_t>           grabType;                                     // AF4
+		DEFAULT_OBJECT                                          animationObjectAction;                        // AF0
+		GrabbingType                                            grabType;                                     // AF4
 		std::int32_t                                            difficulty;                                   // AF8
 		ActorHandle                                             assumedIdentity;                              // AFC
 		std::int8_t                                             murder;                                       // B00

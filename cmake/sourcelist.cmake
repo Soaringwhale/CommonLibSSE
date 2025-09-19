@@ -1049,13 +1049,13 @@ set(SOURCES
 	include/RE/H/hkMoppBvTreeShapeBase.h
 	include/RE/H/hkMotionState.h
 	include/RE/H/hkMultiThreadCheck.h
-	include/RE/H/hkRootLevelContainer.h
 	include/RE/H/hkQsTransform.h
 	include/RE/H/hkQuaternion.h
 	include/RE/H/hkQueue.h
 	include/RE/H/hkRefPtr.h
 	include/RE/H/hkRefVariant.h
 	include/RE/H/hkReferencedObject.h
+	include/RE/H/hkRootLevelContainer.h
 	include/RE/H/hkRotation.h
 	include/RE/H/hkSmallArray.h
 	include/RE/H/hkSseMathTypes.h
