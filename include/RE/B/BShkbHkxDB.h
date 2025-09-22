@@ -1,10 +1,10 @@
 #pragma once
 
 #include "RE/A/AnimationFileManagerSingleton.h"
-#include "RE/B/BSTHashMap.h"
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSResourceEntryDB.h"
 #include "RE/B/BSResourceHandle.h"
+#include "RE/B/BSTHashMap.h"
 #include "RE/H/hkLoader.h"
 
 namespace RE

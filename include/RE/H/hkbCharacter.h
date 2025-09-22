@@ -34,14 +34,14 @@ namespace RE
 		virtual void getNearbyRigidBodies(const hkVector4& sensorPosWS, float maxDistance, void* world, hkArray<hkpRigidBody*>& rigidBodies, uint32_t collisionFilterInfo, bool excludeThisCharacter, bool inCharactersOnly);  // 03
 
 		// TODO: implement
-		virtual void getNearbyCharacters(float maxDistance, hkArray<hkbCharacter*>& characters);                                                                                                                               // 04
+		virtual void getNearbyCharacters(float maxDistance, hkArray<hkbCharacter*>& characters);  // 04
 
 		void clearPoseLocal();
 		/// Get the event queue that stores events to be processed later by the character.
 		hkbEventQueue* getEventQueue() const;
 		hkQsTransform* getPoseLocal();
-		void initPoseLocal();
-		void setWorldFromModel(hkQsTransform* new_worldFromModel, bool new_deleteWorldFromModel);
+		void           initPoseLocal();
+		void           setWorldFromModel(hkQsTransform* new_worldFromModel, bool new_deleteWorldFromModel);
 
 		// members
 		hkArray<hkbCharacter*>           nearbyCharacters;               // 10
