@@ -137,10 +137,10 @@ namespace RE
 		public BSTEventSink<MenuOpenCloseEvent>,     // 2B0
 		public BSTEventSink<MenuModeChangeEvent>,    // 2B8
 		public BSTEventSink<UserEventEnabledEvent>,  // 2C0
-		public BSTEventSink<TESTrackedStatsEvent>    // 2C8
+		public BSTEventSink<TESTrackedStatsEvent>,   // 2C8
 		public BSTEventSource<BGSActorCellEvent>,    // 2D0
 		public BSTEventSource<BGSActorDeathEvent>,   // 328
-		public BSTEventSource<PositionPlayerEvent>,  // 380
+		public BSTEventSource<PositionPlayerEvent>   // 380
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_PlayerCharacter;
