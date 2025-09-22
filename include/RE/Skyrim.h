@@ -363,6 +363,7 @@
 #include "RE/B/BSSmallBlockAllocator.h"
 #include "RE/B/BSSoundHandle.h"
 #include "RE/B/BSSpeedSamplerDBManager.h"
+#include "RE/B/BSSpeedSamplerModifier.h"
 #include "RE/B/BSStorage.h"
 #include "RE/B/BSStream.h"
 #include "RE/B/BSString.h"
