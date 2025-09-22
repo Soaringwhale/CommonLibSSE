@@ -1,8 +1,8 @@
 #pragma once
 
+#include "RE/B/BSResourceHandle.h"
 #include "RE/B/BSTArray.h"
 #include "RE/H/hkbAssetLoader.h"
-#include "RE/B/BSResourceHandle.h"
 
 namespace RE
 {

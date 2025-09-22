@@ -72,7 +72,7 @@ namespace RE
 	void* operator new(size_t n, void* p)                                                           \
 	{                                                                                               \
 		assert(n == sizeof(CLASS_TYPE));                                                            \
-		n;\
+		n;                                                                                          \
 		return p;                                                                                   \
 	}                                                                                               \
 	void* operator new[](size_t, void* p) { return p; }                                             \
