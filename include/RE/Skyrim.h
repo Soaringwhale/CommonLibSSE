@@ -1128,6 +1128,7 @@
 #include "RE/H/hkbStateMachine.h"
 #include "RE/H/hkbSymbolIdMap.h"
 #include "RE/H/hkbSymbolLinker.h"
+#include "RE/H/hkbTimerModifier.h"
 #include "RE/H/hkbTransitionEffect.h"
 #include "RE/H/hkbTwistModifier.h"
 #include "RE/H/hkbUtils.h"
