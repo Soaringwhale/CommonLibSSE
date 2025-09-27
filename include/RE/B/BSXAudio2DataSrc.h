@@ -4,20 +4,19 @@ namespace RE
 {
 	struct WAVFORMATEX
 	{
-		unsigned short  wFormatTag;      /* format type */
-		unsigned short  nChannels;       /* number of channels (i.e. mono, stereo...) */
-		unsigned long   nSamplesPerSec;  /* sample rate */
-		unsigned long   nAvgBytesPerSec; /* for buffer estimation */
-		unsigned short  nBlockAlign;     /* block size of data */
-		unsigned short  wBitsPerSample;  /* number of bits per sample of mono data */
-		unsigned short  cbSize;          /* the count in bytes of the size of */
-							   /* extra information (after cbSize) */
+		uint16_t wFormatTag;      /* format type */
+		uint16_t nChannels;       /* number of channels (i.e. mono, stereo...) */
+		uint32_t nSamplesPerSec;  /* sample rate */
+		uint32_t nAvgBytesPerSec; /* for buffer estimation */
+		uint16_t nBlockAlign;     /* block size of data */
+		uint16_t wBitsPerSample;  /* number of bits per sample of mono data */
+		uint16_t cbSize;          /* the count in bytes of the size of extra information */
 	};
 	static_assert(sizeof(WAVFORMATEX) == 0x14);
 
-  struct RiffFile__RiffMetaData
+	struct RiffFile__RiffMetaData
 	{
-    public:
+      public:
 		WAVFORMATEX*    waveFormat;     // 00
 		uint32_t        dataOffset;     // 08  
 		uint32_t        dataSize;       // 0C - audioBytes
@@ -33,32 +32,32 @@ namespace RE
 	class BSXAudio2DataSrc
 	{
 	  public:
-		void*                  vftable;
-		uint32_t               refCount_8;
-		int                    flags;
-		void*                  stream;
-		int16_t                field_18;
-		WAVFORMATEX            SourceFormat;
-		char                   pad32[6];
-		int                    field_38;
-		int                    pad3C;
-		int                    playBegin;
-		int                    pad44;
-		int                    start_sample;
-		int                    samples_count;
-		int64_t                field_50;
-		RiffFile__RiffMetaData riffMetadata;
-		int64_t                field_80;
-		int                    field_88;
-		int                    pad8C;
-		int64_t                field_90;
-		int                    field_98;
-		int                    field_9C;
-		int64_t                field_A0;
-		uint32_t*              pDecodedPacketCumulativeBytes;
-		int                    AudioBytes;
-		uint32_t               padB4;
-		char*                  pAudioData;
+		void*                  vftable;							 // 00
+		uint32_t               refCount;						 // 08
+		int                    flags;							 // 0C
+		void*                  stream;							 // 10
+		int16_t                unk18;							 // 18
+		WAVFORMATEX            SourceFormat;					 // 1C
+		char                   unk32[6];						 // 30
+		int                    unk38;							 // 38
+		int                    unk3C;							 // 3C
+		int                    playBegin;						 // 40
+		int                    unk44;							 // 44
+		int                    start_sample;					 // 48
+		int                    samples_count;					 // 4C
+		int64_t                unk50;							 // 50
+		RiffFile__RiffMetaData riffMetadata;					 // 58
+		int64_t                unk80;							 // 80
+		int                    unk88;							 // 88
+		int                    pad8C;							 // 8C
+		int64_t                unk90;							 // 90
+		int                    unk98;							 // 98
+		int                    unk9C;							 // 9C
+		int64_t                unkA0;							 // A0
+		uint32_t*              pDecodedPacketCumulativeBytes;    // A8
+		int                    AudioBytes;						 // B0
+		uint32_t               unkB4;							 // B4
+		char*                  pAudioData;						 // B8
 	};
 	static_assert(sizeof(BSXAudio2DataSrc) == 0xC0);
 }
