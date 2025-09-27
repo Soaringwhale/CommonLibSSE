@@ -4,7 +4,6 @@
 
 namespace RE
 {
-	class BGSStandardSoundDef;
 	class BSISoundOutputModel;
 	class BSISoundCategory;
 	struct BSAudioMonitor_Request
@@ -38,7 +37,7 @@ namespace RE
 			int                                                field;                    // 0C
 			int                                                AlternateSoundFormId;     // 10
 			int                                                flags;                    // 14
-			BGSStandardSoundDef::SoundPlaybackCharacteristics* PlaybackCharacteristics;  // 18
+			BSIPlaybackCharacteristics*                        PlaybackCharacteristics;  // 18
 			BSISoundOutputModel*                               OutputModel;              // 20
 			BSISoundCategory*                                  soundCategory;            // 28
 			BSTSmallArray<BSAudioMonitor_Request, 2>           requests;                 // 30
