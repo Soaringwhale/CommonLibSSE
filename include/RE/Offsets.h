@@ -1160,6 +1160,28 @@ namespace RE
 			inline constexpr REL::ID Singleton(static_cast<std::uint64_t>(516458));
 		}
 
+		namespace BSXAudio2GameSound
+		{
+			inline constexpr REL::ID OutputModelChangedImpl(static_cast<std::uint64_t>(66780));
+			inline constexpr REL::ID SyncOpen(static_cast<std::uint64_t>(66757));
+			inline constexpr REL::ID StartAsyncOpen(static_cast<std::uint64_t>(66758));
+			inline constexpr REL::ID TestAsyncOpenReady(static_cast<std::uint64_t>(66759));
+			inline constexpr REL::ID FinishAsyncOpen(static_cast<std::uint64_t>(66760));
+			inline constexpr REL::ID HandleExternalOpen(static_cast<std::uint64_t>(66761));
+			inline constexpr REL::ID Prepare(static_cast<std::uint64_t>(66762));
+			inline constexpr REL::ID Copy(static_cast<std::uint64_t>(66763));
+			inline constexpr REL::ID UpdateEmitterPosition(static_cast<std::uint64_t>(66764));
+			inline constexpr REL::ID Update(static_cast<std::uint64_t>(66765));
+			inline constexpr REL::ID SetEmitterPositionImpl(static_cast<std::uint64_t>(66766));
+			inline constexpr REL::ID GetEmitterPositionImpl(static_cast<std::uint64_t>(66767));
+			inline constexpr REL::ID DoApplyFrequency(static_cast<std::uint64_t>(66770));
+			inline constexpr REL::ID SeekInSamples(static_cast<std::uint64_t>(66771));
+			inline constexpr REL::ID PlayImpl(static_cast<std::uint64_t>(66776));
+			inline constexpr REL::ID PauseImpl(static_cast<std::uint64_t>(66777));
+			inline constexpr REL::ID StopImpl(static_cast<std::uint64_t>(66778));
+			inline constexpr REL::ID SetVolumeImpl(static_cast<std::uint64_t>(66779));
+		}
+
 		inline constexpr REL::ID CreateRefHandle(static_cast<std::uint64_t>(12193));
 		inline constexpr REL::ID DebugNotification(static_cast<std::uint64_t>(52050));
 		inline constexpr REL::ID LookupReferenceByHandle(static_cast<std::uint64_t>(12204));
