@@ -1,7 +1,16 @@
 #pragma once
+#include "RE/I/ID.h"
+#include "RE/B/BSTArray.h"
 
 namespace RE
 {
+	class BGSStandardSoundDef;
+	class BSISoundOutputModel;
+	class BSISoundCategory;
+	struct BSAudioMonitor_Request
+	{
+		int32_t unk0;
+	};
 	class BSISoundDescriptor
 	{
 	public:
@@ -22,12 +31,25 @@ namespace RE
 			virtual std::uint8_t  GetDBVariance() = 0;         // 05
 		};
 		static_assert(sizeof(BSIPlaybackCharacteristics) == 0x8);
+ 
+		struct Resolution
+		{
+			RE::BSResource::ID                                 resource;                 // 00
+			int                                                field;                    // 0C
+			int                                                AlternateSoundFormId;     // 10
+			int                                                flags;                    // 14
+			BGSStandardSoundDef::SoundPlaybackCharacteristics* PlaybackCharacteristics;  // 18
+			BSISoundOutputModel*                               OutputModel;              // 20
+			BSISoundCategory*                                  soundCategory;            // 28
+			BSTSmallArray<BSAudioMonitor_Request, 2>           requests;                 // 30
+		};
+		static_assert(sizeof(Resolution) == 0x48);
 
 		virtual ~BSISoundDescriptor();  // 00
 
 		// add
-		virtual void Unk_01(void) = 0;  // 01
-		virtual void Unk_02(void) = 0;  // 02
+		virtual bool DoResolve (Resolution &res) = 0;  // 01
+		virtual void Unk_02(void) = 0;                 // 02
 	};
 	static_assert(sizeof(BSISoundDescriptor) == 0x8);
 }
