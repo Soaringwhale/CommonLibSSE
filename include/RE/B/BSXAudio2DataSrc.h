@@ -37,7 +37,7 @@ namespace RE
 		int                    flags;							 // 0C
 		void*                  stream;							 // 10
 		int16_t                unk18;							 // 18
-		WAVFORMATEX            SourceFormat;					 // 1C
+		WAVFORMATEX            sourceFormat;					 // 1C
 		char                   unk32[6];						 // 30
 		int                    unk38;							 // 38
 		int                    unk3C;							 // 3C
