@@ -8,6 +8,18 @@ namespace RE
 	class hkbTwistModifier : public hkbModifier
 	{
 	public:
+		enum class SetAngleMethod
+		{
+			LINEAR = 0x0,
+			RAMPED = 0x1,
+		};
+
+		enum class RotationAxisCoordinates
+		{
+			ROTATION_AXIS_IN_MODEL_COORDINATES = 0x0,
+			ROTATION_AXIS_IN_LOCAL_COORDINATES = 0x1,
+		};
+
 		// members
 		hkVector4        axisOfRotation;           // 50 - The axis of rotation
 		float            twistAngle;               // 60 - The total twist angle to apply to chain of bones
