@@ -1,7 +1,14 @@
 #pragma once
 
+#include "RE/I/ID.h"
+#include "RE/N/NiPoint3.h"
+
 namespace RE
 {
+	class NiAVObject;
+	class BSISoundCategory;
+	class BSISoundOutputModel;
+
 	enum SOUND_MSG : __int32
 	{
 		SOUND_MSG_StopAudioThread = 0x2,
