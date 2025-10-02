@@ -230,6 +230,7 @@ set(SOURCES
 	include/RE/B/BSEffectShaderData.h
 	include/RE/B/BSEffectShaderMaterial.h
 	include/RE/B/BSEffectShaderProperty.h
+	include/RE/B/BSEventEveryNEventsModifier.h
 	include/RE/B/BSEventOnDeactivateModifier.h
 	include/RE/B/BSEventOnFalseToTrueModifier.h
 	include/RE/B/BSExtraData.h

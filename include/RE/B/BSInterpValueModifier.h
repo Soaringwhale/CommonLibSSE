@@ -7,6 +7,9 @@ namespace RE
 	class BSInterpValueModifier : public hkbModifier
 	{
 	public:
+		inline static constexpr auto RTTI = RTTI_BSInterpValueModifier;
+		inline static constexpr auto VTABLE = VTABLE_BSInterpValueModifier;
+
 		// members
 		float source;    // 50
 		float target;    // 54

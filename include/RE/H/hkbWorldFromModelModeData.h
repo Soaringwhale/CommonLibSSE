@@ -29,11 +29,11 @@ namespace RE
 		};
 
 		// members
-		int16_t                                       poseMatchingBone0;  // 00 - A bone to use for pose matching used when computing the world-from-model for the ragdoll.
-		int16_t                                       poseMatchingBone1;  // 02 - A bone to use for pose matching used when computing the world-from-model for the ragdoll.
-		int16_t                                       poseMatchingBone2;  // 04 - A bone to use for pose matching used when computing the world-from-model for the ragdoll.
-		stl::enumeration<WorldFromModelMode, uint8_t> mode;               // 06 - How to treat the world-from-model when using the powered ragdoll controller.
-		uint8_t                                       pad7[1];            // 07
+		int16_t            poseMatchingBone0;  // 00 - A bone to use for pose matching used when computing the world-from-model for the ragdoll.
+		int16_t            poseMatchingBone1;  // 02 - A bone to use for pose matching used when computing the world-from-model for the ragdoll.
+		int16_t            poseMatchingBone2;  // 04 - A bone to use for pose matching used when computing the world-from-model for the ragdoll.
+		WorldFromModelMode mode;               // 06 - How to treat the world-from-model when using the powered ragdoll controller.
+		uint8_t            pad7[1];            // 07
 	};
 	static_assert(sizeof(hkbWorldFromModelModeData) == 0x8);
 }

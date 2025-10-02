@@ -21,11 +21,11 @@ namespace RE
 		};
 
 		// members
-		float                                     upperBound;  // 00 - The highest value in this range.  The lowest value of this range is the upperBound from the previous range.
-		uint8_t                                   pad04[4];    // 04
-		hkbEventProperty                          event;       // 08
-		stl::enumeration<EventRangeMode, uint8_t> eventMode;   // 18 - Under what circumstances to send the event.
-		uint8_t                                   pad19[7];    // 19
+		float            upperBound;  // 00 - The highest value in this range.  The lowest value of this range is the upperBound from the previous range.
+		uint8_t          pad04[4];    // 04
+		hkbEventProperty event;       // 08
+		EventRangeMode   eventMode;   // 18 - Under what circumstances to send the event.
+		uint8_t          pad19[7];    // 19
 	};
 	static_assert(sizeof(hkbEventRangeData) == 0x20);
 
@@ -37,7 +37,7 @@ namespace RE
 		inline static constexpr auto VTABLE = VTABLE_hkbEventRangeDataArray;
 
 		// members
-		hkArray<hkbEventRangeData> m_eventData;  // 10 - A series of intervals, each of which has an event associated with it. Note that these must be in increasing order.
+		hkArray<hkbEventRangeData> eventData;  // 10 - A series of intervals, each of which has an event associated with it. Note that these must be in increasing order.
 	};
 	static_assert(sizeof(hkbEventRangeDataArray) == 0x20);
 

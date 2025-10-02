@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RE/H/hkQsTransform.h"
 #include "RE/H/hkbGenerator.h"
 
 namespace RE
@@ -9,25 +10,34 @@ namespace RE
 	class BSSynchronizedClipGenerator : public hkbGenerator
 	{
 	public:
+		inline static constexpr auto RTTI = RTTI_BSSynchronizedClipGenerator;
+		inline static constexpr auto VTABLE = VTABLE_BSSynchronizedClipGenerator;
+
 		// members
-		uint64_t          unk48;                         // 048
+		uint8_t           pad48[8];                      // 048
 		hkbClipGenerator* pClipGenerator;                // 050
 		const char*       SyncAnimPrefix;                // 058
 		bool              bSyncClipIgnoreMarkPlacement;  // 060
-		char              pad61[3];                      // 061
+		uint8_t           pad61[3];                      // 061
 		float             fGetToMarkTime;                // 064
 		float             fMarkErrorThreshold;           // 068
-		uint16_t          field_6C;                      // 06C
+		bool              bLeadCharacter;                // 06C
+		bool              bReorientSupportChar;          // 06D
 		bool              bApplyMotionFromRoot;          // 06E
 		uint8_t           pad_6F;                        // 06F
-		uint8_t           unk70[0x110 - 0x70];           // 070
+		void*             pSyncScene;                    // 070
+		uint8_t           pad78[8];                      // 078
+		hkQsTransform     StartMarkWS;                   // 080
+		hkQsTransform     EndMarkWS;                     // 0B0
+		hkQsTransform     StartMarkMS;                   // 0E0
 		float             fCurrentLerp;                  // 110
-		uint32_t          field_114;                     // 114
-		uint64_t          field_118;                     // 118
-		uint64_t          field_120;                     // 120
-		uint16_t          field_128;                     // 128
-		uint16_t          field_12A;                     // 12A
-		uint8_t           field_12C;                     // 12C
+		uint8_t           pad_114[4];                    // 114
+		void*             pLocalSyncBinding;             // 118
+		void*             pEventMap;                     // 120
+		int16_t           sAnimationBindingIndex;        // 128
+		bool              bAtMark;                       // 12A
+		bool              bAllCharactersInScene;         // 12B
+		bool              bAllCharactersAtMarks;         // 12C
 		uint8_t           pad12D[3];                     // 12D
 	};
 	static_assert(sizeof(BSSynchronizedClipGenerator) == 0x130);

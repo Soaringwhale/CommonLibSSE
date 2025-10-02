@@ -25,6 +25,9 @@ namespace RE
 	class BSLookAtModifier : public hkbModifier
 	{
 	public:
+		inline static constexpr auto RTTI = RTTI_BSLookAtModifier;
+		inline static constexpr auto VTABLE = VTABLE_BSLookAtModifier;
+
 		// members
 		bool                              lookAtTarget;                // 50
 		char                              pad51[7];                    // 51

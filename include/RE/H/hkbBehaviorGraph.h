@@ -20,7 +20,7 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_hkbBehaviorGraph;
 		inline static constexpr auto VTABLE = VTABLE_hkbBehaviorGraph;
 
-		// How do deal with variables when the behavior is inactive
+		// How to deal with variables when the behavior is inactive
 		enum class VariableMode
 		{
 			/// Throw away the variable values and memory on deactivate().

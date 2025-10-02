@@ -22,5 +22,5 @@ namespace RE
 		hkRefPtr<hkbBoneIndexArray>    bones;        // 90
 		uint8_t                        pad98[8];     // 98
 	};
-	static_assert(sizeof(hkbRigidBodyRagdollControlsModifier) == 0x60);
+	static_assert(sizeof(hkbRigidBodyRagdollControlsModifier) == 0xA0);
 }

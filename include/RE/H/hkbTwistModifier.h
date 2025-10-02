@@ -8,7 +8,10 @@ namespace RE
 	class hkbTwistModifier : public hkbModifier
 	{
 	public:
-		enum class SetAngleMethod
+		inline static constexpr auto RTTI = RTTI_hkbTwistModifier;
+		inline static constexpr auto VTABLE = VTABLE_hkbTwistModifier;
+
+		enum class SetAngleMethod : uint8_t
 		{
 			LINEAR = 0x0,
 			RAMPED = 0x1,
@@ -25,7 +28,7 @@ namespace RE
 		float            twistAngle;               // 60 - The total twist angle to apply to chain of bones
 		int16_t          startBoneIndex;           // 64 - Index of the first bone in the chain. This bone must be closer to the root than endBoneIndex.
 		int16_t          endBoneIndex;             // 66 - Index of the last bone in the chain. This bone must be farther from the root than startBoneIndex.
-		int8_t           setAngleMethod;           // 68 - Twist angle per bone increased via LINEAR or RAMPED method
+		SetAngleMethod   setAngleMethod;           // 68 - Twist angle per bone increased via LINEAR or RAMPED method
 		int8_t           rotationAxisCoordinates;  // 69 - Whether the m_axisOfRotation is in model space or local space
 		bool             isAdditive;               // 6A - Twist angle per bone is ADDITIVE or NOT
 		char             pad6B[5];                 // 6B

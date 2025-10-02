@@ -26,5 +26,5 @@ namespace RE
 		hkRefPtr<hkbBoneWeightArray> boneWeights;             // 80 - A weight for each bone of the ragdoll.
 		uint8_t                      pad88[8];                // 88
 	};
-	static_assert(sizeof(hkbPoweredRagdollControlsModifier) == 0x60);
+	static_assert(sizeof(hkbPoweredRagdollControlsModifier) == 0x90);
 }

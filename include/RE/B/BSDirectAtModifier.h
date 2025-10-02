@@ -42,5 +42,5 @@ namespace RE
 		hkVector4        directAtTargetLocation;                        // C0
 		hkArray<int16_t> boneChainIndices;                              // D0
 	};
-	static_assert(sizeof(BSDirectAtModifier) == 0x60);
+	static_assert(sizeof(BSDirectAtModifier) == 0xE0);
 }
