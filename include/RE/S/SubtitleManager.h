@@ -27,11 +27,11 @@ namespace RE
 			return *singleton;
 		}
 
-		void ShowSubtitles (RE::TESObjectREFR *speaker, const char *text, bool alwaysDisplay)
+		void ShowSubtitles(RE::TESObjectREFR* speaker, const char* text, bool alwaysDisplay)
 		{
 			using func_t = decltype(&SubtitleManager ::ShowSubtitles);
-			REL::Relocation<func_t> func { REL::ID(51753) };
-			func (this, speaker, text, alwaysDisplay);
+			REL::Relocation<func_t> func{ REL::ID(51753) };
+			func(this, speaker, text, alwaysDisplay);
 		}
 
 		void KillSubtitles()
