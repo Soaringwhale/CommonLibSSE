@@ -31,7 +31,7 @@ namespace RE
 		kFOOD = 15
 	};
 
-	enum class PACKAGE_PROCEDURE_TYPE
+	enum class PACKAGE_PROCEDURE_TYPE : uint8_t
 	{
 		kNone = static_cast<std::underlying_type_t<PACKAGE_PROCEDURE_TYPE>>(-1),
 		kFind = 0,
@@ -90,7 +90,7 @@ namespace RE
 		kPatrol
 	};
 
-	enum class PACK_INTERRUPT_TARGET
+	enum class PACK_INTERRUPT_TARGET : uint8_t
 	{
 		kNone = static_cast<std::underlying_type_t<PACK_INTERRUPT_TARGET>>(-1),
 		kSpectator = 0,
@@ -113,6 +113,7 @@ namespace RE
 			kContinueIfPCNear = 1 << 9,
 			kOncePerDay = 1 << 10,
 			kPreferredSpeed = 1 << 13,
+			kScriptPackage = 1 << 14,
 			kAlwaysSneak = 1 << 17,
 			kAllowSwimming = 1 << 18,
 			kIgnoreCombat = 1 << 20,
@@ -122,7 +123,7 @@ namespace RE
 			kWearSleepOutfit = 1 << 29
 		};
 
-		enum class PreferredSpeed
+		enum class PreferredSpeed : uint8_t
 		{
 			kWalk = 0,
 			kJog = 1,
@@ -146,9 +147,9 @@ namespace RE
 
 		// members
 		stl::enumeration<GeneralFlag, std::uint32_t>           packFlags;              // 0
-		stl::enumeration<PACKAGE_PROCEDURE_TYPE, std::uint8_t> packType;               // 4
-		stl::enumeration<PACK_INTERRUPT_TARGET, std::uint8_t>  interruptOverrideType;  // 5
-		stl::enumeration<PreferredSpeed, std::uint8_t>         maxSpeed;               // 6
+		PACKAGE_PROCEDURE_TYPE                                 packType;               // 4
+		PACK_INTERRUPT_TARGET                                  interruptOverrideType;  // 5
+		PreferredSpeed                                         maxSpeed;               // 6
 		std::uint8_t                                           pad7;                   // 7
 		stl::enumeration<InterruptFlag, std::uint16_t>         foBehaviorFlags;        // 8
 		std::uint16_t                                          packageSpecificFlags;   // A
