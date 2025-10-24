@@ -9,7 +9,7 @@ namespace RE
 	class BSISoundCategory;
 	class BSISoundOutputModel;
 
-	enum SOUND_MSG : __int32
+	enum SOUND_MSG : int32
 	{
 		SOUND_MSG_StopAudioThread = 0x2,
 		SOUND_MSG_Play = 0x4,
@@ -43,6 +43,7 @@ namespace RE
 	};
 	struct BSSoundMessage
 	{
+		// members
 		SOUND_MSG       msg;          // 00
 		std::uint32_t   soundid;      // 04
 		std::uint32_t   time;         // 08
@@ -56,8 +57,9 @@ namespace RE
 	};
 	struct SoundMessageList
     {
-       BSSoundMessage *head;   // 00
-       BSSoundMessage *tail;   // 08
+		// members
+		BSSoundMessage *head;   // 00
+		BSSoundMessage *tail;   // 08
     };
 
 	class BSGameSound
@@ -66,33 +68,33 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_BSGameSound;
 
 		// add
-		virtual void OutputModelChangedImpl(void);  // 00 - { return; }
+		virtual void OutputModelChangedImpl();  // 00 - { return; }
 
 		virtual ~BSGameSound();  // 01
 
-		virtual bool IsAsyncOpening (void);                            // 02
-		virtual void Unk_03(void);                                     // 03
-		virtual void Unk_04(void) = 0;                                 // 04
+		virtual bool IsAsyncOpening ();                                // 02
+		virtual void Unk_03();                                         // 03
+		virtual void Unk_04() = 0;                                     // 04
 		virtual bool PriorityTest (BSGameSound *other);                // 05
-		virtual bool SyncOpen(void) = 0;                               // 06
-		virtual bool StartAsyncOpen(void) = 0;                         // 07
-		virtual bool TestAsyncOpenReady(void) = 0;                     // 08
-		virtual bool FinishAsyncOpen(void) = 0;                        // 09
-		virtual bool HandleExternalOpen(void) = 0;                     // 0A
-		virtual bool Prepare(void);                                    // 0B
+		virtual bool SyncOpen() = 0;                                   // 06
+		virtual bool StartAsyncOpen() = 0;                             // 07
+		virtual bool TestAsyncOpenReady() = 0;                         // 08
+		virtual bool FinishAsyncOpen() = 0;                            // 09
+		virtual bool HandleExternalOpen() = 0;                         // 0A
+		virtual bool Prepare();                                        // 0B
 		virtual void Copy (BSGameSound *other, bool a3);               // 0C
-		virtual void UpdateEmitterPosition(void) = 0;                  // 0D
-		virtual bool Update (void);                                    // 0E
+		virtual void UpdateEmitterPosition() = 0;                      // 0D
+		virtual bool Update ();                                    	   // 0E
 		virtual void SetEmitterPositionImpl(const NiPoint3 &pos) = 0;  // 0F
 		virtual void GetEmitterPositionImpl(const NiPoint3 &pos) = 0;  // 10
-		virtual void Unk_11(void) = 0;                                 // 11
-		virtual void Unk_12(void) = 0;                                 // 12
-		virtual void DoApplyFrequency(void);                           // 13 - { return; }
+		virtual void Unk_11() = 0;                                     // 11
+		virtual void Unk_12() = 0;                                     // 12
+		virtual void DoApplyFrequency();                               // 13 - { return; }
 		virtual void SeekInSamples(uint32_t a2) = 0;                   // 14
-		virtual void PlayImpl(void) = 0;                               // 15
-		virtual void PauseImpl(void) = 0;                              // 16
+		virtual void PlayImpl() = 0;                                   // 15
+		virtual void PauseImpl() = 0;                                  // 16
 		virtual void StopImpl(bool a2) = 0;                            // 17
-		virtual void SetVolumeImpl(void) = 0;                          // 18
+		virtual void SetVolumeImpl() = 0;                              // 18
 
 		// members
 		char                requests [24];          // 08
