@@ -16,29 +16,30 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_BSXAudio2GameSound;
 
 		// override (BSGameSound)
-		void OutputModelChangedImpl(void) override;                    // 00
+		void OutputModelChangedImpl() override;                        // 00
 		~BSXAudio2GameSound() override;                                // 01
-        void Unk_04(void) override;                                    // 04
-        bool SyncOpen(void) override;                                  // 06
-		bool StartAsyncOpen(void) override;                            // 07
-		bool TestAsyncOpenReady(void) override;                        // 08
-		bool FinishAsyncOpen(void) override;                           // 09
-		bool HandleExternalOpen(void) override;                        // 0A
-		bool Prepare(void) override;                                   // 0B
+		void Unk_04() override;                                        // 04
+		bool SyncOpen() override;                                      // 06
+		bool StartAsyncOpen() override;                                // 07
+		bool TestAsyncOpenReady() override;                            // 08
+		bool FinishAsyncOpen() override;                               // 09
+		bool HandleExternalOpen() override;                            // 0A
+		bool Prepare() override;                                       // 0B
 		void Copy(BSGameSound *other, bool a3) override;               // 0C
-		void UpdateEmitterPosition(void) override;                     // 0D
-		bool Update(void) override;                                    // 0E
+		void UpdateEmitterPosition() override;                         // 0D
+		bool Update() override;                                        // 0E
 		void SetEmitterPositionImpl(const NiPoint3 &pos) override;     // 0F
-	    void GetEmitterPositionImpl(const NiPoint3 &outPos) override;  // 10
-		void Unk_11(void) override;                                    // 11
-		void Unk_12(void) override;                                    // 12
-		void DoApplyFrequency(void) override;                          // 13
+		void GetEmitterPositionImpl(const NiPoint3 &outPos) override;  // 10
+		void Unk_11() override;                                        // 11
+		void Unk_12() override;                                        // 12
+		void DoApplyFrequency() override;                              // 13
 		void SeekInSamples(uint32_t a2) override;                      // 14
-		void PlayImpl(void) override;                                  // 15
-		void PauseImpl(void) override;                                 // 16
+		void PlayImpl() override;                                      // 15
+		void PauseImpl() override;                                     // 16
 		void StopImpl(bool a2) override;                               // 17
-		void SetVolumeImpl(void) override;                             // 18
+		void SetVolumeImpl() override;                                 // 18
 
+		// members
 		void                *vtable_IXAudio2VoiceCallback;   // C8
 		BSXAudio2DataSrc    *data_src;       // D0
 		std::int32_t        unkD8;           // D8

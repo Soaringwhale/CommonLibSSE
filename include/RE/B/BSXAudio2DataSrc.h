@@ -3,20 +3,21 @@
 namespace RE
 {
 	struct WAVFORMATEX
-	{
-		std::uint16_t wFormatTag;      /* format type */
-		std::uint16_t nChannels;       /* number of channels (i.e. mono, stereo...) */
-		std::uint32_t nSamplesPerSec;  /* sample rate */
-		std::uint32_t nAvgBytesPerSec; /* for buffer estimation */
-		std::uint16_t nBlockAlign;     /* block size of data */
-		std::uint16_t wBitsPerSample;  /* number of bits per sample of mono data */
-		std::uint16_t cbSize;          /* the count in bytes of the size of extra information */
+	{ 
+		// members
+		std::uint16_t wFormatTag;      // 00 - format type
+		std::uint16_t nChannels;       // 02 - number of channels (i.e. mono, stereo...)
+		std::uint32_t nSamplesPerSec;  // 04 - sample rate
+		std::uint32_t nAvgBytesPerSec; // 08 - for buffer estimation
+		std::uint16_t nBlockAlign;     // 0C - block size of data
+		std::uint16_t wBitsPerSample;  // 0E - number of bits per sample of mono data
+		std::uint16_t cbSize;          // 10 - the count in bytes of the size of extra information
 	};
 	static_assert(sizeof(WAVFORMATEX) == 0x14);
 
 	struct RiffFile__RiffMetaData
 	{
-      public:
+		// members
 		WAVFORMATEX*    waveFormat;     // 00
 		std::uint32_t   dataOffset;     // 08  
 		std::uint32_t   dataSize;       // 0C - audioBytes

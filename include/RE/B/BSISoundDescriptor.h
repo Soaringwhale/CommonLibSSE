@@ -8,8 +8,11 @@ namespace RE
 	class BSISoundCategory;
 	struct BSAudioMonitor_Request
 	{
+		// members;
 		int32_t unk0;
 	};
+	static_assert(sizeof(BSAudioMonitor_Request) == 0x4);
+
 	class BSISoundDescriptor
 	{
 	public:
@@ -33,6 +36,7 @@ namespace RE
  
 		struct Resolution
 		{
+			// members
 			RE::BSResource::ID                                 resource;                 // 00
 			int                                                field;                    // 0C
 			int                                                AlternateSoundFormId;     // 10
@@ -48,7 +52,7 @@ namespace RE
 
 		// add
 		virtual bool DoResolve (Resolution &res) = 0;  // 01
-		virtual void Unk_02(void) = 0;                 // 02
+		virtual void Unk_02() = 0;                     // 02
 	};
 	static_assert(sizeof(BSISoundDescriptor) == 0x8);
 }
