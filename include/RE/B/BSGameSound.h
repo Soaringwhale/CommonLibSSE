@@ -87,7 +87,7 @@ namespace RE
 		virtual bool Prepare();                                        // 0B
 		virtual void Copy (BSGameSound *other, bool a3);               // 0C
 		virtual void UpdateEmitterPosition() = 0;                      // 0D
-		virtual bool Update ();                                        // 0E
+		virtual bool Update ();                                    	   // 0E
 		virtual void SetEmitterPositionImpl(const NiPoint3 &pos) = 0;  // 0F
 		virtual void GetEmitterPositionImpl(const NiPoint3 &pos) = 0;  // 10
 		virtual void Unk_11() = 0;                                     // 11
