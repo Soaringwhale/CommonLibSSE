@@ -419,6 +419,7 @@ set(SOURCES
 	include/RE/B/BSWin32SaveDataSystemUtility.h
 	include/RE/B/BSWin32VirtualKeyboardDevice.h
 	include/RE/B/BSWindModifier.h
+	include/RE/B/BSXAudio2DataSrc.h
 	include/RE/B/BSXAudio2GameSound.h
 	include/RE/B/BSXFlags.h
 	include/RE/B/BShkbAnimationGraph.h
@@ -1990,6 +1991,7 @@ set(SOURCES
 	src/RE/B/BSWin32SaveDataSystemUtility.cpp
 	src/RE/B/BSWin32VirtualKeyboardDevice.cpp
 	src/RE/B/BSWindModifier.cpp
+	src/RE/B/BSXAudio2GameSound.cpp
 	src/RE/B/BSXFlags.cpp
 	src/RE/B/BShkbUtils.cpp
 	src/RE/B/BSiStateTaggingGenerator.cpp
