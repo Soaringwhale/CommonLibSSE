@@ -1,7 +1,9 @@
 #pragma once
 
 #include "RE/B/BSAnimationGraphManager.h"
+#include "RE/B/BSResourceHandle.h"
 #include "RE/B/BSTArray.h"
+#include "RE/B/BSTHashMap.h"
 #include "RE/H/hkbNode.h"
 
 namespace RE
@@ -17,6 +19,8 @@ namespace RE
 	class hkbNode;
 	class hkbPoseMatchingGenerator;
 	class hkbStateMachine;
+	class hkbSymbolIdMap;
+	class hkbSymbolLinker;
 
 	namespace BShkbUtils
 	{
@@ -112,8 +116,14 @@ namespace RE
 		};
 		static_assert(sizeof(GraphTraverser) == 0x60);
 
-		bool GetActiveClips(hkbCharacter* hkbChar, float time, BSScrapArray<BSAnimationGraphManager::ClipData>& ans);
-		bool GraphInspection(const GraphInspectionConfiguration& cfg, hkbCharacter& hkbChar,
-			GraphInspectionFunctor& functor);
+		hkbBehaviorGraph* CloneRootGraph(hkbCharacter& hchar, hkbBehaviorGraph& graph);
+		void              CreateStateArrayFromVariables(hkbBehaviorGraph* graph, const BSTHashMap<BSFixedString, int32_t>& variableNamesToIds, BSTArray<BSFixedString>& stateNames);
+		bool              GetActiveClips(hkbCharacter* hkbChar, float time, BSScrapArray<BSAnimationGraphManager::ClipData>& ans);
+		bool              GraphInspection(const GraphInspectionConfiguration& cfg, hkbCharacter& hkbChar,
+						 GraphInspectionFunctor& functor);
+		hkbBehaviorGraph* LoadBehaviorProject(const char* folder, const char* name, hkbCharacter& hchar, RE::hkbHkxDBHandle& project_data_handle, BSFixedString& filename, RE::BSScrapArray<hkbBehaviorGraph*>& hgraphs);
+		hkbSymbolIdMap*   PerformOncePerLoadBehaviorOperations(hkbBehaviorGraph* graph, BSScrapArray<hkbBehaviorGraph*>& hgraphs, const char* folder, hkbCharacter& hchar, hkbSymbolLinker& linkBehaviorEvents, hkbSymbolLinker& linkBehaviorVariables);
+		void              RetrieveEventNamesAndIDsFromSymbolLinker(const hkbSymbolLinker& linker, BSTHashMap<BSFixedString, int32_t>& eventNamesToIds, BSTArray<BSFixedString>& eventNames, const BSFixedString* projectName_unused = nullptr);
+		void              RetrieveVariableNamesAndIDsFromSymbolLinker(const hkbSymbolLinker& linker, BSTHashMap<BSFixedString, int32_t>& variableNamesToIds, const BSFixedString* projectName_unused = nullptr);
 	}
 }

@@ -12,7 +12,6 @@ namespace RE
 		inline static constexpr auto VTABLE = VTABLE_BSExtraData;
 		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kNone;
 
-		BSExtraData();
 		virtual ~BSExtraData() = default;  // 00
 
 		// add
@@ -29,7 +28,7 @@ namespace RE
 		TES_HEAP_REDEFINE_NEW();
 
 		// members
-		BSExtraData* next;  // 08
+		BSExtraData* next{};  // 08
 	};
 	static_assert(sizeof(BSExtraData) == 0x10);
 

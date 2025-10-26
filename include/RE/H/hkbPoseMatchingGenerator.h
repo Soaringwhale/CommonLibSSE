@@ -7,6 +7,9 @@ namespace RE
 	class hkbPoseMatchingGenerator : public hkbBlenderGenerator
 	{
 	public:
+		inline static constexpr auto RTTI = RTTI_hkbPoseMatchingGenerator;
+		inline static constexpr auto VTABLE = VTABLE_hkbPoseMatchingGenerator;
+
 		/// The modifier is either performing matching or playing out the matched animation.
 		enum class Mode : uint8_t
 		{

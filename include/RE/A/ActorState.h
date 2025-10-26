@@ -14,7 +14,8 @@ namespace RE
 		kRecycle = 5,
 		kRestrained = 6,
 		kEssentialDown = 7,
-		kBleedout = 8
+		kBleedout = 8,
+		kDontMove = 9,
 	};
 
 	enum class ATTACK_STATE_ENUM : std::uint32_t
@@ -32,10 +33,7 @@ namespace RE
 		kBowReleasing = 11,
 		kBowReleased = 12,
 		kBowNextAttack = 13,
-		kBowFollowThrough = 14,
-		kFire = 15,
-		kFiring = 16,
-		kFired = 17
+		kBowFollowThrough = 14
 	};
 
 	enum class FLY_STATE : std::uint32_t
@@ -141,8 +139,8 @@ namespace RE
 		// override (IMovementState)
 
 		// add
-		virtual void Unk_14(void);  // 14
-		virtual void Unk_15(void);  // 15
+		virtual bool SetSitSleepState(SIT_SLEEP_STATE state);  // 14
+		virtual bool SetWeaponMagicDrawn(bool val);            // 15
 
 		[[nodiscard]] ATTACK_STATE_ENUM GetAttackState() const noexcept { return actorState1.meleeAttackState; }
 		[[nodiscard]] FLY_STATE         GetFlyState() const noexcept { return actorState1.flyState; }

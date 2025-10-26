@@ -22,6 +22,9 @@ namespace RE
 	class hkbBlenderGenerator : public hkbGenerator
 	{
 	public:
+		inline static constexpr auto RTTI = RTTI_hkbBlenderGenerator;
+		inline static constexpr auto VTABLE = VTABLE_hkbBlenderGenerator;
+
 		struct ChildInternalState
 		{
 			bool isActive;       // 00

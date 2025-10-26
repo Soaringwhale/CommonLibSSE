@@ -15,8 +15,8 @@ namespace RE
 
 		enum class Flag : uint32_t
 		{
-			Flag1 = 1 << 0,
-			Flag2 = 1 << 1,
+			OnlyGet = 1 << 0,
+			OnlyRun = 1 << 1,
 		};
 		using Flags = stl::enumeration<Flag, uint32_t>;
 
@@ -46,6 +46,21 @@ namespace RE
 			ActionOutput::CopyTo(dst);
 
 			dst.flags = flags;
+		}
+
+		void ClearGetRun()
+		{
+			flags.reset(Flag::OnlyGet, Flag::OnlyRun);
+		}
+
+		bool QOnlyGet() const
+		{
+			return flags.all(Flag::OnlyGet);
+		}
+
+		bool QOnlyRun() const
+		{
+			return flags.all(Flag::OnlyRun);
 		}
 
 		// members

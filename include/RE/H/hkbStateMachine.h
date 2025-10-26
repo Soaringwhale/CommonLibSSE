@@ -61,7 +61,7 @@ namespace RE
 		inline static constexpr auto VTABLE = VTABLE_hkbStateMachine;
 
 		// Ways of setting the start state.
-		enum class StartStateMode
+		enum class StartStateMode : uint8_t
 		{
 			// Set the start state to m_startStateId.
 			kDefault = 0,
@@ -74,7 +74,7 @@ namespace RE
 		};
 
 		// How to deal with self-transitions (when the state machine is transitioned to while still active).
-		enum class StateMachineSelfTransitionMode
+		enum class StateMachineSelfTransitionMode : uint8_t
 		{
 			// Stay in the current state.
 			kNoTransition = 0,
@@ -250,14 +250,14 @@ namespace RE
 			~ActiveTransitionInfo() = default;
 
 			// members
-			hkbTransitionEffect*    effect;                                // 00
-			hkRefVariant            mb_transitionEffectInternalStateInfo;  // 08
-			TransitionInfoReference transitionInfoReference;               // 10 - A reference to the transition info.
-			TransitionInfoReference transitionInfoReferenceForTE;          // 16 - A reference to the transition info where the TE came from (possibly different from the above). This is used to reconstruct the internal state.
-			int32_t                 fromStateId;                           // 1C
-			int32_t                 toStateId;                             // 20
-			bool                    isReturnToPreviousState;               // 24
-			char                    pad25[3];                              // 25
+			hkbTransitionEffect*    transitionEffect;                   // 00
+			hkRefVariant            transitionEffectInternalStateInfo;  // 08
+			TransitionInfoReference transitionInfoReference;            // 10 - A reference to the transition info.
+			TransitionInfoReference transitionInfoReferenceForTE;       // 16 - A reference to the transition info where the TE came from (possibly different from the above). This is used to reconstruct the internal state.
+			int32_t                 fromStateId;                        // 1C
+			int32_t                 toStateId;                          // 20
+			bool                    isReturnToPreviousState;            // 24
+			char                    pad25[3];                           // 25
 		};
 		static_assert(sizeof(ActiveTransitionInfo) == 0x28);
 
@@ -357,36 +357,36 @@ namespace RE
 		int32_t getUnusedStateId() const;
 
 		// members
-		hkbEvent                                                       eventToSendWhenStateOrTransitionChanges;                               // 048 - If non-null, this event is sent at the beginning and end of a transition, or once for an instantaneous transition.
-		hkRefPtr<hkbStateChooser>                                      startStateChooser;                                                     // 060 - An object that chooses the start state
-		std::int32_t                                                   startStateID{ 0 };                                                     // 068
-		std::int32_t                                                   returnToPreviousStateEventID{ -1 };                                    // 06C - If this event is received, the state machine returns to the previous state if there is an appropriate transition defined.
-		std::int32_t                                                   randomTransitionEventID{ -1 };                                         // 070 - If this event is received, the state machine chooses a random transition from among those available.
-		std::int32_t                                                   transitionToNextHigherStateEventID{ -1 };                              // 074 - If the event is received, the state machine chooses a state with the id higher than the m_currentStateId and do a transition to that state.
-		std::int32_t                                                   transitionToNextLowerStateEventID{ -1 };                               // 078 - If the event is received, the state machine chooses a state with the id lower than the m_currentStateId and do a transition to that state.
-		std::int32_t                                                   syncVariableIndex{ -1 };                                               // 07C - We use variables to sync the start state of the state machine.
-		std::int32_t                                                   currentStateID{ 0 };                                                   // 080
-		bool                                                           wrapAroundStateID{ true };                                             // 084
-		std::int8_t                                                    maxSimultaneousTransitions{ 32 };                                      // 085 - The number of transitions that can be active at once.
-		stl::enumeration<StartStateMode, std::uint8_t>                 startStateMode{ StartStateMode ::kDefault };                           // 086 - How to set the start state.
-		stl::enumeration<StateMachineSelfTransitionMode, std::uint8_t> selfTransitionMode{ StateMachineSelfTransitionMode ::kNoTransition };  // 087 - How to deal with self-transitions (when the state machine is transitioned to while still active).
-		bool                                                           isActive{ false };                                                     // 088 - Whether or not the state machine is active (activate() called but not deactivate()).
-		char                                                           pad89[7];                                                              // 089
-		hkArray<StateInfo*>                                            states;                                                                // 090 - The list of states
-		hkRefPtr<TransitionInfoArray>                                  wildcardTransitions;                                                   // 0A0 - The list of transitions from any state (don't have a specific from state)
-		hkScopedPtr<hkPointerMap<int64_t, int64_t>>                    stateIDToIndexMap;                                                     // 0A8 - State id to index map
-		hkArray<ActiveTransitionInfo>                                  activeTransitions;                                                     // 0B0 - The list of currently active transitions
-		hkArray<uint8_t>                                               transitionFlags;                                                       // 0C0 - Internal flags for the transitions of the current state
-		hkArray<uint8_t>                                               wildcardTransitionFlags;                                               // 0D0 - Internal flags for the wildcard transitions
-		hkArray<DelayedTransitionInfo>                                 delayedTransitions;                                                    // 0E0 - This list consists of all transitions which have their initiate intervals flag or their abutment flag set.
-		float                                                          timeInState{ 0 };                                                      // 0F0 - How many seconds we've been in the current state
-		float                                                          lastLocalTime{ 0 };                                                    // 0F4 - What was the last local time from the syncInfo
-		std::int32_t                                                   previousStateID{ 0 };                                                  // 0F8
-		std::int32_t                                                   nextStartStateIndexOverride{ -1 };                                     // 0FC - The index of the next start state if overridden (-1 means not overridden)
-		bool                                                           stateOrTransitionChanged{ false };                                     // 100 - Whether the state or transition has changed lately
-		bool                                                           echoNextUpdate{ false };                                               // 101 - Whether or not to perform an echo next time update() is called.
-		std::uint16_t                                                  currentStateIndexAndEntered{ 0 };                                      // 102
-		std::uint32_t                                                  pad0BC;                                                                // 104
+		hkbEvent                                    eventToSendWhenStateOrTransitionChanges;                               // 048 - If non-null, this event is sent at the beginning and end of a transition, or once for an instantaneous transition.
+		hkRefPtr<hkbStateChooser>                   startStateChooser;                                                     // 060 - An object that chooses the start state
+		std::int32_t                                startStateID{ 0 };                                                     // 068
+		std::int32_t                                returnToPreviousStateEventID{ -1 };                                    // 06C - If this event is received, the state machine returns to the previous state if there is an appropriate transition defined.
+		std::int32_t                                randomTransitionEventID{ -1 };                                         // 070 - If this event is received, the state machine chooses a random transition from among those available.
+		std::int32_t                                transitionToNextHigherStateEventID{ -1 };                              // 074 - If the event is received, the state machine chooses a state with the id higher than the m_currentStateId and do a transition to that state.
+		std::int32_t                                transitionToNextLowerStateEventID{ -1 };                               // 078 - If the event is received, the state machine chooses a state with the id lower than the m_currentStateId and do a transition to that state.
+		std::int32_t                                syncVariableIndex{ -1 };                                               // 07C - We use variables to sync the start state of the state machine.
+		std::int32_t                                currentStateID{ 0 };                                                   // 080
+		bool                                        wrapAroundStateID{ true };                                             // 084
+		std::int8_t                                 maxSimultaneousTransitions{ 32 };                                      // 085 - The number of transitions that can be active at once.
+		StartStateMode                              startStateMode{ StartStateMode ::kDefault };                           // 086 - How to set the start state.
+		StateMachineSelfTransitionMode              selfTransitionMode{ StateMachineSelfTransitionMode ::kNoTransition };  // 087 - How to deal with self-transitions (when the state machine is transitioned to while still active).
+		bool                                        isActive{ false };                                                     // 088 - Whether or not the state machine is active (activate() called but not deactivate()).
+		char                                        pad89[7];                                                              // 089
+		hkArray<StateInfo*>                         states;                                                                // 090 - The list of states
+		hkRefPtr<TransitionInfoArray>               wildcardTransitions;                                                   // 0A0 - The list of transitions from any state (don't have a specific from state)
+		hkScopedPtr<hkPointerMap<int64_t, int64_t>> stateIDToIndexMap;                                                     // 0A8 - State id to index map
+		hkArray<ActiveTransitionInfo>               activeTransitions;                                                     // 0B0 - The list of currently active transitions
+		hkArray<uint8_t>                            transitionFlags;                                                       // 0C0 - Internal flags for the transitions of the current state
+		hkArray<uint8_t>                            wildcardTransitionFlags;                                               // 0D0 - Internal flags for the wildcard transitions
+		hkArray<DelayedTransitionInfo>              delayedTransitions;                                                    // 0E0 - This list consists of all transitions which have their initiate intervals flag or their abutment flag set.
+		float                                       timeInState{ 0 };                                                      // 0F0 - How many seconds we've been in the current state
+		float                                       lastLocalTime{ 0 };                                                    // 0F4 - What was the last local time from the syncInfo
+		std::int32_t                                previousStateID{ 0 };                                                  // 0F8
+		std::int32_t                                nextStartStateIndexOverride{ -1 };                                     // 0FC - The index of the next start state if overridden (-1 means not overridden)
+		bool                                        stateOrTransitionChanged{ false };                                     // 100 - Whether the state or transition has changed lately
+		bool                                        echoNextUpdate{ false };                                               // 101 - Whether or not to perform an echo next time update() is called.
+		std::uint16_t                               currentStateIndexAndEntered{ 0 };                                      // 102
+		std::uint32_t                               pad0BC;                                                                // 104
 	};
 	static_assert(sizeof(hkbStateMachine) == 0x108);
 }

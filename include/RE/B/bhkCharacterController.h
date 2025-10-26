@@ -160,10 +160,17 @@ namespace RE
 		hkRefPtr<hkpRigidBody>                           bumpedBody;                 // 2C0
 		hkRefPtr<hkpRigidBody>                           bumpedCharCollisionObject;  // 2C8
 		BSTHashMap<UnkKey, UnkValue>                     unk2D0;                     // 2D0
-		std::uint64_t                                    unk300;                     // 300
-		std::uint64_t                                    unk308;                     // 308
-		std::uint64_t                                    unk310;                     // 310
-		std::uint64_t                                    unk318;                     // 318
+		float                                            unk300;                     // 300
+		std::uint32_t                                    material;                   // 304
+		std::uint32_t                                    unk308;                     // 308
+		float                                            unk30C;                     // 30C
+		float                                            unk310;                     // 310
+		std::uint32_t                                    mb_col_layer;               // 314
+		std::uint32_t                                    mb_col_group;               // 318
+		std::uint8_t                                     unk31C;                     // 31C
+		std::uint8_t                                     unk31D;                     // 31D
+		std::uint8_t                                     unk31E;                     // 31E
+		std::uint8_t                                     unk31F;                     // 31F
 		std::uint64_t                                    unk320;                     // 320
 		std::uint64_t                                    unk328;                     // 328
 	};

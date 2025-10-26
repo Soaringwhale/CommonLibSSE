@@ -14,7 +14,7 @@ namespace RE
 
 		// override (IBSTCreator<Parent>)
 		// 01
-		Parent* Create() const override
+		Parent* CreateImpl() const override
 		{
 			return new Derived();
 		}
@@ -23,6 +23,11 @@ namespace RE
 		void Destroy(const Parent* a_val) const override
 		{
 			delete a_val;
+		}
+
+		Derived* Create() const
+		{
+			return reinterpret_cast<Derived*>(CreateImpl());
 		}
 	};
 }

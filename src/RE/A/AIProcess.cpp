@@ -26,7 +26,7 @@ namespace RE
 
 	float AIProcess::GetCachedHeight() const
 	{
-		return high ? high->cachedActorHeight : static_cast<float>(-1.0);
+		return high ? high->actorHeight : static_cast<float>(-1.0);
 	}
 
 	bhkCharacterController* AIProcess::GetCharController()
@@ -42,6 +42,19 @@ namespace RE
 	TESShout* AIProcess::GetCurrentShout()
 	{
 		return high ? high->currentShout : nullptr;
+	}
+
+	InventoryEntryData* AIProcess::GetCurrentWeapon(bool left) const
+	{
+		if (!middleHigh)
+			return nullptr;
+
+		auto ans = left ? middleHigh->leftHand : middleHigh->rightHand;
+		if (ans) {
+			if (!ans->object || ans->object->formType != RE::FormType::Weapon)
+				ans = nullptr;
+		}
+		return ans;
 	}
 
 	TESForm* AIProcess::GetEquippedLeftHand()
@@ -80,7 +93,7 @@ namespace RE
 			if (a_biped) {
 				return a_biped->root->GetObjectByName(FixedStrings::GetSingleton()->weapon);
 			} else {
-				return middleHigh->unk148;
+				return middleHigh->weaponBone1;
 			}
 		} else {
 			return nullptr;
@@ -123,7 +136,7 @@ namespace RE
 
 	bool AIProcess::InHighProcess() const
 	{
-		switch (*processLevel) {
+		switch (processLevel) {
 		case PROCESS_TYPE::kHigh:
 			return true;
 		default:
@@ -133,7 +146,7 @@ namespace RE
 
 	bool AIProcess::InMiddleHighProcess() const
 	{
-		switch (*processLevel) {
+		switch (processLevel) {
 		case PROCESS_TYPE::kHigh:
 		case PROCESS_TYPE::kMiddleHigh:
 			return true;
@@ -144,7 +157,7 @@ namespace RE
 
 	bool AIProcess::InMiddleLowProcess() const
 	{
-		switch (*processLevel) {
+		switch (processLevel) {
 		case PROCESS_TYPE::kHigh:
 		case PROCESS_TYPE::kMiddleHigh:
 		case PROCESS_TYPE::kMiddleLow:
@@ -156,7 +169,7 @@ namespace RE
 
 	bool AIProcess::InLowProcess() const
 	{
-		switch (*processLevel) {
+		switch (processLevel) {
 		case PROCESS_TYPE::kHigh:
 		case PROCESS_TYPE::kMiddleHigh:
 		case PROCESS_TYPE::kMiddleLow:
@@ -206,7 +219,7 @@ namespace RE
 	void AIProcess::SetCachedHeight(float a_height)
 	{
 		if (high) {
-			high->cachedActorHeight = a_height;
+			high->actorHeight = a_height;
 		}
 	}
 
@@ -217,10 +230,10 @@ namespace RE
 		return func(this, a_owner, a_targetPosition);
 	}
 
-	void AIProcess::Set3DUpdateFlag(RESET_3D_FLAGS a_flags)
+	void AIProcess::Set3DUpdateFlag(stl::enumeration<RESET_3D_FLAGS, uint8_t> a_flags)
 	{
 		if (middleHigh) {
-			middleHigh->update3DModel.set(a_flags);
+			middleHigh->reset3dFlags |= a_flags;
 		}
 	}
 

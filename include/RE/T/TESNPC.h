@@ -134,7 +134,7 @@ namespace RE
 		struct FaceData
 		{
 		public:
-			enum class Morphs : uint32_t
+			enum Morphs : uint32_t
 			{
 				kNose_LongShort = 0,
 				kNose_UpDown = 1,
@@ -233,7 +233,10 @@ namespace RE
 		bool                         AddPerk(BGSPerk* a_perk, std::int8_t a_rank);
 		bool                         AddPerks(const std::vector<BGSPerk*>& a_perks, std::int8_t a_rank);
 		void                         ChangeHeadPart(BGSHeadPart* a_target);
+		void                         ClearHeadParts();
 		bool                         ContainsKeyword(std::string_view a_editorID);
+		void                         CopyHeadPartsFrom(BSScrapArray<BGSHeadPart*>& array);
+		void                         GenerateFlattenedHeadPartArray(BSScrapArray<BGSHeadPart*>& ans) const;
 		[[nodiscard]] BGSHeadPart**  GetBaseOverlays() const;
 		BGSHeadPart*                 GetCurrentHeadPartByType(HeadPartType a_type);
 		BGSHeadPart*                 GetHeadPartByType(HeadPartType a_type);
@@ -249,6 +252,7 @@ namespace RE
 		bool                         HasApplicableKeywordString(std::string_view a_editorID);
 		bool                         HasOverlays();
 		bool                         IsInFaction(TESFaction* a_faction) const;
+		bool                         QUsingAlternateHeadPartList() const;  // TESNPC::AlternateHeadPartListMap is not in addresslib .-.
 		bool                         RemovePerk(BGSPerk* a_perk);
 		bool                         RemovePerks(const std::vector<BGSPerk*>& a_perks);
 		bool                         SetDefaultOutfit(BGSOutfit* a_outfit);

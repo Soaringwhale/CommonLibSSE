@@ -387,7 +387,7 @@ namespace RE
 		virtual void                    Unk_C5(void);                                                                                                                                                                    // 0C5 - { return 1; }
 		virtual void                    Unk_C6(void) = 0;                                                                                                                                                                // 0C6
 		virtual float                   GetAcrobatics() const;                                                                                                                                                           // 0C7 - { return 1.0; }
-		virtual bhkCharacterController* Move(float a_arg2, const NiPoint3& a_position);                                                                                                                                  // 0C8
+		virtual bhkCharacterController* Move(float dtime, const NiPoint3& V);                                                                                                                                            // 0C8
 		virtual void                    Unk_C9(void);                                                                                                                                                                    // 0C9
 		virtual void                    OnArmorActorValueChanged();                                                                                                                                                      // 0CA - { return; }
 		virtual ObjectRefHandle         DropObject(const TESBoundObject* a_object, ExtraDataList* a_extraList, std::int32_t a_count, const NiPoint3* a_dropLoc = 0, const NiPoint3* a_rotate = 0);                       // 0CB
@@ -410,7 +410,7 @@ namespace RE
 		virtual void                    InitiateSpectator(Actor* a_target);                                                                                                                                              // 0DC - { return; }
 		virtual void                    InitiateFlee(TESObjectREFR* a_fleeRef, bool a_runOnce, bool a_knows, bool a_combatMode, TESObjectCELL* a_cell, TESObjectREFR* a_ref, float a_fleeFromDist, float a_fleeToDist);  // 0DD
 		virtual void                    InitiateGetUpPackage();                                                                                                                                                          // 0DE
-		virtual void                    PutCreatedPackage(TESPackage* a_package, bool a_tempPackage, bool a_createdPackage, bool a_allowFromFurniture);                                                                  // 0DF
+		virtual void                    PutCreatedPackage(TESPackage* a_package, bool a_tempPackage, bool a_createdPackage);                                                                                             // 0DF
 		virtual void                    UpdateAlpha();                                                                                                                                                                   // 0E0
 		virtual void                    SetAlpha(float a_alpha = 1.0);                                                                                                                                                   // 0E1
 		virtual float                   GetAlpha();                                                                                                                                                                      // 0E2
@@ -419,7 +419,7 @@ namespace RE
 		virtual void                    StopCombat();                                                                                                                                                                    // 0E5
 		virtual float                   CalcArmorRating();                                                                                                                                                               // 0E6 - { return 0.0; }
 		virtual float                   GetArmorBaseFactorSum();                                                                                                                                                         // 0E7 - { return 0.0; }
-		virtual float                   CalcUnarmedDamage();                                                                                                                                                             // 0E8 - { return 0; }
+		virtual int32_t                 CalcUnarmedDamage();                                                                                                                                                             // 0E8 - { return 0; }
 		virtual void                    Unk_E9(void);                                                                                                                                                                    // 0E9 - { return 0; }
 		virtual void                    Unk_EA(void);                                                                                                                                                                    // 0EA - { return 0; }
 		virtual float                   GetRunSpeed();                                                                                                                                                                   // 0EB
@@ -466,7 +466,7 @@ namespace RE
 		virtual ActorHandle             QLastRiddenMount() const;                                                                                                                                                        // 114 - { return {}; }
 		virtual bool                    CalculateCachedOwnerIsUndead() const;                                                                                                                                            // 115
 		virtual bool                    CalculateCachedOwnerIsNPC() const;                                                                                                                                               // 116
-		virtual void                    Unk_117(void);                                                                                                                                                                   // 117 - { return; }
+		virtual void                    Unk_117(void);                                                                                                                                                                   // 117 - TODO: magic related
 		virtual void                    InitValues();                                                                                                                                                                    // 118
 		virtual const BSFixedString&    GetResponseString() const;                                                                                                                                                       // 119 - { return "ActorResponse"; }
 		virtual void                    ModifyMovementData(float a_delta, NiPoint3& a_arg3, NiPoint3& a_arg4);                                                                                                           // 11A
@@ -691,8 +691,8 @@ namespace RE
 		BSTSmartPointer<BipedAnim>                            biped;                              // 260
 		float                                                 armorRating;                        // 268
 		float                                                 armorBaseFactorSum;                 // 26C
-		std::int8_t                                           soundCallBackSet;                   // 271
-		std::uint8_t                                          unk271;                             // 270
+		std::int8_t                                           soundCallBackSet;                   // 270
+		std::uint8_t                                          unk271;                             // 271
 		std::uint8_t                                          unk272;                             // 272
 		std::uint8_t                                          unk273;                             // 273
 		std::uint32_t                                         unk274;                             // 274

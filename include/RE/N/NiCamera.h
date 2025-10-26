@@ -32,6 +32,8 @@ namespace RE
 
 		static bool WorldPtToScreenPt3(const float a_matrix[4][4], const NiRect<float>& a_port, const NiPoint3& a_point, float& a_xOut, float& a_yOut, float& a_zOut, float a_zeroTolerance);
 
+		bool WorldPtToScreenPt3(const NiPoint3& point, float& xOut, float& yOut, float& zOut, float zeroTolerance = 0.00001f) const;
+
 		// members
 		float         worldToCam[4][4];  // 110
 		NiFrustum     viewFrustum;       // 150

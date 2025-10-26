@@ -16,9 +16,11 @@ namespace RE
 	public:
 		inline static constexpr auto RTTI = RTTI_ActorKnowledge;
 
-		enum class FLAGS
+		enum class FLAGS : uint32_t
 		{
-			kNone = 0
+			kNone = 0,
+			kFlag0 = 1 << 0,
+			kHasDetectionListener = 1 << 1,
 		};
 
 		~ActorKnowledge() override;  // 00

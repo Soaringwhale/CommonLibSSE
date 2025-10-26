@@ -47,7 +47,7 @@ namespace RE
 		void                    SetSize(float a_size) override;                                             // 0D9
 		float                   CalcArmorRating() override;                                                 // 0E6 - calculate armor rating?
 		float                   GetArmorBaseFactorSum() override;                                           // 0E7 - something about armor rating
-		float                   CalcUnarmedDamage() override;                                               // 0E8 - get unarmed damage?
+		int32_t                 CalcUnarmedDamage() override;                                               // 0E8 - get unarmed damage?
 		void                    PrecacheData(void) override;                                                // 120
 
 		// add

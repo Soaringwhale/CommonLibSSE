@@ -10,6 +10,9 @@ namespace RE
 	class hkbEvaluateExpressionModifier : public hkbModifier
 	{
 	public:
+		inline static constexpr auto RTTI = RTTI_hkbEvaluateExpressionModifier;
+		inline static constexpr auto VTABLE = VTABLE_hkbEvaluateExpressionModifier;
+
 		struct InternalExpressionData
 		{
 			// members

@@ -10,6 +10,9 @@ namespace RE
 		static constexpr inline size_t HANDLERS = 3;
 
 	public:
+		inline static constexpr auto RTTI = RTTI_BSEventOnFalseToTrueModifier;
+		inline static constexpr auto VTABLE = VTABLE_BSEventOnFalseToTrueModifier;
+
 		struct HandlerData
 		{
 			// members

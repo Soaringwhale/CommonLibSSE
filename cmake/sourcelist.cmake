@@ -223,12 +223,14 @@ set(SOURCES
 	include/RE/B/BSCoreTypes.h
 	include/RE/B/BSCullingProcess.h
 	include/RE/B/BSCyclicBlendTransitionGenerator.h
+	include/RE/B/BSDirectAtModifier.h
 	include/RE/B/BSDirectInputManager.h
 	include/RE/B/BSDismemberSkinInstance.h
 	include/RE/B/BSDynamicTriShape.h
 	include/RE/B/BSEffectShaderData.h
 	include/RE/B/BSEffectShaderMaterial.h
 	include/RE/B/BSEffectShaderProperty.h
+	include/RE/B/BSEventEveryNEventsModifier.h
 	include/RE/B/BSEventOnDeactivateModifier.h
 	include/RE/B/BSEventOnFalseToTrueModifier.h
 	include/RE/B/BSExtraData.h
@@ -238,6 +240,7 @@ set(SOURCES
 	include/RE/B/BSFaceGenManager.h
 	include/RE/B/BSFaceGenModel.h
 	include/RE/B/BSFaceGenNiNode.h
+	include/RE/B/BSFaceGenUtils.h
 	include/RE/B/BSFadeNode.h
 	include/RE/B/BSFastNavmeshEdgeHandle.h
 	include/RE/B/BSFile.h
@@ -332,10 +335,15 @@ set(SOURCES
 	include/RE/B/BSPointerHandleSmartPointer.h
 	include/RE/B/BSPortalGraph.h
 	include/RE/B/BSPrecomputedNavmeshInfoPathMap.h
+	include/RE/B/BSRagdollContactListenerModifier.h
 	include/RE/B/BSReloadShaderI.h
 	include/RE/B/BSRenderPass.h
 	include/RE/B/BSResourceAssetLoader.h
+	include/RE/B/BSResourceEntry.h
+	include/RE/B/BSResourceEntryCache.h
 	include/RE/B/BSResourceEntryDB.h
+	include/RE/B/BSResourceEntryQueue.h
+	include/RE/B/BSResourceHandle.h
 	include/RE/B/BSResourceNiBinaryStream.h
 	include/RE/B/BSResponse.h
 	include/RE/B/BSRotAccumTransfInterpolator.h
@@ -356,6 +364,7 @@ set(SOURCES
 	include/RE/B/BSSmallBlockAllocator.h
 	include/RE/B/BSSoundHandle.h
 	include/RE/B/BSSpeedSamplerDBManager.h
+	include/RE/B/BSSpeedSamplerModifier.h
 	include/RE/B/BSStorage.h
 	include/RE/B/BSStream.h
 	include/RE/B/BSString.h
@@ -414,6 +423,7 @@ set(SOURCES
 	include/RE/B/BSXAudio2GameSound.h
 	include/RE/B/BSXFlags.h
 	include/RE/B/BShkbAnimationGraph.h
+	include/RE/B/BShkbHkxDB.h
 	include/RE/B/BShkbUtils.h
 	include/RE/B/BSiStateTaggingGenerator.h
 	include/RE/B/BanishEffect.h
@@ -1036,6 +1046,7 @@ set(SOURCES
 	include/RE/H/hkContactPoint.h
 	include/RE/H/hkContainerAllocators.h
 	include/RE/H/hkFinishLoadedObjectFlag.h
+	include/RE/H/hkLoader.h
 	include/RE/H/hkMap.h
 	include/RE/H/hkMatrix3.h
 	include/RE/H/hkMemoryAllocator.h
@@ -1049,6 +1060,7 @@ set(SOURCES
 	include/RE/H/hkRefPtr.h
 	include/RE/H/hkRefVariant.h
 	include/RE/H/hkReferencedObject.h
+	include/RE/H/hkRootLevelContainer.h
 	include/RE/H/hkRotation.h
 	include/RE/H/hkSmallArray.h
 	include/RE/H/hkSseMathTypes.h
@@ -1060,6 +1072,7 @@ set(SOURCES
 	include/RE/H/hkaAnimatedReferenceFrame.h
 	include/RE/H/hkaAnimation.h
 	include/RE/H/hkaAnimationBinding.h
+	include/RE/H/hkaAnimationContainer.h
 	include/RE/H/hkaAnimationControl.h
 	include/RE/H/hkaAnnotationTrack.h
 	include/RE/H/hkaBone.h
@@ -1090,16 +1103,23 @@ set(SOURCES
 	include/RE/H/hkbCompiledExpressionSet.h
 	include/RE/H/hkbCondition.h
 	include/RE/H/hkbContext.h
+	include/RE/H/hkbDampingModifier.h
 	include/RE/H/hkbEvaluateExpressionModifier.h
 	include/RE/H/hkbEvent.h
 	include/RE/H/hkbEventBase.h
 	include/RE/H/hkbEventDrivenModifier.h
 	include/RE/H/hkbEventInfo.h
+	include/RE/H/hkbEventPayload.h
 	include/RE/H/hkbEventQueue.h
+	include/RE/H/hkbEventsFromRangeModifier.h
 	include/RE/H/hkbExpressionData.h
 	include/RE/H/hkbExpressionDataArray.h
+	include/RE/H/hkbFootIkControlsModifier.h
+	include/RE/H/hkbFootIkGains.h
 	include/RE/H/hkbGenerator.h
 	include/RE/H/hkbGeneratorOutputUtils.h
+	include/RE/H/hkbGetUpModifier.h
+	include/RE/H/hkbKeyframeBonesModifier.h
 	include/RE/H/hkbManualSelectorGenerator.h
 	include/RE/H/hkbModifier.h
 	include/RE/H/hkbModifierGenerator.h
@@ -1108,18 +1128,26 @@ set(SOURCES
 	include/RE/H/hkbNode.h
 	include/RE/H/hkbNodeInfo.h
 	include/RE/H/hkbPoseMatchingGenerator.h
+	include/RE/H/hkbPoweredRagdollControlData.h
+	include/RE/H/hkbPoweredRagdollControlsModifier.h
 	include/RE/H/hkbProjectData.h
 	include/RE/H/hkbProjectStringData.h
 	include/RE/H/hkbRagdollDriver.h
+	include/RE/H/hkbRigidBodyRagdollControlData.h
+	include/RE/H/hkbRigidBodyRagdollControlsModifier.h
 	include/RE/H/hkbRigidBodySetup.h
+	include/RE/H/hkbRotateCharacterModifier.h
 	include/RE/H/hkbShapeSetup.h
 	include/RE/H/hkbStateMachine.h
 	include/RE/H/hkbSymbolIdMap.h
+	include/RE/H/hkbSymbolLinker.h
+	include/RE/H/hkbTimerModifier.h
 	include/RE/H/hkbTransitionEffect.h
 	include/RE/H/hkbTwistModifier.h
 	include/RE/H/hkbUtils.h
 	include/RE/H/hkbVariableInfo.h
 	include/RE/H/hkbVariableValueSet.h
+	include/RE/H/hkbWorldFromModelModeData.h
 	include/RE/H/hkp3AxisSweep.h
 	include/RE/H/hkpAction.h
 	include/RE/H/hkpAgentNnTrack.h
@@ -1919,6 +1947,7 @@ set(SOURCES
 	src/RE/B/BSDirectInputManager.cpp
 	src/RE/B/BSEffectShaderData.cpp
 	src/RE/B/BSExtraData.cpp
+	src/RE/B/BSFaceGenUtils.cpp
 	src/RE/B/BSFixedString.cpp
 	src/RE/B/BSGamepadDevice.cpp
 	src/RE/B/BSHandleRefObject.cpp
@@ -1940,6 +1969,7 @@ set(SOURCES
 	src/RE/B/BSPathingStreamSimpleBufferRead.cpp
 	src/RE/B/BSPathingStreamSimpleBufferWrite.cpp
 	src/RE/B/BSPointerHandle.cpp
+	src/RE/B/BSResourceAssetLoader.cpp
 	src/RE/B/BSResourceNiBinaryStream.cpp
 	src/RE/B/BSResponse.cpp
 	src/RE/B/BSScaleformManager.cpp
@@ -2272,6 +2302,7 @@ set(SOURCES
 	src/RE/O/ObjectTypeInfo.cpp
 	src/RE/O/ObjectiveState.cpp
 	src/RE/P/PackUnpack.cpp
+	src/RE/P/PackageLocation.cpp
 	src/RE/P/PackedInstructionStream.cpp
 	src/RE/P/PlayerCamera.cpp
 	src/RE/P/PlayerCharacter.cpp

@@ -30,7 +30,7 @@ namespace RE
 			kUseSolidTint = 1 << 4
 		};
 
-		enum class HeadPartType : uint32_t  // PNAM
+		enum HeadPartType : uint32_t  // PNAM
 		{
 			kMisc = 0x0,
 			kFace = 0x1,

@@ -4,6 +4,7 @@
 #include "RE/B/BGSAnimationSequencer.h"
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSIntrusiveRefCounted.h"
+#include "RE/B/BSPathingLocation.h"
 #include "RE/B/BSPointerHandle.h"
 #include "RE/B/BSSoundHandle.h"
 #include "RE/B/BSTHashMap.h"
@@ -20,13 +21,16 @@ namespace RE
 	class ActorKnowledge;
 	class BGSAttackData;
 	class BGSProjectile;
+	class BSPathingSolution;
 	class DialogueItem;
+	class IAIWorldLocation;
 	class IAnimationSetCallbackFunctor;
 	class MagicItem;
 	class NiBillboardNode;
 	class NiAVObject;
 	class NiPointLight;
 	class NiRefObject;
+	class PathingRequest;
 	class TESObjectREFR;
 	class TESObjectWEAP;
 	class StandardDetectionListener;
@@ -54,6 +58,26 @@ namespace RE
 		ObjectRefHandle ref;          // 10
 	};
 	static_assert(sizeof(DetectionEvent) == 0x18);
+
+	struct BSActorPathingMessage
+	{
+	public:
+		// members
+		int32_t                            unk00;     // 00
+		uint8_t                            pad04[4];  // 04
+		BSTSmartPointer<BSPathingSolution> solution;
+	};
+	static_assert(sizeof(BSActorPathingMessage) == 0x10);
+
+	struct BSActorPathingMessageQueue : public BSIntrusiveRefCounted
+	{
+	public:
+		// members
+		std::uint32_t                        pad04;  // 00
+		BSTSmallArray<BSActorPathingMessage> data;   // 08
+		std::uint64_t                        lock;   // 28
+	};
+	static_assert(sizeof(BSActorPathingMessageQueue) == 0x30);
 
 	struct HighProcessData
 	{
@@ -91,46 +115,6 @@ namespace RE
 			};
 		};
 		using HEAD_TRACK_TYPE = HEAD_TRACK_TYPES::HEAD_TRACK_TYPE;
-
-		struct Data190 : public BSIntrusiveRefCounted
-		{
-		public:
-			struct Data
-			{
-			public:
-				struct UnkData
-				{
-					std::uint64_t unk00;  // 00
-					std::uint64_t unk08;  // 08
-					std::uint64_t unk10;  // 10
-					std::uint64_t unk18;  // 18
-					std::uint64_t unk20;  // 20
-					std::uint64_t unk28;  // 28
-					std::uint64_t unk30;  // 30
-					std::uint64_t unk38;  // 38
-					std::uint64_t unk40;  // 40
-					std::uint64_t unk48;  // 48
-					std::uint64_t unk50;  // 50
-					std::uint64_t unk58;  // 58
-					std::uint64_t unk60;  // 60
-					std::uint64_t unk68;  // 68
-					std::uint64_t unk70;  // 70
-					std::uint64_t unk78;  // 78
-				};
-				static_assert(sizeof(UnkData) == 0x80);
-
-				// members
-				UnkData*      unk00;  // 00
-				std::uint64_t unk08;  // 08
-			};
-			static_assert(sizeof(Data) == 0x10);
-
-			// members
-			std::uint32_t       unk04;  // 00
-			BSTSmallArray<Data> unk08;  // 08
-			std::uint64_t       unk28;  // 28
-		};
-		static_assert(sizeof(Data190) == 0x30);
 
 		struct Data208
 		{
@@ -191,10 +175,9 @@ namespace RE
 		float                                                 healthRegenDelay;                          // 01C
 		float                                                 staminaRegenDelay;                         // 020
 		float                                                 magickaRegenDelay;                         // 024
-		float                                                 unk028;                                    // 028
-		std::uint32_t                                         unk02C;                                    // 02C
+		IAIWorldLocation*                                     sandboxLocation;                           // 028
 		BSTArray<ActorHandle>                                 lastSpokenToArray;                         // 030
-		std::uint64_t                                         unk048;                                    // 048
+		std::uint64_t                                         lock1;                                     // 048
 		BGSAnimationSequencer                                 animSequencer;                             // 050
 		NiPoint3                                              pathingCurrentMovementSpeed;               // 088
 		NiPoint3                                              pathingCurrentRotationSpeed;               // 094
@@ -204,12 +187,12 @@ namespace RE
 		NiPoint3                                              pathingDesiredRotationSpeed;               // 0C4
 		std::uint32_t                                         unk0D0;                                    // 0D0
 		float                                                 lastBumpDirection;                         // 0D4
-		ObjectRefHandle                                       lastExtDoorActivated;                      // 0D8
+		ObjectRefHandle                                       doorActivated;                             // 0D8
 		float                                                 activationHeight;                          // 0DC
 		ActorHandle                                           reanimateCaster;                           // 0E0
 		std::uint32_t                                         unk0E4;                                    // 0E4
 		MagicItem*                                            reanimateSpell;                            // 0E8
-		Movement::TypeData                                    cachedMovementType;                        // 0F0
+		Movement::TypeData                                    currentMovementType;                       // 0F0
 		stl::enumeration<FADE_STATE, std::uint32_t>           fadeState;                                 // 130
 		float                                                 fadeAlpha;                                 // 134
 		TESObjectREFR*                                        fadeTrigger;                               // 138
@@ -224,21 +207,14 @@ namespace RE
 		ObjectRefHandle                                       pathLookAtTarget;                          // 17C
 		void*                                                 unk180;                                    // 180 - smart ptr
 		void*                                                 unk188;                                    // 188 - smart ptr
-		BSTSmartPointer<Data190>                              unk190;                                    // 190
-		BSTSmartPointer<Data190>                              unk198;                                    // 198
-		float                                                 unk1A0;                                    // 1A0
-		float                                                 unk1A4;                                    // 1A4
-		float                                                 unk1A8;                                    // 1A8
-		std::uint32_t                                         unk1AC;                                    // 1AC
-		std::uint64_t                                         unk1B0;                                    // 1B0
-		std::uint64_t                                         unk1B8;                                    // 1B8
-		std::uint64_t                                         unk1C0;                                    // 1C0
-		std::uint64_t                                         unk1C8;                                    // 1C8
-		std::uint64_t                                         unk1D0;                                    // 1D0
-		std::uint64_t                                         unk1D8;                                    // 1D8
+		BSTSmartPointer<BSActorPathingMessageQueue>           pathingMsgQueue1;                          // 190
+		BSTSmartPointer<BSActorPathingMessageQueue>           pathingMsgQueue2;                          // 198
+		BSPathingLocation                                     pathingLocation;                           // 1A0
+		BSNavmesh*                                            navmesh;                                   // 1D0
+		std::uint64_t                                         lock2;                                     // 1D8
 		float                                                 unk1E0;                                    // 1E0
-		float                                                 cachedActorHeight;                         // 1E4
-		NiPointer<NiRefObject>                                unk1E8;                                    // 1E8
+		float                                                 actorHeight;                               // 1E4
+		NiPointer<bhkSimpleShapePhantom>                      phantom;                                   // 1E8
 		std::uint32_t                                         unk1F0;                                    // 1F0
 		AITimeStamp                                           bumpTimer;                                 // 1F4
 		AITimeStamp                                           unk1F8;                                    // 1F8
@@ -246,37 +222,40 @@ namespace RE
 		float                                                 takeBackTimer;                             // 200
 		std::uint32_t                                         pad204;                                    // 204
 		Data208*                                              unk208;                                    // 208
-		std::uint32_t                                         unk210;                                    // 210
+		float                                                 avoidWaitTimer;                            // 210
 		PLAYER_ACTION                                         playerActionReaction;                      // 214
-		BSFixedString                                         subtitle;                                  // 218
+		BSFixedString                                         voiceSubtitle;                             // 218
 		BSTArray<BSTTuple<FormID, NiPointer<ActorKnowledge>>> knowledgeArray;                            // 220
 		mutable BSReadWriteLock                               knowledgeLock;                             // 238
 		BSTArray<QueuedDialogueType*>                         queueofGreetings;                          // 240
 		NiPointer<BGSAttackData>                              attackData;                                // 258
 		NiPoint3                                              locationOffsetByWaterPoint;                // 260
 		std::uint32_t                                         unk26C;                                    // 26C
-		std::uint64_t                                         unk270;                                    // 270
-		float                                                 unk278;                                    // 278
+		TESTopicInfo*                                         playerActivationTopic;                     // 270
+		float                                                 distToPlayerSquared;                       // 278
 		NiPoint3                                              deathForceDirection;                       // 27C
 		float                                                 deathForce;                                // 288
 		float                                                 unk28C;                                    // 28C
-		float                                                 unk290;                                    // 290
+		float                                                 talkTimer;                                 // 290
 		float                                                 unk294;                                    // 294
-		float                                                 unk298;                                    // 298
-		float                                                 clearTalkToListTimer;                      // 29C
+		float                                                 searchChatterTimer;                        // 298
+		float                                                 lastSpokenToTimer;                         // 29C
 		float                                                 maxAlpha;                                  // 2A0
-		float                                                 unk2A4;                                    // 2A4
-		std::uint64_t                                         unk2A8;                                    // 2A8
-		float                                                 unk2B0;                                    // 2B0 - fAISocialTimerForConversationsMin
-		std::uint32_t                                         unk2B4;                                    // 2B4
+		float                                                 evalTimer;                                 // 2A4
+		std::uint32_t                                         unk2A8;                                    // 2A8
+		float                                                 procedureEvalTimer;                        // 2AC
+		float                                                 socialTalkTimer;                           // 2B0
+		std::uint32_t                                         eventID;                                   // 2B4
 		std::uint64_t                                         unk2B8;                                    // 2B8
-		std::uint64_t                                         unk2C0;                                    // 2C0
-		std::uint64_t                                         unk2C8;                                    // 2C8
+		float                                                 delayTimer;                                // 2C0
+		std::uint32_t                                         unk2C4;                                    // 2C4
+		std::uint32_t                                         unk2C8;                                    // 2C8
+		std::uint32_t                                         searchTimer;                               // 2CC
 		std::uint64_t                                         unk2D0;                                    // 2D0
 		std::uint32_t                                         animAction;                                // 2D8
 		NiPoint3                                              leftWeaponLastPos;                         // 2DC
 		NiPoint3                                              rightWeaponLastPos;                        // 2E8
-		ObjectRefHandle                                       greetActor;                                // 2F4
+		ObjectRefHandle                                       lastGreeted;                               // 2F4
 		float                                                 soundDelay;                                // 2F8
 		BSSoundHandle                                         soundHandles[2];                           // 2FC
 		float                                                 greetingTimer;                             // 314
@@ -286,19 +265,20 @@ namespace RE
 		float                                                 breathTimer;                               // 324
 		float                                                 voiceTimer;                                // 328
 		float                                                 dyingTimer;                                // 32C
-		std::uint64_t                                         unk330;                                    // 330
+		TESTopicInfo*                                         lastGreeting;                              // 330
 		std::uint64_t                                         unk338;                                    // 338
-		float                                                 closeDialogueTimer;                        // 340
+		float                                                 awarePlayerTimer;                          // 340
 		std::uint32_t                                         unk344;                                    // 344
 		TESIdleForm*                                          currentProcessIdle;                        // 348
-		RefHandle                                             unk350;                                    // 350
+		RefHandle                                             currentProcessIdleTarget;                  // 350
 		std::uint32_t                                         unk354;                                    // 354
 		std::uint64_t                                         unk358;                                    // 358
 		BSTSmartPointer<DialogueItem>                         greetTopic;                                // 360
 		std::uint32_t                                         unk368;                                    // 368
-		RefHandle                                             unk36C;                                    // 36C
-		void*                                                 unk370;                                    // 370
-		std::uint64_t                                         unk378;                                    // 378
+		RefHandle                                             dialogueTarget;                            // 36C
+		void*                                                 faceGenGeomHandle;                         // 370
+		float                                                 packageEndTimerValue;                      // 378
+		std::uint32_t                                         unk37C;                                    // 37C
 		NiPointer<NiBillboardNode>                            healthBarNode;                             // 380
 		float                                                 unk388;                                    // 388
 		std::uint32_t                                         unk38C;                                    // 38C
@@ -309,60 +289,61 @@ namespace RE
 		float                                                 detectionModifierTimer;                    // 3A4
 		float                                                 lightLevel;                                // 3A8
 		float                                                 sceneHeadTrackTimer;                       // 3AC
-		float                                                 pCapVoiceFailsafeTimer;                    // 3B0
+		float                                                 lightLevelTimeStamp;                       // 3B0
 		std::uint32_t                                         pad3B4;                                    // 3B4
-		void*                                                 unk3B8;                                    // 3B8
+		void*                                                 lipAnimHandle;                             // 3B8
 		std::uint64_t                                         unk3C0;                                    // 3C0
-		MuzzleFlash*                                          muzzleFlash;                               // 3C8
+		MuzzleFlash*                                          currentMuzzleFlash;                        // 3C8
 		std::uint32_t                                         unk3D0;                                    // 3D0
 		std::uint32_t                                         pad3D4;                                    // 3D4
 		DetectionEvent*                                       actorsGeneratedDetectionEvent;             // 3D8
 		NiPointer<StandardDetectionListener>                  detectionListener;                         // 3E0
 		std::uint64_t                                         unk3E8;                                    // 3E8
-		void*                                                 unk3F0;                                    // 3F0 - smart ptr
+		PathingRequest*                                       some_request;                              // 3F0 - smart ptr
 		std::uint64_t                                         unk3F8;                                    // 3F8
-		BSTSmallArray<std::uint64_t>                          unk400;                                    // 400
+		BSTSmallArray<DEFAULT_OBJECT, 2>                      animationActions;                          // 400
 		NiPoint3                                              animationDelta;                            // 418
 		NiPoint3                                              animationAngleMod;                         // 424
-		BSTSmartPointer<IAnimationSetCallbackFunctor>         unk430;                                    // 430
+		BSTSmartPointer<IAnimationSetCallbackFunctor>         animationSetCallback;                      // 430
 		float                                                 absorbTimer;                               // 438
 		float                                                 unk43C;                                    // 43C
-		Crime*                                                crimeToReactTo;                            // 440
-		std::uint64_t                                         unk448;                                    // 448
+		Crime*                                                crimeReaction;                             // 440
+		std::uint8_t                                          unk448[7];                                 // 448
+		std::uint8_t                                          lastTurn;                                  // 44F
 		bool                                                  unk450;                                    // 450
 		std::uint8_t                                          unk451;                                    // 451
-		std::uint8_t                                          unk452;                                    // 452
+		bool                                                  skippedLastUpdate;                         // 452
 		std::uint8_t                                          unk453;                                    // 453
 		bool                                                  greetingPlayer;                            // 454
-		std::uint8_t                                          unk455;                                    // 455
+		bool                                                  pickNewIdle;                               // 455
 		std::uint8_t                                          unk456;                                    // 456
 		bool                                                  detectAlert;                               // 457
 		bool                                                  talkingToPC;                               // 458
 		bool                                                  inCommandState;                            // 459
-		std::uint8_t                                          unk45A;                                    // 45A
-		std::uint8_t                                          unk45B;                                    // 45B
-		std::uint8_t                                          unk45C;                                    // 45C
-		std::uint8_t                                          unk45D;                                    // 45D
-		std::uint8_t                                          unk45E;                                    // 45E
+		bool                                                  continuingPackageforPC;                    // 45A
+		bool                                                  animationActive;                           // 45B
+		bool                                                  movementStopped;                           // 45C
+		bool                                                  unk45D;                                    // 45D
+		bool                                                  allowForceReadyWeapon;                     // 45E
 		bool                                                  isDualCasting;                             // 45F
-		bool                                                  getPlantedExplosive;                       // 460
+		bool                                                  plantedExplosive;                          // 460
 		bool                                                  approachingAutoTeleportDoor;               // 461
 		bool                                                  arrested;                                  // 462
 		bool                                                  unk463;                                    // 463
-		bool                                                  unk464;                                    // 464
-		bool                                                  unk465;                                    // 465
+		bool                                                  playerActivationQueued;                    // 464
+		bool                                                  doingSayTo;                                // 465
 		bool                                                  unk466;                                    // 466
-		bool                                                  unk467;                                    // 467
+		bool                                                  stopShoutAudioManually;                    // 467
 		bool                                                  farGeometry;                               // 468
-		bool                                                  unk469;                                    // 469
-		bool                                                  unk46A;                                    // 46A
+		bool                                                  procedureDoesEquip;                        // 469
+		bool                                                  forceRotate;                               // 46A
 		bool                                                  deathDialogue;                             // 46B
 		bool                                                  fistsDrawn;                                // 46C
 		bool                                                  freezeGraphLocomotionChannel;              // 46D
 		bool                                                  freezeGraphLocomotionEvents;               // 46E
-		bool                                                  bAllowRotation;                            // 46F
-		bool                                                  doorActivated;                             // 470
-		bool                                                  unk471;                                    // 471
+		bool                                                  allowRotation;                             // 46F
+		bool                                                  bDoorActivated;                            // 470
+		bool                                                  startedConversation;                       // 471
 		bool                                                  aggroRadiusStarted;                        // 472
 		std::uint8_t                                          pad473;                                    // 473
 		std::uint32_t                                         pad474;                                    // 474

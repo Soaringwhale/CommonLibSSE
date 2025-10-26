@@ -8,7 +8,11 @@ namespace RE
 	class hkbAssetLoader : public hkReferencedObject
 	{
 	public:
+		inline static constexpr auto RTTI = RTTI_hkbAssetLoader;
+		inline static constexpr auto VTABLE = VTABLE_hkbAssetLoader;
+
 		hkbAssetLoader() = default;
+
 		~hkbAssetLoader() override = default;  // 00
 
 		// add

@@ -10,21 +10,24 @@ namespace RE
 	struct BSLookAtModifierBoneData
 	{
 		// members
-		int16_t      index;              // 00
-		char         pad02[14];          // 02
-		NiQuaternion fwdAxisLS;          // 10
-		float        limitAngleDegrees;  //20
-		float        onGain;             //24
-		float        offGain;            //28
-		bool         enabled;            // 2C
-		char         pad2D[3];
-		NiQuaternion currentFwdAxisLS;  // 30
+		int16_t   index;              // 00
+		char      pad02[14];          // 02
+		hkVector4 fwdAxisLS;          // 10
+		float     limitAngleDegrees;  // 20
+		float     onGain;             // 24
+		float     offGain;            // 28
+		bool      enabled;            // 2C
+		char      pad2D[3];           // 2D
+		hkVector4 currentFwdAxisLS;   // 30
 	};
 	static_assert(sizeof(BSLookAtModifierBoneData) == 0x40);
 
 	class BSLookAtModifier : public hkbModifier
 	{
 	public:
+		inline static constexpr auto RTTI = RTTI_BSLookAtModifier;
+		inline static constexpr auto VTABLE = VTABLE_BSLookAtModifier;
+
 		// members
 		bool                              lookAtTarget;                // 50
 		char                              pad51[7];                    // 51
@@ -49,6 +52,7 @@ namespace RE
 		bool                              ballBonesValid;              // CC
 		char                              padCD[3];                    // CD
 		void*                             pSkeletonMemory;             // D0
+		uint8_t                           padD8[8];                    // D8
 	};
-	static_assert(sizeof(BSLookAtModifier) == 0xD8);
+	static_assert(sizeof(BSLookAtModifier) == 0xE0);
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RE/H/hkbEventBase.h"
+#include "RE/H/hkbEventPayload.h"
 
 namespace RE
 {

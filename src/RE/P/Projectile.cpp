@@ -95,24 +95,24 @@ namespace RE
 		return func(this);
 	}
 
-	ProjectileHandle* Projectile::Launch(ProjectileHandle* a_result, LaunchData& a_data) noexcept
+	ProjectileHandle Projectile::Launch(LaunchData& a_data) noexcept
 	{
 		using func_t = decltype(&Projectile::Launch);
 		REL::Relocation<func_t> func{ RELOCATION_ID(42928, 44108) };
-		return func(a_result, a_data);
+		return func(a_data);
 	}
 
-	ProjectileHandle* Projectile::LaunchSpell(ProjectileHandle* a_result, TESObjectREFR* a_shooter, SpellItem* a_spell, const NiPoint3& a_origin, const ProjectileRot& a_angles) noexcept
+	ProjectileHandle Projectile::LaunchSpell(TESObjectREFR* a_shooter, SpellItem* a_spell, const NiPoint3& a_origin, const ProjectileRot& a_angles) noexcept
 	{
 		LaunchData launchData(a_shooter, a_origin, a_angles, a_spell);
-		return Launch(a_result, launchData);
+		return Launch(launchData);
 	}
 
-	ProjectileHandle* Projectile::LaunchSpell(ProjectileHandle* a_result, TESObjectREFR* a_shooter, SpellItem* a_spell, MagicSystem::CastingSource a_source) noexcept
+	ProjectileHandle Projectile::LaunchSpell(TESObjectREFR* a_shooter, SpellItem* a_spell, MagicSystem::CastingSource a_source) noexcept
 	{
 		const auto caster = a_shooter->GetMagicCaster(a_source);
 		if (!caster) {
-			return a_result;
+			return {};
 		}
 
 		NiPoint3 origin;
@@ -141,16 +141,16 @@ namespace RE
 			angles = { 0 };
 		}
 
-		return LaunchSpell(a_result, a_shooter, a_spell, origin, angles);
+		return LaunchSpell(a_shooter, a_spell, origin, angles);
 	}
 
-	ProjectileHandle* Projectile::LaunchArrow(ProjectileHandle* a_result, TESObjectREFR* a_shooter, TESAmmo* a_ammo, TESObjectWEAP* a_weap, const NiPoint3& a_origin, const ProjectileRot& a_angles) noexcept
+	ProjectileHandle Projectile::LaunchArrow(TESObjectREFR* a_shooter, TESAmmo* a_ammo, TESObjectWEAP* a_weap, const NiPoint3& a_origin, const ProjectileRot& a_angles) noexcept
 	{
 		LaunchData launchData(a_shooter, a_origin, a_angles, a_ammo, a_weap);
-		return Launch(a_result, launchData);
+		return Launch(launchData);
 	}
 
-	ProjectileHandle* Projectile::LaunchArrow(ProjectileHandle* a_result, TESObjectREFR* a_shooter, TESAmmo* a_ammo, TESObjectWEAP* a_weap) noexcept
+	ProjectileHandle Projectile::LaunchArrow(TESObjectREFR* a_shooter, TESAmmo* a_ammo, TESObjectWEAP* a_weap) noexcept
 	{
 		NiAVObject* fireNode;
 
@@ -181,6 +181,6 @@ namespace RE
 			angles.z = a_shooter->GetAngleZ();
 		}
 
-		return LaunchArrow(a_result, a_shooter, a_ammo, a_weap, origin, angles);
+		return LaunchArrow(a_shooter, a_ammo, a_weap, origin, angles);
 	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RE/A/AITimer.h"
 #include "RE/A/ActorPackage.h"
 #include "RE/B/BGSDefaultObjectManager.h"
 #include "RE/B/BSTArray.h"
@@ -13,6 +14,7 @@ namespace RE
 	class bhkCharacterController;
 	class BipedAnim;
 	class HighProcess;
+	class InventoryEntryData;
 	class NiAVObject;
 	class NiPoint3;
 	class TESForm;
@@ -20,7 +22,7 @@ namespace RE
 	struct HighProcessData;
 	struct MiddleHighProcessData;
 
-	enum class PROCESS_TYPE
+	enum class PROCESS_TYPE : uint8_t
 	{
 		kNone = static_cast<std::underlying_type_t<PROCESS_TYPE>>(-1),
 		kHigh = 0,
@@ -60,8 +62,12 @@ namespace RE
 			kDPS = 1 << 3,
 			kMedicineEffectivenessMult = 1 << 4,
 			kEyeLevel = 1 << 9,
-			kConditionPreventsRun = 1 << 10,
-			kForwardLength = 1 << 11,
+			kFastWalkSpeed = 1 << 10,
+			kJogSpeed = 1 << 11,
+			kWalkSpeed = 1 << 12,
+			kRunSpeed = 1 << 13,
+			kConditionPreventsRun = 1 << 14,
+			kForwardLength = 1 << 15,
 			kActorIsGhost = 1 << 20,
 			kHealthDamaged = 1 << 21,
 			kMagickaPointsDamaged = 1 << 22,
@@ -108,6 +114,14 @@ namespace RE
 		std::uint64_t unk20;  // 20
 	};
 	static_assert(sizeof(ObjectstoAcquire) == 0x28);
+
+	struct EquippedItem
+	{
+		// members
+		TESBoundObject* object;  // 00
+		BGSEquipSlot*   slot;    // 08
+	};
+	static_assert(sizeof(EquippedItem) == 0x10);
 
 	class AIProcess
 	{
@@ -156,6 +170,7 @@ namespace RE
 		bhkCharacterController* GetCharController();
 		ActorHandle             GetCommandingActor() const;
 		TESShout*               GetCurrentShout();
+		InventoryEntryData*     GetCurrentWeapon(bool left) const;
 		TESForm*                GetEquippedLeftHand();
 		TESForm*                GetEquippedRightHand();
 		ObjectRefHandle         GetHeadtrackTarget() const;
@@ -178,7 +193,7 @@ namespace RE
 		void                    SetArrested(bool a_arrested);
 		void                    SetCachedHeight(float a_height);
 		void                    SetHeadtrackTarget(Actor* a_owner, NiPoint3& a_targetPosition);
-		void                    Set3DUpdateFlag(RESET_3D_FLAGS a_flags);
+		void                    Set3DUpdateFlag(stl::enumeration<RESET_3D_FLAGS, uint8_t> a_flags);
 		bool                    SetupSpecialIdle(Actor* a_actor, DEFAULT_OBJECT a_action, TESIdleForm* a_idle, bool a_arg5, bool a_arg6, TESObjectREFR* a_target);
 		void                    StopCurrentIdle(Actor* a_actor, bool a_forceIdleStop);
 		void                    Update3DModel(Actor* a_actor);
@@ -188,8 +203,8 @@ namespace RE
 		MiddleHighProcessData*                          middleHigh;                     // 008
 		HighProcessData*                                high;                           // 010
 		ActorPackage                                    currentPackage;                 // 018
-		float                                           unk048;                         // 048
-		std::uint32_t                                   unk04C;                         // 04C
+		float                                           hourLastProcessed;              // 048
+		std::uint32_t                                   dateLastProcessed;              // 04C
 		CachedValues*                                   cachedValues;                   // 050
 		std::int32_t                                    numberItemsActivate;            // 058
 		std::uint32_t                                   pad05C;                         // 05C
@@ -201,27 +216,28 @@ namespace RE
 		float                                           deathTime;                      // 094
 		float                                           trackedDamage;                  // 098
 		std::uint32_t                                   pad09C;                         // 09C
-		BSTArray<TESForm*>                              forms;                          // 0A0
-		Data0B8                                         unk0B8;                         // 0B8
+		BSTArray<EquippedItem>                          equippedForms;                  // 0A0
+		Data0B8                                         dataB8;                         // 0B8
 		TESForm*                                        equippedObjects[Hand::kTotal];  // 0F0
-		std::uint64_t                                   unk100;                         // 100
-		std::uint64_t                                   unk108;                         // 108
+		TESBoundObject*                                 itemBeingUsed;                  // 100
+		AITimer                                         combatDelayTimer;               // 108
 		RefHandle                                       followTarget;                   // 110
 		RefHandle                                       target;                         // 114
-		std::uint64_t                                   unk118;                         // 118
+		RefHandle                                       genericLocation;                // 118
+		RefHandle                                       secondGenericLocation;          // 11C
 		std::uint64_t                                   unk120;                         // 120
-		std::uint64_t                                   unk128;                         // 128
+		TESTopic*                                       speakingTopic;                  // 128
 		std::uint32_t                                   unk130;                         // 130
 		std::uint16_t                                   unk134;                         // 134
 		stl::enumeration<LowProcessFlags, std::uint8_t> lowProcessFlags;                // 136
-		stl::enumeration<PROCESS_TYPE, std::uint8_t>    processLevel;                   // 137
+		PROCESS_TYPE                                    processLevel;                   // 137
 		bool                                            skippedTimeStampForPathing;     // 138
 		bool                                            ignoringCombat;                 // 139
 		bool                                            endAlarmOnActor;                // 13A
 		bool                                            escortingPlayer;                // 13B
 		std::uint32_t                                   pad13C;                         // 13C
 
-	protected:
+	private:
 		void Update3DModel_Impl(Actor* a_actor);
 	};
 	static_assert(sizeof(AIProcess) == 0x140);

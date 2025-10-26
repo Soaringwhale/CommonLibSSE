@@ -121,6 +121,13 @@ namespace RE
 			return func(this);
 		}
 
+		void SetFlagBit(RE::ACTOR_BASE_DATA::Flag flag, bool val, bool a4)
+		{
+			using func_t = decltype(&TESActorBaseData::SetFlagBit);
+			REL::Relocation<func_t> func{ RELOCATION_ID(14261, 14383) };
+			return func(this, flag, val, a4);
+		}
+
 		// members
 		ACTOR_BASE_DATA        actorData;         // 08
 		TESLevItem*            deathItem;         // 20 - INAM

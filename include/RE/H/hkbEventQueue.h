@@ -18,11 +18,15 @@ namespace RE
 	public:
 		int32_t convert_id(int32_t id) const;
 
+		hkbEventQueue() = default;
+
+		HK_HEAP_REDEFINE_NEW_NOVIRTUAL(hkbEventQueue);
+
 		// members
-		hkQueue<hkbEvent> queue;                 // 00
-		hkbSymbolIdMap*   eventIDMap;            // 18
-		bool              internal_or_external;  // 20
-		char              pad21[7];              // 21
+		hkQueue<hkbEvent> queue;                          // 00
+		hkbSymbolIdMap*   eventIDMap{ nullptr };          // 18
+		bool              internal_or_external{ false };  // 20
+		uint8_t           pad21[7];                       // 21
 	};
 	static_assert(sizeof(hkbEventQueue) == 0x28);
 }

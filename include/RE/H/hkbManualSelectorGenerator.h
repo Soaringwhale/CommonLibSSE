@@ -7,6 +7,9 @@ namespace RE
 	class hkbManualSelectorGenerator : public hkbGenerator
 	{
 	public:
+		inline static constexpr auto RTTI = RTTI_hkbManualSelectorGenerator;
+		inline static constexpr auto VTABLE = VTABLE_hkbManualSelectorGenerator;
+
 		// members
 		hkArray<hkbGenerator*> options;                 // 48
 		int8_t                 selectedGeneratorIndex;  // 58

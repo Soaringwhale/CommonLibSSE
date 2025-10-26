@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RE/H/hkbEventBase.h"
+#include "RE/H/hkbEvent.h"
 #include "RE/H/hkbModifier.h"
 
 namespace RE
@@ -8,8 +8,11 @@ namespace RE
 	class BSEventOnDeactivateModifier : public hkbModifier
 	{
 	public:
+		inline static constexpr auto RTTI = RTTI_BSEventOnDeactivateModifier;
+		inline static constexpr auto VTABLE = VTABLE_BSEventOnDeactivateModifier;
+
 		// members
-		hkbEventBase event;  // 50
+		hkbEventProperty event;  // 50
 	};
 	static_assert(sizeof(BSEventOnDeactivateModifier) == 0x60);
 }

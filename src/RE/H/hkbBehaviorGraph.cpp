@@ -14,6 +14,13 @@ namespace RE
 		return const_cast<hkbNodeInfo&>(std::as_const(*this).getNodeInfoByTemplate(nodeTemplate));
 	}
 
+	hkbBehaviorGraph* hkbBehaviorGraph::cloneDeep(bool copyAnimationBindings, bool copyIdMappers, bool copyReferencedBehaviors, void* vtableClassRegistry, void* finishLoadedObjectRegistry, hkbGenerator* replacementRootGenerator, void* behaviorToCloneMap)
+	{
+		using func_t = decltype(&hkbBehaviorGraph::cloneDeep);
+		REL::Relocation<func_t> func{ RELOCATION_ID(57770, 58341) };
+		return func(this, copyAnimationBindings, copyIdMappers, copyReferencedBehaviors, vtableClassRegistry, finishLoadedObjectRegistry, replacementRootGenerator, behaviorToCloneMap);
+	}
+
 	hkbNode* hkbBehaviorGraph::getNodeClone(hkbNode* nodeTemplate) const
 	{
 		if (nodeTemplate->cloneState == RE::hkbNode::CloneState::kClone || !nodeTemplateToCloneMap)

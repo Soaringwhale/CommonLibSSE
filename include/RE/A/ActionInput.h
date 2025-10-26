@@ -16,14 +16,14 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_ActionInput;
 		inline static constexpr auto VTABLE = VTABLE_ActionInput;
 
-		enum class Priority : uint32_t
+		enum class ACTIONPRIORITY : uint32_t
 		{
 			Priority_0,
 			Priority_1,
 			Priority_2,
 		};
 
-		ActionInput(Priority a_priority = Priority::Priority_0, TESObjectREFR* a_ref = nullptr, BGSAction* a_action = nullptr, TESObjectREFR* a_targetRef = nullptr) :
+		ActionInput(ACTIONPRIORITY a_priority = ACTIONPRIORITY::Priority_0, TESObjectREFR* a_ref = nullptr, BGSAction* a_action = nullptr, TESObjectREFR* a_targetRef = nullptr) :
 			ref(a_ref), targetRef(a_targetRef), action(a_action), priority(a_priority) { stl::emplace_vtable(this); }
 		ActionInput(const ActionInput& other) = delete;
 
@@ -37,10 +37,10 @@ namespace RE
 		TES_HEAP_REDEFINE_NEW();
 
 		// members
-		TESObjectREFRPtr ref{};                             // 08
-		TESObjectREFRPtr targetRef{};                       // 10
-		BGSAction*       action{ nullptr };                 // 18
-		Priority         priority{ Priority::Priority_0 };  // 20
+		TESObjectREFRPtr ref{};                                   // 08
+		TESObjectREFRPtr targetRef{};                             // 10
+		BGSAction*       action{ nullptr };                       // 18
+		ACTIONPRIORITY   priority{ ACTIONPRIORITY::Priority_0 };  // 20
 
 	protected:
 		void CopyTo(ActionInput& dst) const
@@ -52,5 +52,4 @@ namespace RE
 		}
 	};
 	static_assert(sizeof(ActionInput) == 0x28);
-	using ACTIONPRIORITY = ActionInput::Priority;
 }

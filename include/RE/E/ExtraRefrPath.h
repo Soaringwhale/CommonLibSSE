@@ -15,6 +15,8 @@ namespace RE
 
 		enum class PATH_TYPE : uint32_t
 		{
+			Translation,
+			Spline,
 		};
 
 		ExtraRefrPath()

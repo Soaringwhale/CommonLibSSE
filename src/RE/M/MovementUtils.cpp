@@ -136,6 +136,13 @@ namespace RE
 			return func(MV_cur, MV_target, acc_denorm, decel_denorm, dtime, ans);
 		}
 
+		void DampenMovementVector(const MovementVector& MV_cur, const MovementVector& MV_target, float acc_denorm, float decel_denorm, float max_rot_speed_denorm, float dtime, MovementVector& ans)
+		{
+			using func_t = void(const MovementVector& MV_cur, const MovementVector& MV_target, float acc_denorm, float decel_denorm, float max_rot_speed_denorm, float dtime, MovementVector& ans);
+			REL::Relocation<func_t> func{ RELOCATION_ID(89354, 91820) };
+			return func(MV_cur, MV_target, acc_denorm, decel_denorm, max_rot_speed_denorm, dtime, ans);
+		}
+
 		float DenormalizeAcceleration(float acc_norm, const Movement::MaxSpeeds& max_speeds)
 		{
 			using DIR = Movement::SPEED_DIRECTION;

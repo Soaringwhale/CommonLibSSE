@@ -10,6 +10,9 @@ namespace RE
 	class hkbBehaviorReferenceGenerator : public hkbGenerator
 	{
 	public:
+		inline static constexpr auto RTTI = RTTI_hkbBehaviorReferenceGenerator;
+		inline static constexpr auto VTABLE = VTABLE_hkbBehaviorReferenceGenerator;
+
 		// members
 		hkStringPtr       behaviorName;  // 48
 		hkbBehaviorGraph* behavior;      // 50
