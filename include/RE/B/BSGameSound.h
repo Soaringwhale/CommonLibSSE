@@ -60,8 +60,8 @@ namespace RE
 	struct SoundMessageList
 	{
 		// members
-		BSSoundMessage *head;   // 00
-		BSSoundMessage *tail;   // 08
+		BSSoundMessage* head;  // 00
+		BSSoundMessage* tail;  // 08
 	};
 	static_assert(sizeof(SoundMessageList) == 0x10);
 
@@ -75,21 +75,21 @@ namespace RE
 
 		virtual ~BSGameSound();  // 01
 
-		virtual bool IsAsyncOpening ();                                // 02
+		virtual bool IsAsyncOpening();                                 // 02
 		virtual void Unk_03();                                         // 03
 		virtual void Unk_04() = 0;                                     // 04
-		virtual bool PriorityTest (BSGameSound *other);                // 05
+		virtual bool PriorityTest(BSGameSound* other);                 // 05
 		virtual bool SyncOpen() = 0;                                   // 06
 		virtual bool StartAsyncOpen() = 0;                             // 07
 		virtual bool TestAsyncOpenReady() = 0;                         // 08
 		virtual bool FinishAsyncOpen() = 0;                            // 09
 		virtual bool HandleExternalOpen() = 0;                         // 0A
 		virtual bool Prepare();                                        // 0B
-		virtual void Copy (BSGameSound *other, bool a3);               // 0C
+		virtual void Copy(BSGameSound* other, bool a3);                // 0C
 		virtual void UpdateEmitterPosition() = 0;                      // 0D
-		virtual bool Update ();                                    	   // 0E
-		virtual void SetEmitterPositionImpl(const NiPoint3 &pos) = 0;  // 0F
-		virtual void GetEmitterPositionImpl(const NiPoint3 &pos) = 0;  // 10
+		virtual bool Update();                                         // 0E
+		virtual void SetEmitterPositionImpl(const NiPoint3& pos) = 0;  // 0F
+		virtual void GetEmitterPositionImpl(const NiPoint3& pos) = 0;  // 10
 		virtual void Unk_11() = 0;                                     // 11
 		virtual void Unk_12() = 0;                                     // 12
 		virtual void DoApplyFrequency();                               // 13 - { return; }
@@ -100,40 +100,40 @@ namespace RE
 		virtual void SetVolumeImpl() = 0;                              // 18
 
 		// members
-		char                requests [24];          // 08
-        NiPoint3            beamEnd;                // 20
-        std::int32_t        unk2C;                  // 2C
-        SoundMessageList    list;                   // 30
-        BSResource::ID      resource_id;            // 40
-        std::int32_t        soundID;                // 4C
-        std::uint32_t       flags;                  // 50
-        std::int32_t        field;                  // 54
-        std::int32_t        alternateSoundFormId;   // 58
-        std::int32_t        flags2;                 // 5C
-        std::uint32_t       milliseconds;           // 60
-        std::int16_t        attenuation;            // 64
-        std::int16_t        unk66;                  // 66
-        std::int16_t        unk68;                  // 68
-        std::int16_t        unk6A;                  // 6A
-        std::int16_t        unk6C;                  // 6C
-        char                pad6E[2];               // 6E
-        float               volume;                 // 70
-        float               unk74;                  // 74
-        float               unk78;                  // 78
-        std::int32_t        audioBytes;             // 7C
-        float               distanceToListener;     // 80
-        std::int32_t        unk84;                  // 84
-        std::int64_t        unk88;                  // 88
-        std::int64_t        callback;               // 90
-        std::int64_t        unk98;                  // 98
-        std::int64_t        unkA0;                  // A0
-        std::uint32_t       priority;               // A8
-        std::int32_t        unkAC;                  // AC
-        BSISoundCategory    *soundCategory;         // B0
-        BSISoundOutputModel *output_model;          // B8
-        std::uint8_t        min_frequency;          // C0
-        std::uint8_t        frequency_spread;       // C1
-        char                unkC2[6];               // C2
+		char                 requests[24];          // 08
+		NiPoint3             beamEnd;               // 20
+		std::int32_t         unk2C;                 // 2C
+		SoundMessageList     list;                  // 30
+		BSResource::ID       resource_id;           // 40
+		std::int32_t         soundID;               // 4C
+		std::uint32_t        flags;                 // 50
+		std::int32_t         field;                 // 54
+		std::int32_t         alternateSoundFormId;  // 58
+		std::int32_t         flags2;                // 5C
+		std::uint32_t        milliseconds;          // 60
+		std::int16_t         attenuation;           // 64
+		std::int16_t         unk66;                 // 66
+		std::int16_t         unk68;                 // 68
+		std::int16_t         unk6A;                 // 6A
+		std::int16_t         unk6C;                 // 6C
+		char                 pad6E[2];              // 6E
+		float                volume;                // 70
+		float                unk74;                 // 74
+		float                unk78;                 // 78
+		std::int32_t         audioBytes;            // 7C
+		float                distanceToListener;    // 80
+		std::int32_t         unk84;                 // 84
+		std::int64_t         unk88;                 // 88
+		std::int64_t         callback;              // 90
+		std::int64_t         unk98;                 // 98
+		std::int64_t         unkA0;                 // A0
+		std::uint32_t        priority;              // A8
+		std::int32_t         unkAC;                 // AC
+		BSISoundCategory*    soundCategory;         // B0
+		BSISoundOutputModel* output_model;          // B8
+		std::uint8_t         min_frequency;         // C0
+		std::uint8_t         frequency_spread;      // C1
+		char                 unkC2[6];              // C2
 	};
 	static_assert(sizeof(BSGameSound) == 0xC8);
 }
