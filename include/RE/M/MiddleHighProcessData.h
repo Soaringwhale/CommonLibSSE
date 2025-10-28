@@ -183,7 +183,7 @@ namespace RE
 		NiPointer<bhkCharacterController>              charController;              // 250
 		BSTSmartPointer<bhkRagdollPenetrationUtil>     penetrationDetectUtil;       // 258
 		InventoryEntryData*                            rightHand;                   // 260
-		InventoryEntryData*                            bothHands;                   // 268
+		InventoryEntryData*                            currentAmmo;                 // 268
 		NiPointer<QueuedFile>                          bodyPartPreload;             // 270
 		void*                                          BSCloneReserver;             // 278
 		TESIdleForm*                                   lastIdlePlayed;              // 280
