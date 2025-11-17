@@ -32,9 +32,9 @@ namespace RE
 		float                        fTransitionDuration;          // 7C
 		uint8_t                      eBlendCurve;                  // 80
 		uint8_t                      pad81[15];                    // 81
-		hkbBlenderGenerator*         pTransitionBlenderGenerator;  // 90
+		hkbBlenderGenerator*         pTransitionBlenderGenerator;  // 90 - clone of pBlenderGenerator when active
 		uint8_t                      pad98[8];                     // 98
-		hkbBlendingTransitionEffect* pTransitionEffect;            // A0
+		hkbBlendingTransitionEffect* pTransitionEffect;            // A0 - filled when active
 		CurrentBlendMode             currentMode;                  // A8
 		uint8_t                      pad_A9[7];                    // A9
 	};
