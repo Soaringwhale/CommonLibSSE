@@ -759,7 +759,7 @@ namespace RE
 	bool Actor::IsAlarmed() const
 	{
 		auto currentPackage = GetCurrentPackage();
-		return currentPackage && currentPackage->packData.packType.get() == PACKAGE_PROCEDURE_TYPE::kAlarm;
+		return currentPackage && currentPackage->packData.packType == PACKAGE_PROCEDURE_TYPE::kAlarm;
 	}
 
 	bool Actor::IsAMount() const
