@@ -1124,6 +1124,7 @@ namespace RE
 			inline constexpr REL::ID GetLock(static_cast<std::uint64_t>(19818));
 			inline constexpr REL::ID GetOwner(static_cast<std::uint64_t>(19789));
 			inline constexpr REL::ID GetStealValue(static_cast<std::uint64_t>(15807));
+			inline constexpr REL::ID SetLinkedRef(static_cast<std::uint64_t>(19848));
 			inline constexpr REL::ID InitInventoryIfRequired(static_cast<std::uint64_t>(15800));
 			inline constexpr REL::ID MoveTo(static_cast<std::uint64_t>(56227));
 			inline constexpr REL::ID PlayAnimation(static_cast<std::uint64_t>(14189));

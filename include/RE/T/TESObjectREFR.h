@@ -400,6 +400,7 @@ namespace RE
 		InventoryCountMap                       GetInventoryCounts(std::function<bool(TESBoundObject&)> a_filter, bool a_noInit = false);
 		InventoryChanges*                       GetInventoryChanges(bool a_noInit = false);
 		TESObjectREFR*                          GetLinkedRef(BGSKeyword* a_keyword);
+		void                                    SetLinkedRef(TESObjectREFR *a_linkedRef, BGSKeyword *a_keyword);
 		REFR_LOCK*                              GetLock() const;
 		LOCK_LEVEL                              GetLockLevel() const;
 		const char*                             GetName() const;
