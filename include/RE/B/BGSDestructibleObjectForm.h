@@ -69,6 +69,34 @@ namespace RE
 		void ClearDataComponent() override;                     // 02
 		void CopyComponent(BaseFormComponent* a_rhs) override;  // 03
 
+		bool UpdateCurrentDamageStage(TESObjectREFR* a_ref, bool a_forceUpdateVisuals)
+		{
+			using func_t = decltype(&BGSDestructibleObjectForm::UpdateCurrentDamageStage);
+			REL::Relocation<func_t> func{ REL::ID(14066) };
+			return func(this, a_ref, a_forceUpdateVisuals);
+		}
+
+		static std::int32_t CalcDestructionStage(TESObjectREFR* a_ref)
+		{
+			using func_t = decltype(&BGSDestructibleObjectForm::CalcDestructionStage);
+			REL::Relocation<func_t> func{ REL::ID(14071) };
+			return func(a_ref);
+		}
+
+		static void ClearDestruction(TESObjectREFR* a_ref)
+		{
+			using func_t = decltype(&BGSDestructibleObjectForm::ClearDestruction);
+			REL::Relocation<func_t> func{ REL::ID(14082) };
+			return func(a_ref);
+		}
+
+		static BGSDestructibleObjectForm* GetDestructionForm(TESForm* a_form)
+		{
+			using func_t = decltype(&BGSDestructibleObjectForm::GetDestructionForm);
+			REL::Relocation<func_t> func{ REL::ID(14055) };
+			return func(a_form);
+		}
+
 		// members
 		DestructibleObjectData* data;  // 08
 	};
