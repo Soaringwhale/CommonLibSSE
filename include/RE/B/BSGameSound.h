@@ -46,7 +46,7 @@ namespace RE
 		// members
 		SOUND_MSG       msg;          // 00
 		std::uint32_t   soundid;      // 04
-		std::uint32_t   time;         // 08
+		std::uint32_t   value;        // 08
 		std::int32_t    unkC;         // 0C
 		void*           data;         // 10
 		NiAVObject*     source_node;  // 18
@@ -113,7 +113,7 @@ namespace RE
         std::uint32_t       milliseconds;           // 60
         std::int16_t        attenuation;            // 64
         std::int16_t        unk66;                  // 66
-        std::int16_t        unk68;                  // 68
+        std::int16_t        calculatedAttenuation;  // 68
         std::int16_t        unk6A;                  // 6A
         std::int16_t        unk6C;                  // 6C
         char                pad6E[2];               // 6E

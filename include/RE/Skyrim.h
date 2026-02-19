@@ -1295,6 +1295,8 @@
 #include "RE/I/IVMObjectBindInterface.h"
 #include "RE/I/IVMSaveLoadInterface.h"
 #include "RE/I/IVirtualMachine.h"
+#include "RE/I/IXAudio2SourceVoice.h"
+#include "RE/I/IXAudio2Voice.h"
 #include "RE/I/IXAudio2VoiceCallback.h"
 #include "RE/I/ImageData.h"
 #include "RE/I/ImageSpaceData.h"

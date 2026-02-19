@@ -49,13 +49,13 @@ namespace RE
 		std::int32_t        unkE8;           // E8
 		float               floats[12];      // F0
 		std::int32_t        unk11C;          // 11C
-		std::int32_t        unk120;          // 120
+		std::uint32_t       samplesPlayed;   // 120
 		std::uint32_t       samples;         // 124
 		IXAudio2SourceVoice *sourceVoice;    // 128
 		std::int64_t        unk130;          // 130
 		std::int64_t        unk138;          // 138
-		std::int32_t        unk140;          // 140
-		std::int32_t        unk144;          // 144
+		std::int32_t        channelCount;    // 140
+		std::int32_t        sampleSize;      // 144
 		std::int64_t        unk148;          // 148
 		std::int64_t        unk150;          // 150
 		std::int64_t        unk158;          // 158
@@ -68,7 +68,7 @@ namespace RE
 		std::int32_t        unk194;          // 194
 		std::int64_t        unk198;          // 198
 		std::int64_t        unk1A0;          // 1A0
-		std::int32_t        unk1A8;          // 1A8
+		std::int32_t        channelCount2;   // 1A8
 		std::int32_t        unk1AC;          // 1AC
 		float               **unk1B0;        // 1B0
 		std::int32_t        *unk1B8;         // 1B8
