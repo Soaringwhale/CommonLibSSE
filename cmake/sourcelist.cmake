@@ -1982,7 +1982,6 @@ set(SOURCES
 	src/RE/B/BSSoundHandle.cpp
 	src/RE/B/BSStringPool.cpp
 	src/RE/B/BSSystemFileStorage.cpp
-	src/RE/B/BSTArray.cpp
 	src/RE/B/BSTCreateFactoryManager.cpp
 	src/RE/B/BSUtilities.cpp
 	src/RE/B/BSVirtualKeyboardDevice.cpp

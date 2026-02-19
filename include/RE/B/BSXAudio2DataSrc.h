@@ -6,7 +6,7 @@
 namespace RE
 {
 	struct WAVFORMATEX
-	{ 
+	{
 		// members
 		std::uint16_t wFormatTag;         // 00 - format type
 		std::uint16_t nChannels;          // 02 - number of channels (i.e. mono, stereo...)
@@ -32,7 +32,7 @@ namespace RE
 		std::uint32_t   reserved;          // 24
 	};
 	static_assert(sizeof(RiffFile__RiffMetaData) == 0x28);
-	 
+
 	class BSXAudio2DataSrc
 	{
 	public:
@@ -55,8 +55,8 @@ namespace RE
 		std::int32_t                                unk88;                          // 88
 		std::int32_t                                pad8C;                          // 8C
 		void*                                       allocatedAudioBuffer;           // 90
-		std::int32_t                                asyncAudioDataSize;             // 98
-		std::int32_t                                allocatedBufferSize;            // 9C
+		std::uint32_t                               asyncAudioDataSize;             // 98
+		std::uint32_t                               allocatedBufferSize;            // 9C
 		void*                                       asyncAudioSourceData;           // A0
 		std::uint32_t*                              pDecodedPacketCumulativeBytes;  // A8
 		std::int32_t                                audioBytes;                     // B0

@@ -147,13 +147,13 @@ namespace RE
 		};
 
 		// members
-		stl::enumeration<GeneralFlag, std::uint32_t>           packFlags;              // 0
-		PACKAGE_PROCEDURE_TYPE                                 packType;               // 4
-		PACK_INTERRUPT_TARGET                                  interruptOverrideType;  // 5
-		PreferredSpeed                                         maxSpeed;               // 6
-		std::uint8_t                                           pad7;                   // 7
-		stl::enumeration<InterruptFlag, std::uint16_t>         foBehaviorFlags;        // 8
-		std::uint16_t                                          packageSpecificFlags;   // A
+		stl::enumeration<GeneralFlag, std::uint32_t>   packFlags;              // 0
+		PACKAGE_PROCEDURE_TYPE                         packType;               // 4
+		PACK_INTERRUPT_TARGET                          interruptOverrideType;  // 5
+		PreferredSpeed                                 maxSpeed;               // 6
+		std::uint8_t                                   pad7;                   // 7
+		stl::enumeration<InterruptFlag, std::uint16_t> foBehaviorFlags;        // 8
+		std::uint16_t                                  packageSpecificFlags;   // A
 	};
 	static_assert(sizeof(PACKAGE_DATA) == 0xC);
 

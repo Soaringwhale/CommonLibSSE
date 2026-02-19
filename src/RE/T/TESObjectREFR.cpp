@@ -438,7 +438,7 @@ namespace RE
 		return extraList.GetLinkedRef(a_keyword);
 	}
 
-	void TESObjectREFR::SetLinkedRef(TESObjectREFR *a_linkedRef, BGSKeyword* a_keyword)
+	void TESObjectREFR::SetLinkedRef(TESObjectREFR* a_linkedRef, BGSKeyword* a_keyword)
 	{
 		extraList.SetLinkedRef(a_linkedRef, a_keyword);
 	}
