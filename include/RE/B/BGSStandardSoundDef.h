@@ -56,7 +56,7 @@ namespace RE
 		~BGSStandardSoundDef() override;  // 00
 
 		// override (BGSSoundDescriptor)
-		bool          DoResolve (Resolution &res) override; // 01
+		bool          DoResolve(Resolution& res) override;  // 01
 		void          Unk_02(void) override;                // 02
 		void          InitSound(TESForm* a_src) override;   // 03
 		bool          LoadSound(TESFile* a_mod) override;   // 04

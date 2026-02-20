@@ -1,8 +1,8 @@
 #pragma once
 
 #include "RE/B/BSGameSound.h"
-#include "RE/I/IXAudio2VoiceCallback.h"
 #include "RE/B/BSXAudio2DataSrc.h"
+#include "RE/I/IXAudio2VoiceCallback.h"
 
 namespace RE
 {
@@ -25,11 +25,11 @@ namespace RE
 		bool FinishAsyncOpen() override;                               // 09
 		bool HandleExternalOpen() override;                            // 0A
 		bool Prepare() override;                                       // 0B
-		void Copy(BSGameSound *other, bool a3) override;               // 0C
+		void Copy(BSGameSound* other, bool a3) override;               // 0C
 		void UpdateEmitterPosition() override;                         // 0D
 		bool Update() override;                                        // 0E
-		void SetEmitterPositionImpl(const NiPoint3 &pos) override;     // 0F
-		void GetEmitterPositionImpl(const NiPoint3 &outPos) override;  // 10
+		void SetEmitterPositionImpl(const NiPoint3& pos) override;     // 0F
+		void GetEmitterPositionImpl(const NiPoint3& outPos) override;  // 10
 		void Unk_11() override;                                        // 11
 		void Unk_12() override;                                        // 12
 		void DoApplyFrequency() override;                              // 13

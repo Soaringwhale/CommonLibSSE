@@ -6,7 +6,7 @@
 namespace RE
 {
 	struct WAVFORMATEX
-	{ 
+	{
 		// members
 		std::uint16_t wFormatTag;         // 00 - format type
 		std::uint16_t nChannels;          // 02 - number of channels (i.e. mono, stereo...)
@@ -32,7 +32,7 @@ namespace RE
 		std::uint32_t   reserved;          // 24
 	};
 	static_assert(sizeof(RiffFile__RiffMetaData) == 0x28);
-	 
+
 	class BSXAudio2DataSrc
 	{
 	public:

@@ -258,7 +258,7 @@ namespace RE
 		virtual void                              Update3DPosition(bool a_warp);                                                                                                                                                                               // 3F
 		virtual void                              UpdateSoundCallBack(bool a_endSceneAction);                                                                                                                                                                  // 40
 		virtual bool                              SetDialogueWithPlayer(bool a_flag, bool a_forceGreet, TESTopicInfo* a_topic);                                                                                                                                // 41
-		virtual void                              DamageObject(float a_damage, bool a_ignoreProtection);                                                                                                                                                             // 42
+		virtual void                              DamageObject(float a_damage, bool a_ignoreProtection);                                                                                                                                                       // 42
 		virtual bool                              GetFullLODRef() const;                                                                                                                                                                                       // 43
 		virtual void                              SetFullLODRef(bool a_set);                                                                                                                                                                                   // 44
 		virtual BGSAnimationSequencer*            GetSequencer() const;                                                                                                                                                                                        // 45
@@ -400,7 +400,7 @@ namespace RE
 		InventoryCountMap                       GetInventoryCounts(std::function<bool(TESBoundObject&)> a_filter, bool a_noInit = false);
 		InventoryChanges*                       GetInventoryChanges(bool a_noInit = false);
 		TESObjectREFR*                          GetLinkedRef(BGSKeyword* a_keyword);
-		void                                    SetLinkedRef(TESObjectREFR *a_linkedRef, BGSKeyword *a_keyword);
+		void                                    SetLinkedRef(TESObjectREFR* a_linkedRef, BGSKeyword* a_keyword);
 		REFR_LOCK*                              GetLock() const;
 		LOCK_LEVEL                              GetLockLevel() const;
 		const char*                             GetName() const;

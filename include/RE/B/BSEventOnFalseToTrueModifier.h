@@ -7,11 +7,11 @@ namespace RE
 {
 	class BSEventOnFalseToTrueModifier : public hkbModifier
 	{
-		static constexpr inline size_t HANDLERS = 3;
-
 	public:
 		inline static constexpr auto RTTI = RTTI_BSEventOnFalseToTrueModifier;
 		inline static constexpr auto VTABLE = VTABLE_BSEventOnFalseToTrueModifier;
+
+		static constexpr inline size_t HANDLERS = 3;
 
 		struct HandlerData
 		{

@@ -208,6 +208,13 @@ namespace RE
 		return func(this, a_spell);
 	}
 
+	bool Actor::Dismount(uint32_t INTERACTION_EXIT)
+	{
+		using func_t = decltype(&Actor::Dismount);
+		REL::Relocation<func_t> func{ RELOCATION_ID(37760, 38705) };
+		return func(this, INTERACTION_EXIT);
+	}
+
 	void Actor::DispelAlteredStates(EffectArchetype a_exception)
 	{
 		using func_t = decltype(&Actor::DispelAlteredStates);
@@ -959,6 +966,13 @@ namespace RE
 		using func_t = decltype(&Actor::KillImmediate);
 		REL::Relocation<func_t> func{ RELOCATION_ID(36723, 37735) };
 		return func(this);
+	}
+
+	bool Actor::Mount(RE::Actor* target, bool a3)
+	{
+		using func_t = decltype(&Actor::Mount);
+		REL::Relocation<func_t> func{ RELOCATION_ID(37759, 38704) };
+		return func(this, target, a3);
 	}
 
 	void Actor::PlayASound(BSSoundHandle& a_result, FormID a_formID, bool a_arg3, std::uint32_t a_flags)
