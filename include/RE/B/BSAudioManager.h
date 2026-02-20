@@ -18,7 +18,7 @@ namespace RE
 		std::uint32_t     flags;         // 04
 		void*             soundOrState;  // 08
 		BSSoundInfo*      nextInBucket;  // 10
-		std::uint32_t     unk14;         // 18
+		std::uint32_t     unk18;         // 18
 		std::uint8_t      someState;     // 1C
 		std::uint8_t      pad1D[3];      // 1D
 		std::uint32_t     pad20;         // 20

@@ -55,8 +55,8 @@ namespace RE
 		std::int32_t                                unk88;                          // 88
 		std::int32_t                                pad8C;                          // 8C
 		void*                                       allocatedAudioBuffer;           // 90
-		std::int32_t                                asyncAudioDataSize;             // 98
-		std::int32_t                                allocatedBufferSize;            // 9C
+		std::uint32_t                               asyncAudioDataSize;             // 98
+		std::uint32_t                               allocatedBufferSize;            // 9C
 		void*                                       asyncAudioSourceData;           // A0
 		std::uint32_t*                              pDecodedPacketCumulativeBytes;  // A8
 		std::int32_t                                audioBytes;                     // B0
