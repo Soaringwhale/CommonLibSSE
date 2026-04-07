@@ -21,6 +21,7 @@ set(SOURCES
 	include/RE/A/ActorMagicCaster.h
 	include/RE/A/ActorMover.h
 	include/RE/A/ActorPackage.h
+	include/RE/A/ActorPackageData.h
 	include/RE/A/ActorSpeedChannel.h
 	include/RE/A/ActorState.h
 	include/RE/A/ActorTargetCheck.h
@@ -153,12 +154,15 @@ set(SOURCES
 	include/RE/B/BGSOverridePackCollection.h
 	include/RE/B/BGSPackageDataBool.h
 	include/RE/B/BGSPackageDataLocation.h
+	include/RE/B/BGSPackageDataLocationWrapper.h
 	include/RE/B/BGSPackageDataPointerTemplate.h
+	include/RE/B/BGSPackageDataRef.h
 	include/RE/B/BGSPerk.h
 	include/RE/B/BGSPerkEntry.h
 	include/RE/B/BGSPerkRankArray.h
 	include/RE/B/BGSPickupPutdownSounds.h
 	include/RE/B/BGSPreloadable.h
+	include/RE/B/BGSProcedurePatrolExecState.h
 	include/RE/B/BGSProcedureTreeBranch.h
 	include/RE/B/BGSProcedureTreeConditionalItem.h
 	include/RE/B/BGSProcedureTreeProcedure.h
@@ -1242,6 +1246,7 @@ set(SOURCES
 	include/RE/H/hkpWorldPostSimulationListener.h
 	include/RE/H/hkpWorldRayCastInput.h
 	include/RE/H/hkpWorldRayCastOutput.h
+	include/RE/I/IAITarget.h
 	include/RE/I/IAIWorldLocationHandle.h
 	include/RE/I/IAnimationClipLoaderSingleton.h
 	include/RE/I/IAnimationGraphManagerHolder.h
@@ -1282,6 +1287,7 @@ set(SOURCES
 	include/RE/I/IPackageDataAIWorldLocationHandle.h
 	include/RE/I/IPipelineStageInterface.h
 	include/RE/I/IPostAnimationChannelUpdateFunctor.h
+	include/RE/I/IProcedureTreeExecState.h
 	include/RE/I/IProcedureTreeItem.h
 	include/RE/I/IProfilePolicy.h
 	include/RE/I/ISavePatcherInterface.h
@@ -1578,6 +1584,7 @@ set(SOURCES
 	include/RE/P/PackedInstructionStream.h
 	include/RE/P/ParalysisEffect.h
 	include/RE/P/PathingCell.h
+	include/RE/P/PatrolActorPackageData.h
 	include/RE/P/PeakValueModifierEffect.h
 	include/RE/P/PerkEntryVisitor.h
 	include/RE/P/PerkRankVisitor.h

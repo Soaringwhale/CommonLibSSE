@@ -6,6 +6,7 @@
 namespace RE
 {
 	class TESFile;
+	class BGSPackageDataValidationContext;
 
 	template <class Parent, class Pointer /*, const BSFixedString& TYPE_NAME*/>
 	class BGSPackageDataPointerTemplate : public BGSNamedPackageData<Parent>
@@ -14,11 +15,11 @@ namespace RE
 		virtual ~BGSPackageDataPointerTemplate();  // 00
 
 		// override (BGSNamedPackageData<Parent>)
-		void                               Unk_05(void) override;         // 05 - { return 1; }
-		[[nodiscard]] const BSFixedString& GetTypeName() const override;  // 0B - { return TYPE_NAME; }
+		void                               Validate(BGSPackageDataValidationContext* a_validationContext) override; // 05  -  { return 1; }
+		[[nodiscard]] const BSFixedString& QType() const override;                                                  // 0B  -  { return TYPE_NAME; }
 
 		// add
-		virtual void LoadPointer(TESFile* a_mod) = 0;  // ??
+		//virtual void LoadPointer(TESFile* a_mod) = 0;  // ?? upd. no such func in ida
 
 		// members
 		Pointer* pointer;  // ??
