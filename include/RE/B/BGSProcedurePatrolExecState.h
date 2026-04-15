@@ -2,11 +2,12 @@
 #pragma once
 
 #include "RE/I/IProcedureTreeExecState.h"
+#include "RE/B/BGSTypedItem.h"
+#include "RE/B/BGSPackageDataRef.h"
 
 namespace RE
 {
 	class PatrolActorPackageData;
-	class PackageTarget;
 	class BSPathingRequest;
 
 	class BGSProcedurePatrolExecState : public BGSTypedItem<BGSProcedurePatrolExecState, IProcedureTreeExecState>
