@@ -9,20 +9,23 @@ namespace RE
 
 	//const BSFixedString kPackageDataLocationTypeName("Location");
 
-	class BGSPackageDataLocation : public BGSPackageDataPointerTemplate<IPackageDataAIWorldLocationHandle, PackageLocation /*, kPackageDataLocationTypeName*/>
+	class BGSPackageDataLocation : BGSNamedPackageData<IPackageDataAIWorldLocationHandle>
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSPackageDataLocation;
 
 		~BGSPackageDataLocation() override;  // 00
 
-		// override (BGSPackageDataPointerTemplate<IPackageDataAIWorldLocationHandle, PackageLocation, kPackageDataLocationTypeName>)
+		// override (IPackageData)
 		void RemapInterruptData(std::uint32_t a_target, std::uint32_t a_loc, void* a_handle) override;  // 06
 		void SaveGame(BGSSaveFormBuffer* a_buf) override;                                               // 07
 		void LoadGame(BGSLoadFormBuffer* a_buf) override;                                               // 08
 		void InitLoadGame(BGSLoadFormBuffer* a_buf) override;                                           // 09 - { return; }
 		void GetDescription(BSString& a_dst, TESForm* a_form) const override;                           // 0A
 		bool QIsCurrLoc() override;                                                                     // 0C - { return pointer->type == PackageLocation::Type::kNearPackageStartLocation; }
+
+		// members
+		PackageLocation* pointer;   // 18
 	};
 	static_assert(sizeof(BGSPackageDataLocation) == 0x20);
 }

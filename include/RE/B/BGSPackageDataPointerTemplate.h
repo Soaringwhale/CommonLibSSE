@@ -15,11 +15,11 @@ namespace RE
 		virtual ~BGSPackageDataPointerTemplate();  // 00
 
 		// override (BGSNamedPackageData<Parent>)
-		void                               Validate(BGSPackageDataValidationContext* a_validationContext) override; // 05  -  { return 1; }
+		void                               Validate(BGSPackageDataValidationContext& a_validationContext) override; // 05  -  { return 1; }
 		[[nodiscard]] const BSFixedString& QType() const override;                                                  // 0B  -  { return TYPE_NAME; }
 
 		// add
-		//virtual void LoadPointer(TESFile* a_mod) = 0;  // ?? upd. no such func in ida
+		//virtual void InternalLoad(TESFile* a_mod) = 0;  //
 
 		// members
 		Pointer* pointer;  // ??

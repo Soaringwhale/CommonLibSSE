@@ -5,15 +5,14 @@ namespace RE
 { 
 	class AITargetContext;
 
-    class IAITarget : 
-		public IAIWorldLocationHandle, // 00
-		public IPackageData            // 08
+    class IAITarget : public IPackageDataAIWorldLocationHandle
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IAITarget;
 
 		~IAITarget() override; // 00
 
+		// add
 		virtual void*         GetRefOrContainer(AITargetContext& a_context);                         // 04
 		virtual void*         GetObjectA(AITargetContext& a_context);                                // 05
 		virtual std::uint32_t GetAcquireType();                                                      // 06
