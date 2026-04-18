@@ -28,9 +28,6 @@ namespace RE
 		void                    AdvanceToNextTarget() override;                                                            // 09
 		std::uint32_t           GetCount() override;                                                                       // 0A
 
-		// add
-		virtual void InternalLoad(TESFile* a_mod);  // 0C
-
 		// override (IPackageData)
 		void							   Validate(BGSPackageDataValidationContext& a_context) override;                              // 05
 		void							   RemapInterruptData(std::uint32_t a_target, std::uint32_t a_loc, void* a_handle) override;   // 06
@@ -39,6 +36,9 @@ namespace RE
 		void							   InitLoadGame(BGSLoadFormBuffer* a_buf) override;                                            // 09
 		void							   GetDescription(BSString& a_dst, TESForm* a_form) const override;                            // 0A
 		[[nodiscard]] const BSFixedString& QType() const override;																	   // 0B
+
+		// add
+		virtual void InternalLoad(TESFile* a_mod);  // 0C
 
 		// members
 		PackageTarget* packageTarget;  // 18
