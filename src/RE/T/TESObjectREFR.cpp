@@ -299,6 +299,13 @@ namespace RE
 		}
 	}
 
+	uint32_t TESObjectREFR::GetFirstFreeMarkerIndex(Actor* a_actor, char a3)
+	{
+		using func_t = decltype(&TESObjectREFR::GetFirstFreeMarkerIndex);
+		REL::Relocation<func_t> func{ REL::ID(19767) };
+		return func (this, a_actor, a3);
+	}
+
 	ObjectRefHandle TESObjectREFR::GetHandle()
 	{
 		return ObjectRefHandle(this);

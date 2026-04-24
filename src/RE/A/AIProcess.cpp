@@ -237,6 +237,20 @@ namespace RE
 		}
 	}
 
+	void AIProcess::SetTarget(Actor *a_actor, ObjectRefHandle *a_refh) 
+	{
+		using func_t = decltype(&AIProcess::SetTarget);
+		REL::Relocation<func_t> func{ REL::ID(38179) };
+		return func(this, a_actor, a_refh);
+	}
+
+	void AIProcess::SetFurniture(Actor *a_actor, ObjectRefHandle *a_refh)
+	{
+		using func_t = decltype(&AIProcess::SetFurniture);
+		REL::Relocation<func_t> func{ REL::ID(38909) };
+		return func(this, a_actor, a_refh);
+	}
+
 	bool AIProcess::SetupSpecialIdle(Actor* a_actor, DEFAULT_OBJECT a_action, TESIdleForm* a_idle, bool a_arg5, bool a_arg6, TESObjectREFR* a_target)
 	{
 		using func_t = decltype(&AIProcess::SetupSpecialIdle);

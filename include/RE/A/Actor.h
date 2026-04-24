@@ -610,6 +610,7 @@ namespace RE
 		bool                            Mount(RE::Actor* target, bool a3);
 		void                            PlayASound(BSSoundHandle& a_result, FormID a_formID, bool a_unk03, std::uint32_t a_flags);
 		void                            ProcessVATSAttack(MagicCaster* a_caster, bool a_hasTargetAnim, TESObjectREFR* a_target, bool a_leftHand);
+		bool                            PutActorInChairBedQuick(TESObjectREFR* a_furn, std::uint32_t a_markerIdx);
 		void                            RemoveAnimationGraphEventSink(BSTEventSink<BSAnimationGraphEvent>* a_sink) const;
 		void                            RemoveCastScroll(SpellItem* a_spell, MagicSystem::CastingSource a_source);
 		void                            RemoveExtraArrows3D();

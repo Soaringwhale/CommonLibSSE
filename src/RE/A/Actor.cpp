@@ -989,6 +989,13 @@ namespace RE
 		return func(this, a_caster, a_hasTargetAnim, a_target, a_leftHand);
 	}
 
+	bool Actor::PutActorInChairBedQuick(TESObjectREFR* a_furn, std::uint32_t a_markerIdx)
+	{
+		using func_t = decltype(&Actor::PutActorInChairBedQuick);
+		REL::Relocation<func_t> func{ REL::ID(36334) };
+		return func(this, a_furn, a_markerIdx);
+	}
+
 	void Actor::RemoveAnimationGraphEventSink(BSTEventSink<BSAnimationGraphEvent>* a_sink) const
 	{
 		BSAnimationGraphManagerPtr graphManager;
