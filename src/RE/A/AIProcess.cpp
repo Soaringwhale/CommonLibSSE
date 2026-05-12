@@ -237,14 +237,14 @@ namespace RE
 		}
 	}
 
-	void AIProcess::SetTarget(Actor *a_actor, ObjectRefHandle *a_refh) 
+	void AIProcess::SetTarget(Actor *a_actor, const ObjectRefHandle& a_refh) 
 	{
 		using func_t = decltype(&AIProcess::SetTarget);
 		REL::Relocation<func_t> func{ REL::ID(38179) };
 		return func(this, a_actor, a_refh);
 	}
 
-	void AIProcess::SetFurniture(Actor *a_actor, ObjectRefHandle *a_refh)
+	void AIProcess::SetFurniture(Actor *a_actor, const ObjectRefHandle& a_refh)
 	{
 		using func_t = decltype(&AIProcess::SetFurniture);
 		REL::Relocation<func_t> func{ REL::ID(38909) };
