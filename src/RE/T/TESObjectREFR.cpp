@@ -918,6 +918,13 @@ namespace RE
 		MoveTo_Impl(ObjectRefHandle(), GetParentCell(), GetWorldspace(), a_pos, data.angle);
 	}
 
+	void TESObjectREFR::Unlock()
+	{
+		using func_t = decltype(&TESObjectREFR::Unlock);
+		REL::Relocation<func_t> func{ REL::ID(19821) };
+		func(this);
+	}
+
 	InventoryChanges* TESObjectREFR::ForceInitInventoryChanges()
 	{
 		auto changes = MakeInventoryChanges();

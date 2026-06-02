@@ -464,6 +464,7 @@ namespace RE
 		bool                                    SetMotionType(MotionType a_motionType, bool a_allowActivate = true);
 		void                                    SetPosition(float a_x, float a_y, float a_z);
 		void                                    SetPosition(NiPoint3 a_pos);
+		void                                    Unlock();
 
 		// members
 		OBJ_REFR         data;          // 40
